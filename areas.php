@@ -91,7 +91,8 @@
 									<h2 class="panel-title">Áreas registradas</h2>
 								</header>
 								<div id="tabla_areas" class="panel-body">
-									<table class="table table-bordered table-striped mb-none" id="datatable-default">
+									<table id="datatable-default"
+									class="table table-bordered table-striped mb-none" >
 										<thead>
 											<tr>
 												<th width="40%">Nombre</th>

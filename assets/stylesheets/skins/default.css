@@ -132,13 +132,13 @@ body .btn-primary.dropdown-toggle {
 body .btn-primary {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	background-color: #0088cc;
+	background-color: #388de0;
 	border-color: #0088cc;
 }
 
 body .btn-primary:hover {
 	border-color: #0099e6 !important;
-	background-color: #0099e6;
+	background-color: #6fbeff;
 }
 
 body .btn-primary:active,
@@ -314,7 +314,7 @@ p.drop-caps.colored.secundary:first-child:first-letter {
 }
 /* Page Header */
 .page-header h2 {
-	border-bottom-color: #0088cc;
+	
 }
 
 .page-header .sidebar-right-toggle:hover {
@@ -384,7 +384,7 @@ html.dark .pagination > li.active span:focus {
 
 html .pagination > li.active a,
 html.dark .pagination > li.active a {
-	background-color: #0088cc;
+	background-color: #6fbeff;
 }
 /* Fullcalendar */
 .fc .fc-widget-header {

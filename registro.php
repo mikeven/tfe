@@ -39,70 +39,81 @@
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style type="text/css">
 		    .alert{ display: none; margin-top: 20px; }
+		    
+			body {
+			    background-size: cover;
+			    background-repeat: no-repeat;
+			    background-attachment: fixed;
+			    -webkit-transition: background-image 0.8s ease-in-out;
+				transition: background-image 0.8s ease-in-out;
+			}
+
 		</style>
 
 	</head>
 	<body>
 		<!-- start: page -->
-		<section class="body-sign">
-			<div class="center-sign">
-				<a href="/" class="logo pull-left">
-					<img src="assets/images/logo.png" height="54" alt="Porto Admin" />
-				</a>
+		<div id="fullPage">
+			<section class="body-sign">
+				<div class="center-sign">
+					<a href="/" class="logo pull-left">
+						<img src="assets/images/logo.png" height="54" alt="Porto Admin" />
+					</a>
 
-				<div class="panel panel-sign">
-					<div class="panel-title-sign mt-xl text-right">
-						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Registrarse</h2>
-					</div>
-					<div class="panel-body">
-						<form id="frm_registro">
-							<div class="form-group mb-lg">
-								<label>Nombre</label>
-								<input name="nombre" type="text" class="form-control input-lg" required/>
-							</div>
+					<div class="panel panel-sign">
+						<div class="panel-title-sign mt-xl text-right">
+							<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Registrarse</h2>
+						</div>
+						<div class="panel-body">
+							<form id="frm_registro">
+								<div class="form-group mb-lg">
+									<label>Nombre</label>
+									<input name="nombre" type="text" class="form-control input-lg" required/>
+								</div>
 
-							<div class="form-group mb-lg">
-								<label>Correo electrónico</label>
-								<input name="email" type="email" class="form-control input-lg" required/>
-							</div>
+								<div class="form-group mb-lg">
+									<label>Correo electrónico</label>
+									<input name="email" type="email" class="form-control input-lg" required/>
+								</div>
 
-							<div class="form-group mb-none">
+								<div class="form-group mb-none">
+									<div class="row">
+										<div class="col-sm-6 mb-lg">
+											<label>Contraseña</label>
+											<input id="pwd" name="password" type="password" class="form-control input-lg" required/>
+										</div>
+										<div class="col-sm-6 mb-lg">
+											<label>Confirme contraseña</label>
+											<input name="cnf_password" type="password" class="form-control input-lg" required/>
+										</div>
+									</div>
+								</div>
+
 								<div class="row">
-									<div class="col-sm-6 mb-lg">
-										<label>Contraseña</label>
-										<input id="pwd" name="password" type="password" class="form-control input-lg" required/>
-									</div>
-									<div class="col-sm-6 mb-lg">
-										<label>Confirme contraseña</label>
-										<input name="cnf_password" type="password" class="form-control input-lg" required/>
+									<div class="col-sm-8"></div>
+									<div class="col-sm-4 text-right">
+										<button type="submit" class="btn btn-primary hidden-xs">Registrarse</button>
+										<button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Registrarse</button>
 									</div>
 								</div>
-							</div>
 
-							<div class="row">
-								<div class="col-sm-8"></div>
-								<div class="col-sm-4 text-right">
-									<button type="submit" class="btn btn-primary hidden-xs">Registrarse</button>
-									<button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Registrarse</button>
-								</div>
-							</div>
+								<hr>
+								<?php include( "secciones/notificaciones/alert-boton.html" );?>
+								<?php include( "secciones/notificaciones/alert.html" );?>
 
-							<hr>
-							<?php include( "secciones/notificaciones/alert-boton.html" );?>
-							<?php include( "secciones/notificaciones/alert.html" );?>
+								<p class="text-center">¿Ya está registrado? <a href="index.php">
+								Ingresar</a></p>
 
-							<p class="text-center">¿Ya está registrado? <a href="index.php">
-							Ingresar</a>
-
-						</form>
+							</form>
+						</div>
 					</div>
-				</div>
 
-				<p class="text-center text-muted mt-md mb-md">
-					&copy; TFE Life Planner 2019.
-				</p>
-			</div>
-		</section>
+					<p class="text-center text-muted mt-md mb-md">
+						&copy; TFE Life Planner 2019.
+					</p>
+				</div>
+			</section>
+		</div>
 		<!-- end: page -->
 
 		<!-- Vendor -->
@@ -126,9 +137,10 @@
 		<script src="assets/javascripts/theme.init.js"></script>
 
 		<script src="js/fn-ui.js"></script>
+		<script src="js/fn-login.js"></script>
 		<script src="js/fn-acceso.js"></script>
 		<script src="js/fn-usuario.js"></script>
 		<script src="js/validate-extend.js"></script>
-
+		
 	</body>
 </html>

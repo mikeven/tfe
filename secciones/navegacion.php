@@ -14,14 +14,20 @@
 			<nav id="menu" class="nav-main" role="navigation">
 				<ul class="nav nav-main">
 					<li class="nav-active">
+						<a href="home.php">
+							<i class="fa fa-home" aria-hidden="true"></i>
+							<span>Inicio</span>
+						</a>
+					</li>
+					<li class="nav-active">
 						<a href="areas.php">
-							<i class="fa fa-font" aria-hidden="true"></i>
+							<i class="fa fa-cube" aria-hidden="true"></i>
 							<span>Áreas</span>
 						</a>
 					</li>
 					<li class="nav-active">
 						<a href="#!">
-							<i class="fa fa-users" aria-hidden="true"></i>
+							<i class="fa fa-database" aria-hidden="true"></i>
 							<span>S.O.P.A.</span>
 						</a>
 					</li>
@@ -39,7 +45,7 @@
 					</li>
 					<li class="nav-active">
 						<a href="#!">
-							<i class="fa fa-file-text-o" aria-hidden="true"></i>
+							<i class="fa fa-cubes" aria-hidden="true"></i>
 							<span>Historial</span>
 						</a>
 					</li>

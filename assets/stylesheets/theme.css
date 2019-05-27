@@ -1,4 +1,20 @@
 
+@font-face {
+    font-family: 'GothamB';
+    src: 	url('../../fonts/Gotham-Black.ttf'), 
+    		url('../../fonts/GothamBlack.eot'), 
+    		url('../../fonts/Gotham-Black.otf'),
+    		url('../../fonts/GothamBlack.woff');
+}
+
+@font-face {
+    font-family: 'GothamL';
+    src: 	url('../../fonts/Gotham-Light.ttf'), 
+    		url('../../fonts/GothamLight.eot'), 
+    		url('../../fonts/GothamLight.otf'),
+    		url('../../fonts/GothamLight.woff');
+}
+
 html,
 body {
 	background: #ecedf0;
@@ -11,7 +27,7 @@ html {
 
 body {
 	color: #777;
-	font-family: "Open Sans", Arial, sans-serif;
+	font-family: "GothamL", Arial, sans-serif;
 	line-height: 22px;
 	margin: 0;
 	font-size: 13px;
@@ -70,7 +86,7 @@ a:active {
 
 /* Layout Base - Page Header */
 .page-header {
-	background: #34495e;
+	background: #388de0;
 	border-bottom: none;
 	border-left: 1px solid #3a3a3a;
 	box-shadow: 1px 3px 0 1px #cccccc;
@@ -81,8 +97,8 @@ a:active {
 
 /* Layout Base - Sidebar Left */
 .sidebar-left {
-	background: #34495e;
-	box-shadow: -5px 0 0 #2f3139 inset;
+	background: #45abff;
+	box-shadow: -5px 0 0 #388de0 inset;
 	color: #777777;
 	display: table-cell;
 	position: relative;
@@ -1532,10 +1548,10 @@ html.header-dark .header .input-search .input-group-btn .btn-default {
 }
 
 .sidebar-left .sidebar-header .sidebar-title {
-	color: #465162;
+	color: #FFF;
 	padding: 15px;
-	font-size: 15px;
-	font-size: 1.5rem;
+	font-size: 18px;
+	font-size: 1.8rem;
 }
 
 .sidebar-left .sidebar-header .sidebar-toggle {
@@ -1544,7 +1560,7 @@ html.header-dark .header .input-search .input-group-btn .btn-default {
 	right: 0;
 	width: 73px;
 	height: 50px;
-	background-color: #171717;
+	background-color: #2f75c9;
 	border-radius: 0 0 0 5px;
 	text-align: center;
 	cursor: pointer;
@@ -1684,8 +1700,8 @@ html.header-dark .header .input-search .input-group-btn .btn-default {
 	}
 
 	html.sidebar-left-collapsed.fixed .sidebar-left .nano {
-		background: #1d2127;
-		box-shadow: -5px 0 0 #2f3139 inset;
+		background: #45abff;
+		box-shadow: -5px 0 0 #45abff inset;
 	}
 
 	html.sidebar-left-collapsed.fixed .sidebar-left .nano:hover {
@@ -2323,11 +2339,11 @@ ul.nav-main {
 }
 
 ul.nav-main > li > a {
-	padding: 12px 25px;
+	padding: 16px 25px;
 }
 
 ul.nav-main > li > a:hover, ul.nav-main > li > a:focus {
-	background-color: #21262d;
+	background-color: #6fbeff;
 }
 
 ul.nav-main > li.nav-active > a {
@@ -2335,7 +2351,7 @@ ul.nav-main > li.nav-active > a {
 }
 
 ul.nav-main > li.nav-active > a:hover {
-	color: #abb4be;
+	color: #FFF;
 }
 
 ul.nav-main > li.nav-active > i {
@@ -2343,13 +2359,13 @@ ul.nav-main > li.nav-active > i {
 }
 
 ul.nav-main > li.nav-expanded > a {
-	background: #21262d;
+	background: #6fbeff;
 }
 
 ul.nav-main li a {
-	font-size: 13px;
-	font-size: 1.3rem;
-	color: #abb4be;
+	font-size: 16px;
+	font-size: 1.6rem;
+	color: #FFF;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
@@ -2364,7 +2380,7 @@ ul.nav-main li a span.label {
 
 ul.nav-main li a .not-included {
 	font-style: normal;
-	color: #505b67;
+	color: #FFF;
 	display: inline-block;
 	padding: 0 0 0 6px;
 }
@@ -2453,6 +2469,7 @@ ul.nav-main li .nav-children .nav-children .nav-children li a {
 }
 
 .page-header h2 {
+	font-family: 'GothamB';
 	color: #FFF;
 	border-bottom: 4px solid #cccccc;
 	-webkit-box-sizing: content-box;
@@ -2511,7 +2528,7 @@ ul.nav-main li .nav-children .nav-children .nav-children li a {
 
 .page-header .breadcrumbs a,
 .page-header .breadcrumbs span {
-	color: #c3c3c3;
+	color: #FFF;
 	display: inline-block;
 	font-size: 14px;
 	font-size: 1.4rem;
@@ -2981,7 +2998,7 @@ ul.nav-list.primary > li a {
 }
 
 .text-muted {
-	color: #999999 !important;
+	color: #FFF !important;
 }
 
 html.dark .text-muted {
@@ -3697,7 +3714,7 @@ html.dark .form-bordered .form-group {
 .input-group-icon input.form-control,
 .input-search input.form-control {
 	font-size: 12px;
-	font-size: 1.2rem;
+	font-size: 1.5rem;
 	padding-right: 36px;
 }
 
@@ -15316,6 +15333,7 @@ html.dark .invoice table.table > tbody tr > td {
 	background: transparent;
 }
 .body-sign .panel-sign .panel-title-sign .title {
+	font-family: GothamB;
 	background-color: #cccccc;
 	border-radius: 5px 5px 0 0;
 	color: #FFF;

@@ -59,11 +59,9 @@
 				<section role="main" class="content-body">
 					<?php include( "secciones/titulo_pagina.php" ); ?>
 					<h3 class="mt-none">Bienvenido a TFE Life Planner</h3>
-					<a href="#confirmar-accion" class="mb-xs mt-xs mr-xs elim_area modal-with-move-anim" data-ida="<?php echo $a["id"] ?>" 
-						data-toggle="modal">MODAL</a>
 				</section>
 			</div>
-<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
+			
 		</section>
 
 		<!-- Vendor -->

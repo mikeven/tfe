@@ -39,6 +39,15 @@
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style type="text/css">
 		    .alert{ display: none; margin-top: 20px; }
+		    
+			body {
+			    background-size: cover;
+			    background-repeat: no-repeat;
+			    background-attachment: fixed;
+			    -webkit-transition: background-image 0.8s ease-in-out;
+				transition: background-image 0.8s ease-in-out;
+			}
+
 		</style>
 
 	</head>
@@ -135,6 +144,7 @@
 		<script src="assets/vendor/jquery-validation/jquery.validate.js"></script>
 
 		<script src="js/fn-ui.js"></script>
+		<script src="js/fn-login.js"></script>
 		<script src="js/fn-acceso.js"></script>
 		<script src="js/fn-usuario.js"></script>
 		<script src="js/validate-extend.js"></script>
