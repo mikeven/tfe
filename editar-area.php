@@ -1,6 +1,6 @@
 <?php
     /*
-     * TFE Life Planner - Áreas
+     * TFE Life Planner - Editar área
      * 
      */
     session_start();
@@ -9,20 +9,21 @@
     include( "database/data-acceso.php" );
     include( "database/data-area.php" );
     checkSession( "" );
-    $titulo_pagina = "Áreas";
+    $titulo_pagina = "Editar área";
 
     $idu = $_SESSION["user"]["id"];
-    $areas = obtenerListaAreas( $dbh, $idu );
+    if( isset( $_GET["id"] ) ){
+        $ida = $_GET["id"];
+        $area = obtenerAreaPorId( $dbh, $ida );
+    }
+    
 ?>
 <!doctype html>
 <html class="fixed">
 	<head>
 		<!-- Título -->
-		<title>Áreas | TFE Life Planner</title>
+		<title>Editar área | TFE Life Planner</title>
 		<?php include( "secciones/meta-tags.html" );?>
-
-		<!-- Web Fonts  -->
-		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
 		<!-- Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
@@ -65,78 +66,31 @@
 					<div class="row">
 						<div class="col-md-4 col-sm-6 col-xs-12">
 							<section class="panel">
-								<form id="frm_narea" class="form-horizontal">
-									<input type="hidden" name="idu" value="<?php echo $idu?>">
+								<form id="frm_edit_area" class="form-horizontal">
+									<input type="hidden" name="id" 
+									value="<?php echo $area['id']?>">
 									<header class="panel-heading">
-										<h2 class="panel-title">Agregar área</h2>
+										<h2 class="panel-title">Editar nombre de área</h2>
 									</header>
 									<div class="panel-body">
-										<p class="p_inst">Escriba un nombre para el área nueva</p>
+										<p class="p_inst">Escriba un nuevo nombre para el área</p>
 										
 										<div class="row form-group">
 											<div class="col-lg-12">
-												<input type="text" name="nombre" placeholder="Nombre" class="form-control" required>
+												<input type="text" name="nombre" placeholder="Nombre" class="form-control" required 
+												value="<?php echo $area['nombre']?>">
 											</div>
 										</div>
 									</div>
 									<footer class="panel-footer">
-										<button class="btn btn-primary" type="submit">Agregar</button>
+										<button class="btn btn-primary" type="submit">Guardar</button>
 									</footer>
 								</form>
 							</section>
 						</div>
-						<div class="col-md-8 col-sm-6 col-xs-12">
-							<section class="panel">
-								<header class="panel-heading">
-									<h2 class="panel-title">Áreas registradas</h2>
-								</header>
-								<div id="tabla_areas" class="panel-body">
-									<table id="datatable-default"
-									class="table table-bordered table-striped mb-none" >
-										<thead>
-											<tr>
-												<th width="40%">Nombre</th>
-												<th width="15%">Acciones</th>
-												<th width="15%"></th>
-												<th width="30%"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<?php foreach ( $areas as $a ) { ?>
-											<tr class="gradeX">
-												<td><?php echo $a["nombre"] ?></td>
-												<td>
-													<a href="editar-area.php?id=<?php echo $a["id"]?>">
-												<i class="fa fa-edit"></i> Editar</a>
-												</td>
-												<td>
-													<a href="#confirmar-accion" 
-													class="modal-sizes modal-with-zoom-anim elim_area" 
-													data-ida="<?php echo $a["id"] ?>">
-														<i class="fa fa-trash-o"></i> Eliminar
-													</a>
-												</td>
-												<td>
-													<a href="#!">
-														<i class="fa fa-database"></i> 
-														Cargar S.O.P.A.
-													</a>
-												</td>
-											</tr>
-											<?php } ?>
-										</tbody>
-									</table>
-									
-								</div>
-							</section>
-							<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
-					<input id="id-area-e" type="hidden">
-						</div>
 					</div>
-
 				</section>
 			</div>
-			
 		</section>
 
 		<!-- Vendor -->

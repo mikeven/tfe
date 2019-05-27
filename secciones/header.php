@@ -5,7 +5,7 @@
 	<div class="container_">
 		<div class="logo-container">
 			<a href="home.php" class="logo">
-				<img src="img/logo-a-64.png" height="35" alt="JSOFT Admin" />TFE Life Planner
+				<img src="img/logo-navbar.png" height="35" alt="TFE"/>TFE Life Planner
 			</a>
 			<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
 				<i class="fa fa-bars" aria-label="Toggle sidebar"></i>

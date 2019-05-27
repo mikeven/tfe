@@ -56,7 +56,7 @@
 		<section class="body-sign">
 			<div class="center-sign">
 				<a href="/" class="logo pull-left">
-					<img src="assets/images/logo.png" height="54" alt="Porto Admin" />
+					<img src="img/logo-navbar.png" height="54" alt="Porto Admin" />
 				</a>
 
 				<div class="panel panel-sign">
@@ -135,9 +135,6 @@
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="assets/javascripts/theme.js"></script>
-		
-		<!-- Theme Custom -->
-		<script src="assets/javascripts/theme.custom.js"></script>
 		
 		<!-- Theme Initialization Files -->
 		<script src="assets/javascripts/theme.init.js"></script>

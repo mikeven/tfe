@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.4
+-- version 4.5.5.1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2019 a las 09:24:27
--- Versión del servidor: 5.6.15-log
--- Versión de PHP: 5.4.24
+-- Tiempo de generación: 27-05-2019 a las 22:58:09
+-- Versión del servidor: 5.7.11
+-- Versión de PHP: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `mgideasn_tfe`
@@ -26,23 +26,33 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `area`
 --
 
-CREATE TABLE IF NOT EXISTS `area` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `area` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `creado` datetime DEFAULT NULL,
   `modificado` datetime DEFAULT NULL,
-  `usuario_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sssso_id_idx` (`usuario_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+  `usuario_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `area`
 --
 
 INSERT INTO `area` (`id`, `nombre`, `creado`, `modificado`, `usuario_id`) VALUES
-(1, 'Hogar', '2019-05-26 18:56:48', NULL, 1),
-(3, 'Trabajo', '2019-05-26 18:57:08', NULL, 1);
+(1, 'Familia', '2019-05-27 16:55:01', NULL, 1),
+(2, 'Trabajo', '2019-05-27 16:55:05', NULL, 1),
+(3, 'Hogar', '2019-05-27 16:55:09', NULL, 1),
+(4, 'Salud', '2019-05-27 16:55:22', NULL, 1),
+(5, 'Mascotas', '2019-05-27 16:55:46', NULL, 1),
+(6, 'Automóvil', '2019-05-27 16:55:51', NULL, 1),
+(7, 'Hobbies', '2019-05-27 16:55:59', NULL, 1),
+(8, 'Entretenimiento', '2019-05-27 16:56:05', NULL, 1),
+(9, 'Imagen Personal', '2019-05-27 16:56:16', NULL, 1),
+(10, 'Hábitos', '2019-05-27 16:56:20', NULL, 1),
+(11, 'Mejoramiento Profesional', '2019-05-27 16:56:44', NULL, 1),
+(12, 'Mejoramiento Personal', '2019-05-27 16:57:26', NULL, 1),
+(13, 'Equipo de Ventas', '2019-05-27 16:57:35', NULL, 1),
+(14, 'Proyectos', '2019-05-27 16:57:39', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -50,23 +60,53 @@ INSERT INTO `area` (`id`, `nombre`, `creado`, `modificado`, `usuario_id`) VALUES
 -- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE IF NOT EXISTS `usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `creado` date DEFAULT NULL,
-  `ultimo_ingreso` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  `ultimo_ingreso` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `email`, `password`, `creado`, `ultimo_ingreso`) VALUES
-(1, 'Miguel', 'mikeven@gmail.com', '121212', '2019-05-25', '2019-05-26 23:43:08');
+(1, 'Miguel', 'mikeven@gmail.com', '121212', '2019-05-25', '2019-05-27 16:50:12');
 
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `area`
+--
+ALTER TABLE `area`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sssso_id_idx` (`usuario_id`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `area`
+--
+ALTER TABLE `area`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Restricciones para tablas volcadas
 --

@@ -150,8 +150,10 @@
 		// Invocación desde: js/fn-usuario.js
 		session_start();
 		include( "bd.php" );
-
-		$login = checkLogin( $dbh, $_POST["email"], $_POST["password"] );
+		$email 	= escaparTexto( $dbh, $_POST["email"] );
+		$pwd 	= escaparTexto( $dbh, $_POST["password"] );
+		$login 	= checkLogin( $dbh, $email, $pwd );
+		
 		if( $login["valido"] ){
 			actualizarUltimoIngreso( $dbh, $login["usuario"]["id"] );
 			$res["exito"] = 1;
@@ -186,6 +188,8 @@
 		// Invocación desde: js/fn-usuario.js
 		include( "bd.php" );
 		parse_str( $_POST["usr_reg"], $usuario );
+		$usuario = escaparCampos( $dbh, $usuario );
+
 		$rsp = registrarUsuario( $dbh, $usuario );
 
 		if( ( $rsp != 0 ) && ( $rsp != "" ) ){
