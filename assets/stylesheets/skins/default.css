@@ -480,7 +480,7 @@ html .panel-primary .panel-heading {
 }
 
 .panel-heading.bg-primary {
-	background: #0088cc;
+	background: #388de0;
 }
 
 .panel-body.bg-primary {
@@ -657,8 +657,8 @@ html body .tabs-primary .nav-tabs li.active a:focus,
 html.dark body .tabs-primary .nav-tabs li.active a:focus,
 html body .tabs-primary .nav-tabs.nav-justified li.active a:focus,
 html.dark body .tabs-primary .nav-tabs.nav-justified li.active a:focus {
-	border-top-color: #0088cc;
-	color: #0088cc;
+	border-top-color: #388de0;
+	color: #388de0;
 }
 
 html body .tabs-primary.tabs-bottom .nav-tabs li a:hover,

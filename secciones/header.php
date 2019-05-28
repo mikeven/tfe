@@ -196,7 +196,7 @@
 				<div class="dropdown-menu">
 					<ul class="list-unstyled">
 						<li class="divider"></li>
-						<li class="hidden">
+						<li>
 							<a role="menuitem" tabindex="-1" href="perfil.php">
 								<i class="fa fa-user"></i> Perfil</a>
 						</li>
