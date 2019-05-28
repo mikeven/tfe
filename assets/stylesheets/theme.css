@@ -15337,6 +15337,7 @@ html.dark .invoice table.table > tbody tr > td {
 	background-color: #cccccc;
 	border-radius: 5px 5px 0 0;
 	color: #FFF;
+	letter-spacing: 0.5px;
 	display: inline-block;
 	font-size: 12px;
 	font-size: 1.2rem;
