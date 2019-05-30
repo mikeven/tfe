@@ -12,7 +12,7 @@
 	/* Inits */
 	/* --------------------------------------------------------- */
 
-	var img_array = ['TFE1.png','TFE2.png'],
+	var img_array = ['TFE1.png','TFE2.png', 'TFE3.png', 'TFE4.png', 'TFE5.png'],
         newIndex = 0, index = 0, interval = 6000;
     (function changeBg() {
         index = (index + 1) % img_array.length;
