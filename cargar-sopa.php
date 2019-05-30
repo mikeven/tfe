@@ -1,6 +1,6 @@
 <?php
     /*
-     * TFE Life Planner - Áreas
+     * TFE Life Planner - Cargar S.O.P.A.
      * 
      */
     session_start();
@@ -9,20 +9,21 @@
     include( "database/data-acceso.php" );
     include( "database/data-area.php" );
     checkSession( "" );
-    $titulo_pagina = "Áreas";
+    $titulo_pagina = "Cargar S.O.P.A";
 
     $idu = $_SESSION["user"]["id"];
-    $areas = obtenerListaAreas( $dbh, $idu );
+    if( isset( $_GET["id_area"] ) ){
+        $ida = $_GET["id_area"];
+        $area = obtenerAreaPorId( $dbh, $ida );
+    }
+    
 ?>
 <!doctype html>
 <html class="fixed">
 	<head>
 		<!-- Título -->
-		<title>Áreas | TFE Life Planner</title>
+		<title>Cargar S.O.P.A | TFE Life Planner</title>
 		<?php include( "secciones/meta-tags.html" );?>
-
-		<!-- Web Fonts  -->
-		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
 		<!-- Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
@@ -46,6 +47,11 @@
 
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		<style type="text/css">
+			.icon-xx{
+				float: right;
+			}
+		</style>
 	</head>
 	
 	<body>
@@ -61,82 +67,90 @@
 				<!-- end: sidebar -->
 				<section role="main" class="content-body">
 					<?php include( "secciones/titulo_pagina.php" ); ?>
-
-					<div class="row">
-						<div class="col-md-4 col-sm-6 col-xs-12">
-							<section class="panel">
-								<form id="frm_narea" class="form-horizontal">
-									<input type="hidden" name="idu" value="<?php echo $idu?>">
-									<header class="panel-heading">
-										<h2 class="panel-title">Agregar área</h2>
-									</header>
-									<div class="panel-body">
-										<p class="p_inst">Escriba un nombre para el área nueva</p>
+					
+					<section class="panel">
+						<form id="frm_edit_area" class="form-horizontal">
+							<header class="panel-heading">
+								<h2 class="panel-title">Cargar datos para área "<?php echo $area['nombre']?>"
+								</h2>
+							</header>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6 col-sm-6 col-xs-12">
 										
 										<div class="row form-group">
 											<div class="col-lg-12">
-												<input type="text" name="nombre" placeholder="Nombre" class="form-control" required>
+												<label class="control-label">Sujeto</label>
+												<input type="text" name="sujeto" 
+												class="form-control">
+											</div>
+										</div>
+										
+										<label class="control-label">Objeto</label>
+										<div class="input-group mb-md">
+											<input type="text" class="form-control">
+											<span class="input-group-btn">
+											<button class="btn btn-success" type="button">
+											 Agregar
+											</button>
+											</span>
+										</div>
+										<div class="col-sm-9 col-sm-offset-3">
+										<ol class="dd-list">
+											<li class="dd-item" data-id="1">
+												<div class="dd-handle">Obj 1
+													<div class="icon-xx">
+														<i class="fa fa-times"></i>
+													</div>
+												</div>
+											</li>
+											<li class="dd-item" data-id="2">
+												<div class="dd-handle">Obj 2
+													<div class="icon-xx">
+														<i class="fa fa-times"></i>
+													</div>
+												</div>
+											</li>
+										</ol>
+										</div>
+										<div class="row form-group">
+											<div class="col-lg-12">
+												<label class="control-label">Propósito</label>
+												<input type="text" name="proposisto" 
+												class="form-control">
 											</div>
 										</div>
 									</div>
-									<footer class="panel-footer">
-										<button class="btn btn-primary" type="submit">Agregar</button>
-									</footer>
-								</form>
-							</section>
-						</div>
-						<div class="col-md-8 col-sm-6 col-xs-12">
-							<section class="panel">
-								<header class="panel-heading">
-									<h2 class="panel-title">Áreas registradas</h2>
-								</header>
-								<div id="tabla_areas" class="panel-body">
-									<table id="datatable-default"
-									class="table table-bordered table-striped mb-none" >
-										<thead>
-											<tr>
-												<th width="30%">Nombre</th>
-												<th width="20%">Acciones</th>
-												<th width="20%"></th>
-												<th width="30%"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<?php foreach ( $areas as $a ) { ?>
-											<tr class="gradeX">
-												<td><?php echo $a["nombre"] ?></td>
-												<td>
-													<a href="editar-area.php?id=<?php echo $a["id"]?>">
-												<i class="fa fa-edit"></i> Editar</a>
-												</td>
-												<td>
-													<a href="#confirmar-accion" 
-													class="modal-sizes modal-with-zoom-anim elim_area" 
-													data-ida="<?php echo $a["id"] ?>">
-														<i class="fa fa-trash-o"></i> Eliminar
-													</a>
-												</td>
-												<td>
-													<a href="cargar-sopa.php?id_area=<?php echo $a["id"] ?>">
-														<i class="fa fa-database"></i> 
-														Cargar S.O.P.A.
-													</a>
-												</td>
-											</tr>
-											<?php } ?>
-										</tbody>
-									</table>
 									
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<label class="control-label">Actividades</label>
+										<div class="input-group mb-md">
+											<input type="text" class="form-control">
+											<span class="input-group-btn">
+											<button class="btn btn-success" type="button"> Agregar</button>
+											</span>
+										</div>
+										<div class="dd" id="nestable">
+											<ol class="dd-list">
+												<li class="dd-item" data-id="1">
+													<div class="dd-handle">Item 1</div>
+												</li>
+												<li class="dd-item" data-id="1">
+													<div class="dd-handle">Item 2</div>
+												</li>
+											</ol>
+										</div>
+									</div>
 								</div>
-							</section>
-							<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
-					<input id="id-area-e" type="hidden">
-						</div>
-					</div>
-
+							</div>
+							<footer class="panel-footer">
+								<button class="btn btn-primary" type="submit">Guardar</button>
+							</footer>
+						</form>
+					</section>
+						
 				</section>
 			</div>
-			
 		</section>
 
 		<!-- Vendor -->
