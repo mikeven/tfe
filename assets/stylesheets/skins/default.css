@@ -272,7 +272,7 @@ body .btn-dark[disabled] {
 }
 /* Label */
 .label-primary {
-	background: #0088cc;
+	background: #388de0;
 }
 /* Text Primary */
 .text-primary {
@@ -388,8 +388,8 @@ html.dark .pagination > li.active a {
 }
 /* Fullcalendar */
 .fc .fc-widget-header {
-	background: #0088cc;
-	border-color: #0088cc;
+	background: #388de0;
+	border-color: #388de0;
 }
 
 .fc .fc-header-title h2:before {
@@ -397,8 +397,8 @@ html.dark .pagination > li.active a {
 }
 
 .fc-event {
-	background: #0088cc;
-	border-color: #0088cc;
+	background: #388de0;
+	border-color: #388de0;
 }
 
 .fc-event.fc-event-primary {

@@ -15,6 +15,23 @@
 		return $data;
 	}
 	/* --------------------------------------------------------- */
+	function actualizarContrasena( $dbh, $usuario ){
+		// Actualiza el campo de contraseña de un registro de usuario
+		$q = "update usuario set password = '$usuario[pwd1]' where id = $usuario[idu]";
+
+		$data = mysqli_query( $dbh, $q );
+		return mysqli_affected_rows( $dbh );
+	}
+	/* --------------------------------------------------------- */
+	function actualizarDatosPersonales( $dbh, $usuario ){
+		// Actualiza los cámpos de datos personales de un registro de usuario
+		$q = "update usuario set nombre = '$usuario[nombre]', 
+		email = '$usuario[email]' where id = $usuario[idu]";
+
+		$data = mysqli_query( $dbh, $q );
+		return mysqli_affected_rows( $dbh );
+	}
+	/* --------------------------------------------------------- */
 	//Inicio de sesión (asinc)
 	if( isset( $_POST["usr_login"] ) ){ 
 		// Invocación desde: js/fn-usuario.js
@@ -36,18 +53,49 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	// Recuperar contraseña (asinc)
-	if( isset( $_POST["lyrpass"] ) ){ 
+	// Actualizar datos personales (asinc)
+	if( isset( $_POST["act_datap"] ) ){ 
 		// Invocación desde: js/fn-usuario.js
 		include( "bd.php" );
-		$rsp = checkEmailLogin( $dbh, $_POST["email"] );
-		if( $rsp["valido"] ){
-			enviarPasswordEmail( $_POST["email"], $rsp["reg"]["password"] );
+		include( "data-sistema.php" );
+		parse_str( $_POST["act_datap"], $usuario );
+
+		$usuario = escaparCampos( $dbh, $usuario );
+		
+		if( nombreDisponible($dbh, "usuario", "email", $usuario["nombre"], $usuario["idu"], "")){
+			$rsp = actualizarDatosPersonales( $dbh, $usuario );
+			if( $rsp != -1 ){
+				$res["exito"] = 1;
+				$res["mje"] = "Datos actualizados con éxito";
+				$res["mje2"] = "Si actualizó su email, recuerde usarlo la próxima vez que inicie sesión";
+			} else {
+				$res["exito"] = 0;
+				$res["mje"] = "Error al actualizar datos de usuario";
+			}
+		}else{
+			$res["exito"] = 0;
+			$res["mje"] = "Este email ya está registrado";
+		}
+		
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
+	// Actualizar contraseña (asinc)
+	if( isset( $_POST["act_pwd"] ) ){ 
+		// Invocación desde: js/fn-usuario.js
+		include( "bd.php" );
+		parse_str( $_POST["act_pwd"], $usuario );
+
+		$usuario = escaparCampos( $dbh, $usuario );
+		$rsp = actualizarContrasena( $dbh, $usuario );
+
+		if( $rsp != -1 ){
 			$res["exito"] = 1;
-			$res["mje"] = "Se ha enviado un mensaje a tu correo electrónico con tu contraseña";
+			$res["mje"] = "Contraseña actualizada con éxito";
+			$res["mje2"] = "Recuerde usar esta contraseña la próxima vez que inicie sesión";
 		} else {
 			$res["exito"] = 0;
-			$res["mje"] = "No existe cuenta asociada a este correo electrónico, verifique sus datos e intente nuevamente";
+			$res["mje"] = "Error al actualizar contraseña";
 		}
 		
 		echo json_encode( $res );

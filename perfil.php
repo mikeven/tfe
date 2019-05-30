@@ -47,6 +47,9 @@
 
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		<style type="text/css">
+		    .alert{ display: none; margin-top: 20px; }
+		</style>
 	</head>
 	
 	<body>
@@ -62,15 +65,11 @@
 				<!-- end: sidebar -->
 				<section role="main" class="content-body">
 					<?php include( "secciones/titulo_pagina.php" ); ?>
-
 					<div class="row">
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<section class="panel-group mb-xlg">
 								<header class="panel-heading bg-primary">
 									<div class="widget-profile-info">
-										<div class="profile-picture">
-											<img src="assets/images/!logged-user.jpg">
-										</div>
 										<div class="profile-info">
 											<h4 class="name text-semibold">
 												<?php echo $usr["nombre"]; ?>
@@ -102,20 +101,24 @@
 									<div class="tab-content">
 										<div id="tfe_dp" class="tab-pane active">
 											<p>Datos personales </p>
-											<form id="frm_datausr" action="forms-validation.html" 
-											class="form-horizontal">
-												<div class="form-group">
-													<label class="col-sm-5 control-label">Nombre <span class="required">*</span></label>
-													<div class="col-sm-7">
-														<input type="text" name="nombre" class="form-control" placeholder="" required 
-														value="<?php echo $usr["nombre"]; ?>" />
+											<form id="frm_mdatos_pers" class="form-horizontal">
+												<input type="hidden" name="idu" 
+												value="<?php echo $idu ?>">
+												<div class="row form-group">
+													<div class="col-lg-12">
+														<label control-label">Nombre 
+														<span class="required">*</span></label>
+														<input type="text" name="nombre" placeholder="Nombre" 
+														class="form-control" required 
+														value="<?php echo $usr['nombre']?>">
 													</div>
 												</div>
-												<div class="form-group">
-													<label class="col-sm-5 control-label">Email <span class="required">*</span></label>
-													<div class="col-sm-7">
-														<input type="email" name="email" class="form-control" placeholder="" required 
-														value="<?php echo $usr["email"]; ?>" />
+												<div class="row form-group">
+													<div class="col-lg-12">
+														<label control-label">Email 
+														<span class="required">*</span></label>
+														<input type="email" name="email" placeholder="Email" class="form-control" required 
+														value="<?php echo $usr['email']?>">
 													</div>
 												</div>
 												<footer class="panel-footer">
@@ -129,24 +132,28 @@
 										</div>
 										<div id="tfe_pwd" class="tab-pane">
 											<p>Cambiar contraseña </p>
-											<form id="frm_actpwd" action="forms-validation.html" 
-											class="form-horizontal">
-												<div class="form-group">
-													<label class="col-sm-5 control-label">Contraseña <span class="required">*</span></label>
-													<div class="col-sm-7">
-														<input type="text" name="pwd1" class="form-control" required/>
+											<form id="frm_actpwd" class="form-horizontal">
+												<input type="hidden" name="idu" 
+												value="<?php echo $idu ?>">
+												<div class="row form-group">
+													<div class="col-lg-12">
+														<label control-label">Contraseña 
+														<span class="required">*</span></label>
+														<input id="pwd1" type="password" name="pwd1" class="form-control" required>
 													</div>
 												</div>
-												<div class="form-group">
-													<label class="col-sm-5 control-label">Confirmar nueva contraseña <span class="required">*</span></label>
-													<div class="col-sm-7">
-														<input type="password" name="pwd2" class="form-control" required/>
+												<div class="row form-group">
+													<div class="col-lg-12">
+														<label control-label">Confirmar contraseña 
+														<span class="required">*</span></label>
+														<input type="password" name="pwd2" class="form-control" required>
 													</div>
 												</div>
+												
 												<footer class="panel-footer">
 													<div class="row">
 														<div class="col-sm-9 col-sm-offset-3">
-															<button class="btn btn-primary">Guardar</button>
+															<button type="submit" class="btn btn-primary">Guardar</button>
 														</div>
 													</div>
 												</footer>
@@ -154,6 +161,7 @@
 										</div>
 									</div>
 								</div>
+								<?php include( "secciones/notificaciones/alert.html" );?>
 							</section>
 						</div>
 					</div>
@@ -197,7 +205,7 @@
 
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>
-		<script src="js/fn-area.js"></script>
+		<script src="js/fn-usuario.js"></script>
 		<script src="js/validate-extend.js"></script>
 		
 	</body>

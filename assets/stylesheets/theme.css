@@ -8,6 +8,14 @@
 }
 
 @font-face {
+    font-family: 'GothamBold';
+    src: 	url('../../fonts/GothamBold.ttf'), 
+    		url('../../fonts/GothamBold.eot'), 
+    		url('../../fonts/GothamBold.otf'),
+    		url('../../fonts/GothamBold.woff');
+}
+
+@font-face {
     font-family: 'GothamL';
     src: 	url('../../fonts/Gotham-Light.ttf'), 
     		url('../../fonts/GothamLight.eot'), 
@@ -2469,7 +2477,7 @@ ul.nav-main li .nav-children .nav-children .nav-children li a {
 }
 
 .page-header h2 {
-	font-family: 'GothamB';
+	font-family: 'GothamBold';
 	color: #FFF;
 	border-bottom: 4px solid #cccccc;
 	-webkit-box-sizing: content-box;

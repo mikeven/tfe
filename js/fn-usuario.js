@@ -41,8 +41,9 @@
 		    registrar();
 		}
 	});
-
-	$("#frm_passw").validate({
+	/* --------------------------------------------------------- */
+	// Formulario actualización de contraseña
+	$("#frm_actpwd").validate({
 		highlight: function( label ) {
 			$(label).closest('.form-group').removeClass('has-success').addClass('has-error');
 		},
@@ -60,39 +61,42 @@
 				placement.after(error);
 			}
 		},
-		submitHandler: function(form) {
-		    //asignarPassword();
-		}
-	});
-
-	$("#frm_npass").validate({
-		highlight: function( label ) {
-			$(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-		},
-		success: function( label ) {
-			$(label).closest('.form-group').removeClass('has-error');
-			label.remove();
-		},
-		rules: {
-		    pass1: "required",
-		    pass2: {
-		      equalTo: "#passw1"
-		    }
-		 },
-		onkeyup: false,
-		errorPlacement: function( error, element ) {
-			var placement = element.closest('.input-group');
-			if (!placement.get(0)) {
-				placement = element;
-			}
-			if (error.text() !== '') {
-				placement.after(error);
-			}
-		},
+		rules : {
+            pwd1 : { minlength : 6 },
+            pwd2 : {
+                minlength : 6,
+                equalTo : "#pwd1"
+            }
+        },
 		submitHandler: function(form) {
 		    actualizarPassword();
 		}
 	});
+	/* --------------------------------------------------------- */
+	// Formulario actualización de datos de usuario
+	$("#frm_mdatos_pers").validate({
+		highlight: function( label ) {
+			$(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+		},
+		success: function( label ) {
+			$(label).closest('.form-group').removeClass('has-error');
+			label.remove();
+		},
+		onkeyup: false,
+		errorPlacement: function( error, element ) {
+			var placement = element.closest('.input-group');
+			if (!placement.get(0)) {
+				placement = element;
+			}
+			if (error.text() !== '') {
+				placement.after(error);
+			}
+		},
+		submitHandler: function(form) {
+		   actualizarDatosPersonales();
+		}
+	});
+	/* --------------------------------------------------------- */
 
 	// validation summary
 	var $summaryForm = $("#summary-form");
@@ -159,41 +163,48 @@ function tooltipSuiche( valor, suiche ){
 /* --------------------------------------------------------- */
 function actualizarPassword(){
 	// Invoca al servidor para actualizar contraseña de usuario 
-	var form = $('#frm_npass');
+	var form = $('#frm_actpwd');
+
 	$.ajax({
         type:"POST",
-        url:"database/data-participantes.php",
-        data:form.serialize(),
+        url:"database/data-usuario.php",
+        data:{ act_pwd: form.serialize() },
         beforeSend: function(){
         },
         success: function( response ){
         	console.log( response );
         	form[0].reset();
         	res = jQuery.parseJSON( response );
-			alertaMensaje( res.exito, res.mje );
-        }
+        	if( res.exito == 1 ){
+				notificar( "Cuenta de usuario", res.mje, "success" );
+				alertaMensaje( res.exito, res.mje2 );
+        	}
+			else 
+				notificar( "Cuenta de usuario", res.mje, "error" );
+        }	
     });	
 }
 /* --------------------------------------------------------- */
-function asignarPassword(){
-	// Invoca al servidor para asignar contraseña a usuario
+function actualizarDatosPersonales(){
+	// Invoca al servidor para actualizar datos personales de usuario 
+	var form = $('#frm_mdatos_pers');
 
-	var form = $('#frm_passw');
 	$.ajax({
         type:"POST",
-        url:"database/data-participantes.php",
-        data:form.serialize(),
-        beforeSend: function() {
-        	$(".alert").removeClass("alert-danger");
-        	$(".alert").removeClass("alert-success");
-        	$(".alert").hide();
+        url:"database/data-usuario.php",
+        data:{ act_datap: form.serialize() },
+        beforeSend: function(){
         },
         success: function( response ){
         	console.log( response );
         	form[0].reset();
         	res = jQuery.parseJSON( response );
-			alertaMensaje( res.exito, res.mje );
-        }
-    });
+        	if( res.exito == 1 ){
+				notificar( "Cuenta de usuario", res.mje, "success" );
+				alertaMensaje( res.exito, res.mje2 );
+        	}
+			else 
+				notificar( "Cuenta de usuario", res.mje, "error" );
+        }	
+    });	
 }
-/* --------------------------------------------------------- */

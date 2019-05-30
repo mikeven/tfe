@@ -57,24 +57,7 @@ function tooltipSuiche( valor, suiche ){
 	else
 		$( suiche ).attr( "data-original-title", "Deshabilitar" );
 } 
-/* --------------------------------------------------------- */
-function actualizarPassword(){
-	// Invoca al servidor para actualizar contraseña de usuario 
-	var form = $('#frm_npass');
-	$.ajax({
-        type:"POST",
-        url:"database/data-participantes.php",
-        data:form.serialize(),
-        beforeSend: function(){
-        },
-        success: function( response ){
-        	console.log( response );
-        	form[0].reset();
-        	res = jQuery.parseJSON( response );
-			alertaMensaje( res.exito, res.mje );
-        }
-    });	
-}
+
 /* --------------------------------------------------------- */
 function asignarPassword(){
 	// Invoca al servidor para asignar contraseña a usuario

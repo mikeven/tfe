@@ -74,7 +74,6 @@
 									</header>
 									<div class="panel-body">
 										<p class="p_inst">Escriba un nuevo nombre para el área</p>
-										
 										<div class="row form-group">
 											<div class="col-lg-12">
 												<input type="text" name="nombre" placeholder="Nombre" class="form-control" required 
