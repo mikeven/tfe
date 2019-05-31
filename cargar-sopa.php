@@ -99,7 +99,7 @@
 											<li class="dd-item " 
 											data-id="<?php echo $o["id"]?>">
 								
-												<div class="dd-handle noDragClass">
+												<div class="dd-handle ">
 													<?php echo $o["descripcion"]?>
 													<a href="#frm-proposito" class="modal-sizes modal-with-zoom-anim" 
 													data-ido="<?php echo $o["id"]?>">
@@ -115,7 +115,7 @@
 												include( "secciones/sopa/panel_agr_obj.php" ); 
 											?>
 												
-											<li class="dd-item hidden" data-id="2">
+											<li class="dd-item " data-id="2">
 												<div class="dd-handle">Item 2</div>
 												<ol class="dd-list">
 													<li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
@@ -184,17 +184,7 @@
 		<script src="js/fn-sujeto.js"></script>
 		<script src="js/fn-objeto.js"></script>
 		<script src="js/validate-extend.js"></script>
-		<script type="text/javascript">
-	       jQuery(function($){
-		    $('.dd').each(function(){
-		               $(this).nestable({
-		                    maxDepth: 0,
-		                    noDragClass:'dd-nodrag'
-
-		               });
-		           });
-		    });
-		</script>
+		
 		
 	</body>
 </html>
