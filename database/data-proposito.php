@@ -1,20 +1,20 @@
 <?php
 	/* --------------------------------------------------------- */
-	/* TFE Life Planner - Acceso a áreas */
+	/* TFE Life Planner - Acceso a propósitos */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
-	function obtenerListaAreas( $dbh, $idu ){
-		// Devuelve todos los registros de áreas
+	function obtenerListaPropositos( $dbh, $ido ){
+		// Devuelve todos los registros de propósitos asociados a un objeto (id)
 		$q = "select * from area where usuario_id = $idu";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
-	function obtenerAreaPorId( $dbh, $id ){
+	function obtenerPropositoPorId( $dbh, $id ){
 		// Devuelve el registro de un área dado su id
-		$q = "select id, nombre, date_format(creado,'%d/%m/%Y') as fregistro 
-		from area where id = $id";
+		$q = "select id, descripcion, date_format(creado,'%d/%m/%Y') as fregistro 
+		from proposito where id = $id";
 
 		$rst = mysqli_query( $dbh, $q );
 		$data = mysqli_fetch_array( $rst );
@@ -22,34 +22,34 @@
 		return $data;
 	}
 	/* --------------------------------------------------------- */
-	function agregarAreaUsuario( $dbh, $area ){
+	function agregarProposito( $dbh, $proposito ){
 		// Procesa el registro de nueva área
-		$q = "insert into area ( nombre, creado, usuario_id ) values 
-		('$area[nombre]', NOW(), $area[idu] )";
+		$q = "insert into proposito ( descripcion, objeto_id, creado ) values 
+		('$proposito[descripcion]', $proposito[idobjeto], NOW() )";
 
 		$data = mysqli_query( $dbh, $q );
 		return mysqli_insert_id( $dbh );
 	}
 	/* --------------------------------------------------------- */
-	function editarArea( $dbh, $area ){
+	function editarProposito( $dbh, $proposito ){
 		//Elimina un registro de área
-		$q = "update area set nombre = '$area[nombre]' where id = $area[id]";
+		$q = "update proposito set descripcion = '$proposito[descripcion]' where id = $area[id]";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
-	function eliminarArea( $dbh, $id ){
+	function eliminarProposito( $dbh, $id ){
 		//Elimina un registro de área
-		$q = "delete from area where id = $id";
+		$q = "delete from proposito where id = $id";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["narea"] ) ){ 
+	if( isset( $_POST["nproposito"] ) ){ 
 		// Invocación desde: js/fn-area.js
 		include( "bd.php" );
 		include( "data-sistema.php" );
 
-		parse_str( $_POST["narea"], $area );
-		$area = escaparCampos( $dbh, $area );
+		parse_str( $_POST["nproposito"], $proposito );
+		$proposito = escaparCampos( $dbh, $proposito );
 		
 		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], "", "" ) ){
 			$rsp = agregarAreaUsuario( $dbh, $area );

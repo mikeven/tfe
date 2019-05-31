@@ -96,7 +96,7 @@ a:active {
 .page-header {
 	background: #388de0;
 	border-bottom: none;
-	border-left: 1px solid #3a3a3a;
+	/*border-left: 1px solid #3a3a3a;*/
 	box-shadow: 1px 3px 0 1px #cccccc;
 	height: 50px;
 	margin: -40px -40px 40px -40px;
@@ -106,7 +106,7 @@ a:active {
 /* Layout Base - Sidebar Left */
 .sidebar-left {
 	background: #45abff;
-	box-shadow: -5px 0 0 #388de0 inset;
+	box-shadow: -5px 0 0 #2f75c9 inset;
 	color: #777777;
 	display: table-cell;
 	position: relative;

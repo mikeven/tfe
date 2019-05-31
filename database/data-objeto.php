@@ -1,19 +1,19 @@
 <?php
 	/* --------------------------------------------------------- */
-	/* TFE Life Planner - Acceso a áreas */
+	/* TFE Life Planner - Acceso a objetos */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
-	function obtenerListaAreas( $dbh, $idu ){
-		// Devuelve todos los registros de áreas
-		$q = "select * from area where usuario_id = $idu";
+	function obtenerListaObjetos( $dbh, $ids ){
+		// Devuelve todos los registros de objetos asociados a un sujeto (id)
+		$q = "select * from objeto where sujeto_id = $ids";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
-	function obtenerAreaPorId( $dbh, $id ){
-		// Devuelve el registro de un área dado su id
-		$q = "select id, nombre, date_format(creado,'%d/%m/%Y') as fregistro 
+	function obtenerObjetoPorId( $dbh, $id ){
+		// Devuelve el registro de un objeto dado su id
+		$q = "select id, descripcion, date_format(creado,'%d/%m/%Y') as fregistro 
 		from area where id = $id";
 
 		$rst = mysqli_query( $dbh, $q );
@@ -22,54 +22,50 @@
 		return $data;
 	}
 	/* --------------------------------------------------------- */
-	function agregarAreaUsuario( $dbh, $area ){
-		// Procesa el registro de nueva área
-		$q = "insert into area ( nombre, creado, usuario_id ) values 
-		('$area[nombre]', NOW(), $area[idu] )";
+	function agregarObjeto( $dbh, $objeto ){
+		// Guarda un nuevo registro de objeto
+		$q = "insert into objeto ( descripcion, sujeto_id, creado ) values 
+		('$objeto[descripcion]', $objeto[idsujeto], NOW() )";
 
 		$data = mysqli_query( $dbh, $q );
 		return mysqli_insert_id( $dbh );
 	}
 	/* --------------------------------------------------------- */
-	function editarArea( $dbh, $area ){
-		//Elimina un registro de área
-		$q = "update area set nombre = '$area[nombre]' where id = $area[id]";
+	function editarObjeto( $dbh, $objeto ){
+		//Modifica los datos de un registro de objeto
+		$q = "update objeto set nombre = '$objeto[descripcion]' where id = $objeto[id]";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
-	function eliminarArea( $dbh, $id ){
-		//Elimina un registro de área
-		$q = "delete from area where id = $id";
+	function eliminarObjeto( $dbh, $id ){
+		//Elimina un registro de objeto
+		$q = "delete from objeto where id = $id";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["narea"] ) ){ 
+	if( isset( $_POST["nobjeto"] ) ){ 
 		// Invocación desde: js/fn-area.js
 		include( "bd.php" );
 		include( "data-sistema.php" );
 
-		parse_str( $_POST["narea"], $area );
-		$area = escaparCampos( $dbh, $area );
+		parse_str( $_POST["nobjeto"], $objeto );
+		$objeto = escaparCampos( $dbh, $objeto );
+		$sujeto["id"] = $_POST["ids"];
 		
-		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], "", "" ) ){
-			$rsp = agregarAreaUsuario( $dbh, $area );
-			if( $rsp != 0 ){
-				$res["exito"] = 1;
-				$res["mje"] = "Área registrada con éxito";
-			}else{
-				$res["exito"] = 1;
-				$res["mje"] = "Error al registrar área";
-			}
-		}
-		else{ 
-			$rsp = -2;
-			$res["mje"] = "Nombre de área ya registrado";
+		$rsp = agregarObjeto( $dbh, $objeto );
+		if( $rsp != 0 ){
+			$res["exito"] = 1;
+			$res["mje"] = "Objeto registrado con éxito";
+			$res["reg"] = $sujeto;
+		}else{
+			$res["exito"] = 1;
+			$res["mje"] = "Error al registrar objeto";
 		}
 
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["earea"] ) ){ 
+	if( isset( $_POST["eobjeto"] ) ){ 
 		// Editar área Invocación desde: js/fn-area.js
 		include( "bd.php" );
 		include( "data-sistema.php" );
@@ -95,19 +91,18 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["elim_area"] ) ){
+	if( isset( $_POST["elim_objeto"] ) ){
 		// Invocación desde: js/fn-area.js
 		include( "bd.php" );	
 		//include( "data-sistema.php" );
 		
-		//registrosAsociadosLinea( $dbh, $_POST["id_elimlinea"] )
 		if( false ){
 			$res["exito"] = -1;
-			$res["mje"] = "Debe eliminar registros asociados al área primero.";
+			$res["mje"] = "Debe eliminar registros asociados al objeto primero.";
 		}else{
 			eliminarArea( $dbh, $_POST["elim_area"] );
 			$res["exito"] = 1;
-			$res["mje"] = "Área eliminada con éxito";
+			$res["mje"] = "Objeto eliminado con éxito";
 		}
 		echo json_encode( $res );
 	}

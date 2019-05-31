@@ -32,7 +32,7 @@
 	}
 	/* --------------------------------------------------------- */
 	function editarArea( $dbh, $area ){
-		//Elimina un registro de área
+		//Modifica los datos de un registro de área
 		$q = "update area set nombre = '$area[nombre]' where id = $area[id]";
 		return mysqli_query( $dbh, $q );
 	}

@@ -22,7 +22,7 @@
 	Nestable 1
 	*/
 	$('#nestable').nestable({
-		group: 1
+		group: 1,noDragClass:'dd-nodrag'
 	}).on('change', updateOutput);
 
 	/*

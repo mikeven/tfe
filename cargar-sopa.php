@@ -9,6 +9,7 @@
     include( "database/data-acceso.php" );
     include( "database/data-area.php" );
     include( "database/data-sujeto.php" );
+    include( "database/data-objeto.php" );
     include( "fn/fn-forms.php" );
     checkSession( "" );
     $titulo_pagina = "Cargar fórmula S.O.P.A";
@@ -22,6 +23,7 @@
     if( isset( $_GET["id_s"] ) ){
     	$ids = $_GET["id_s"];
     	$sujeto = obtenerSujetoPorId( $dbh, $ids );
+    	$objetos = obtenerListaObjetos( $dbh, $ids );
     }
     
 ?>
@@ -57,6 +59,7 @@
 		<style type="text/css">
 			.icon-xx{ float: right; }
 			.btn-no-ft{ float: right; }
+			
 		</style>
 	</head>
 	
@@ -86,44 +89,53 @@
 						<?php if( isset( $sujeto ) ) { ?>
 						<div class="col-md-8 col-sm-6 col-xs-12">
 							<section class="panel">
-								<form id="frm_edit_area" class="form-horizontal">
-									<div class="panel-body">
-										<div class="dd" id="nestable">
-											<ol class="dd-list">
-												<li class="dd-item" data-id="1">
-													<div class="dd-handle">Item 1
-														<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-success 
-														btn-no-ft"><i class="fa fa-plus" aria-hidden="true"></i> Propósito</button>
-													</div>
-												</li>
-												<li class="dd-item" data-id="2">
-													<div class="dd-handle">Item 2</div>
-													<ol class="dd-list">
-														<li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
-														<li class="dd-item" data-id="4"><div class="dd-handle">Item 4</div></li>
-														<li class="dd-item" data-id="5">
-															<div class="dd-handle">Item 5</div>
-															<ol class="dd-list">
-																<li class="dd-item" data-id="6"><div class="dd-handle">Item 6</div></li>
-																<li class="dd-item" data-id="7"><div class="dd-handle">Item 7</div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Item 8</div></li>
-															</ol>
-														</li>
-														<li class="dd-item" data-id="9"><div class="dd-handle">Item 9</div></li>
-														<li class="dd-item" data-id="10"><div class="dd-handle">Item 10</div></li>
-													</ol>
-												</li>
-												<li class="dd-item" data-id="11">
-													<div class="dd-handle">Item 11</div>
-												</li>
-												<li class="dd-item" data-id="12">
-													<div class="dd-handle">Item 12</div>
-												</li>
-											</ol>
-										</div>
+								<div class="panel-body">
+									<div class="dd dd-nodrag" id="nestable">
+										<ol class="dd-list">
+											<?php 
+											if( count( $objetos ) > 0 )
+												foreach ( $objetos as $o ) { 
+											?>
+											<li class="dd-item " 
+											data-id="<?php echo $o["id"]?>">
+								
+												<div class="dd-handle noDragClass">
+													<?php echo $o["descripcion"]?>
+													<a href="#frm-proposito" class="modal-sizes modal-with-zoom-anim" 
+													data-ido="<?php echo $o["id"]?>">
+														<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-success btn-no-ft">
+															<i class="fa fa-plus" aria-hidden="true"></i> Propósito
+														</button>
+													</a>
+												</div>
+											
+											</li>
+											<?php } 
+											else 
+												include( "secciones/sopa/panel_agr_obj.php" ); 
+											?>
+												
+											<li class="dd-item hidden" data-id="2">
+												<div class="dd-handle">Item 2</div>
+												<ol class="dd-list">
+													<li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
+													<li class="dd-item" data-id="4"><div class="dd-handle">Item 4</div></li>
+													<li class="dd-item" data-id="5">
+														<div class="dd-handle">Item 5</div>
+														<ol class="dd-list">
+															<li class="dd-item" data-id="6"><div class="dd-handle">Item 6</div></li>
+															<li class="dd-item" data-id="7"><div class="dd-handle">Item 7</div></li>
+															<li class="dd-item" data-id="8"><div class="dd-handle">Item 8</div></li>
+														</ol>
+													</li>
+													<li class="dd-item" data-id="9"><div class="dd-handle">Item 9</div></li>
+													<li class="dd-item" data-id="10"><div class="dd-handle">Item 10</div></li>
+												</ol>
+											</li>
+											
+										</ol>
 									</div>
-									
-								</form>
+								</div>									
 							</section>
 						</div>
 						<?php } ?>
@@ -166,12 +178,23 @@
 		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
 		<script src="assets/javascripts/ui-elements/examples.nestable.js"></script>
 		
-
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>
 		<script src="js/fn-area.js"></script>
 		<script src="js/fn-sujeto.js"></script>
+		<script src="js/fn-objeto.js"></script>
 		<script src="js/validate-extend.js"></script>
+		<script type="text/javascript">
+	       jQuery(function($){
+		    $('.dd').each(function(){
+		               $(this).nestable({
+		                    maxDepth: 0,
+		                    noDragClass:'dd-nodrag'
+
+		               });
+		           });
+		    });
+		</script>
 		
 	</body>
 </html>

@@ -12,9 +12,10 @@
 	/* --------------------------------------------------------- */
 	function obtenerSujetoPorId( $dbh, $id ){
 		// Devuelve el registro de un área dado su id
-		$q = "select id, nombre, date_format(creado,'%d/%m/%Y') as fregistro 
-		from sujeto where id = $id";
-
+		$q = "select s.id, s.nombre as nombre, a.nombre as area, 
+		date_format(s.creado,'%d/%m/%Y') as fregistro 
+		from sujeto s, area a where s.area_id = a.id and s.id = $id";
+		
 		$rst = mysqli_query( $dbh, $q );
 		$data = mysqli_fetch_array( $rst );
 
@@ -31,14 +32,14 @@
 	}
 	/* --------------------------------------------------------- */
 	function editarSujeto( $dbh, $sujeto ){
-		//Elimina un registro de área
-		$q = "update sujeto set nombre = '$area[nombre]', modificado = NPW() 
+		//Edita un registro de sujeto
+		$q = "update sujeto set nombre = '$area[nombre]', modificado = NOW() 
 		where id = $area[id]";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
 	function eliminarSujeto( $dbh, $id ){
-		//Elimina un registro de área
+		//Elimina un registro de sujeto
 		$q = "delete from sujeto where id = $id";
 		return mysqli_query( $dbh, $q );
 	}
