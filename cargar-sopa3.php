@@ -8,7 +8,6 @@
     include( "database/bd.php" );
     include( "database/data-acceso.php" );
     include( "database/data-area.php" );
-    include( "database/data-sujeto.php" );
     include( "fn/fn-forms.php" );
     checkSession( "" );
     $titulo_pagina = "Cargar fórmula S.O.P.A";
@@ -56,7 +55,7 @@
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style type="text/css">
 			.icon-xx{ float: right; }
-			.btn-no-ft{ float: right; }
+			.btn-no-ft{ float: right; margin-top: 28px; }
 		</style>
 	</head>
 	
@@ -73,61 +72,124 @@
 				<!-- end: sidebar -->
 				<section role="main" class="content-body">
 					<?php include( "secciones/titulo_pagina.php" ); ?>
-					<div class="row">
-						<div class="col-md-4 col-sm-6 col-xs-12">
-							<?php 
-								if( isset( $sujeto ) )
-									include("secciones/sopa/panel_sujeto.php");
-								else
-									include("secciones/sopa/panel_crear_sujeto.php");
-							?>
+					<?php if( isset($sujeto) ) { ?>
+						Sujeto: S
+					<?php } else { ?>
+					<section class="panel panel-transparent">
+						<div class="panel-body">
+							<form id="frm_agr_sujeto">
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="row">
+											<div class="form-group">
+												<label class="control-label">Área</label>
+												<select class="form-control" name="area">
+													<?php foreach ( $areas as $a ) { ?>
+													<option value="<?php echo $a["id"] ?>" 
+														<?php 
+														echo sop( $a["id"], $area["id"] ) 
+														?>><?php echo $a["nombre"] ?>
+													</option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group">
+												<label class="control-label">Sujeto</label>
+												<input type="text" name="nombre" class="form-control" required>
+												
+											</div>
+										</div>
+										<div class="row">
+											<button type="submit" 
+											class="btn btn-primary btn-no-ft">
+											Agregar</button></div>
+									</div>
+								</div>
+							</form>
 						</div>
-					
-						<?php if( isset( $sujeto ) ) { ?>
-						<div class="col-md-8 col-sm-6 col-xs-12">
-							<section class="panel">
-								<form id="frm_edit_area" class="form-horizontal">
-									<div class="panel-body">
+
+					</section>
+					<?php } ?>
+					<?php if( isset( $sujeto ) ) { ?>
+					<section class="panel">
+						<form id="frm_edit_area" class="form-horizontal">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										
+										<div class="row form-group">
+											<div class="col-lg-12">
+												<label class="control-label">Sujeto</label>
+												<input type="text" name="sujeto" 
+												class="form-control">
+											</div>
+										</div>
+										
+										<label class="control-label">Objeto</label>
+										<div class="input-group mb-md">
+											<input type="text" class="form-control">
+											<span class="input-group-btn">
+											<button class="btn btn-success" type="button">
+											 Agregar
+											</button>
+											</span>
+										</div>
+										<div class="col-sm-9 col-sm-offset-3">
+										<ol class="dd-list">
+											<li class="dd-item" data-id="1">
+												<div class="dd-handle">Obj 1
+													<div class="icon-xx">
+														<i class="fa fa-times"></i>
+													</div>
+												</div>
+											</li>
+											<li class="dd-item" data-id="2">
+												<div class="dd-handle">Obj 2
+													<div class="icon-xx">
+														<i class="fa fa-times"></i>
+													</div>
+												</div>
+											</li>
+										</ol>
+										</div>
+										<div class="row form-group">
+											<div class="col-lg-12">
+												<label class="control-label">Propósito</label>
+												<input type="text" name="proposisto" 
+												class="form-control">
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<label class="control-label">Actividades</label>
+										<div class="input-group mb-md">
+											<input type="text" class="form-control">
+											<span class="input-group-btn">
+											<button class="btn btn-success" type="button"> Agregar</button>
+											</span>
+										</div>
 										<div class="dd" id="nestable">
 											<ol class="dd-list">
 												<li class="dd-item" data-id="1">
-													<div class="dd-handle">Item 1
-														<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-success 
-														btn-no-ft"><i class="fa fa-plus" aria-hidden="true"></i> Propósito</button>
-													</div>
+													<div class="dd-handle">Item 1</div>
 												</li>
-												<li class="dd-item" data-id="2">
+												<li class="dd-item" data-id="1">
 													<div class="dd-handle">Item 2</div>
-													<ol class="dd-list">
-														<li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
-														<li class="dd-item" data-id="4"><div class="dd-handle">Item 4</div></li>
-														<li class="dd-item" data-id="5">
-															<div class="dd-handle">Item 5</div>
-															<ol class="dd-list">
-																<li class="dd-item" data-id="6"><div class="dd-handle">Item 6</div></li>
-																<li class="dd-item" data-id="7"><div class="dd-handle">Item 7</div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Item 8</div></li>
-															</ol>
-														</li>
-														<li class="dd-item" data-id="9"><div class="dd-handle">Item 9</div></li>
-														<li class="dd-item" data-id="10"><div class="dd-handle">Item 10</div></li>
-													</ol>
-												</li>
-												<li class="dd-item" data-id="11">
-													<div class="dd-handle">Item 11</div>
-												</li>
-												<li class="dd-item" data-id="12">
-													<div class="dd-handle">Item 12</div>
 												</li>
 											</ol>
 										</div>
 									</div>
-									
-								</form>
-							</section>
-						</div>
-						<?php } ?>
-					</div>	
+								</div>
+							</div>
+							<footer class="panel-footer">
+								<button class="btn btn-primary" type="submit">Guardar</button>
+							</footer>
+						</form>
+					</section>
+					<?php } ?>	
 				</section>
 			</div>
 		</section>
@@ -148,7 +210,6 @@
 		<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
 		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
-		<script src="assets/vendor/jquery-nestable/jquery.nestable.js"></script>
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="assets/javascripts/theme.js"></script>
@@ -164,8 +225,6 @@
 		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
-		<script src="assets/javascripts/ui-elements/examples.nestable.js"></script>
-		
 
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>

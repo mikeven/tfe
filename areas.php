@@ -130,7 +130,7 @@
 								</div>
 							</section>
 							<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
-					<input id="id-area-e" type="hidden">
+							<input id="id-area-e" type="hidden">
 						</div>
 					</div>
 
