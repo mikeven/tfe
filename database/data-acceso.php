@@ -92,7 +92,7 @@
 		// Verifica si un usuario existe y está habilitado para ingresar
 
 		$data_login["valido"] = false;
-		
+		$data_u = NULL;
 		$data_u = obtenerUsuarioLogin( $dbh, $email, $passw );
 
 		if( $data_u != NULL ){

@@ -57,7 +57,7 @@
 			<section class="body-sign">
 				<div class="center-sign">
 					<a href="/" class="logo pull-left">
-						<img src="img/logo-navbar.png" height="54" alt="Porto Admin" />
+						<img src="img/tfe_logo_blanco.png" height="54" alt="Porto Admin" />
 					</a>
 
 					<div class="panel panel-sign">
