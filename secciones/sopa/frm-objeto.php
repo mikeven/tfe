@@ -2,7 +2,7 @@
 	<section class="panel">
 		<form id="frm-nobjeto" class="form-horizontal mb-lg" novalidate="novalidate">
 			<header class="panel-heading">
-				<h2 class="panel-title">Agregar objeto</h2>
+				<h2 class="panel-title">Crear objeto</h2>
 			</header>
 			<div class="panel-body">
 				<input id="id_s" type="hidden" name="idsujeto" value="<?php echo $ids ?>">

@@ -14,8 +14,10 @@
     checkSession( "" );
     $titulo_pagina = "Cargar fórmula S.O.P.A";
 
+    $ida = NULL;
     $idu = $_SESSION["user"]["id"];
     $areas = obtenerListaAreas( $dbh, $idu );
+    $sujetos = obtenerListaSujetos( $dbh );
     if( isset( $_GET["id_area"] ) ){
         $ida = $_GET["id_area"];
         $area = obtenerAreaPorId( $dbh, $ida );
@@ -44,6 +46,7 @@
 		<link rel="stylesheet" href="assets/vendor/pnotify/pnotify.custom.css" />
 		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
 		
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
@@ -61,11 +64,12 @@
 			.btn-no-ft{ float: right; }
 			.drag_disabled{
 			    -webkit-user-select: none;
-	-webkit-user-drag: none;
-	-webkit-app-region: no-drag;
-	cursor: default;
+				-webkit-user-drag: none;
+				-webkit-app-region: no-drag;
+				cursor: default;
 			}
-			
+			.ssel, .ssel .btn-group, .ssel button{ width: 100%; }
+			.ssel button{ text-align: left; }
 		</style>
 	</head>
 	
@@ -167,6 +171,7 @@
 		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
 		<script src="assets/vendor/jquery-nestable/jquery.nestable.js"></script>
+		<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="assets/javascripts/theme.js"></script>
@@ -182,7 +187,9 @@
 		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
-		<script src="assets/javascripts/ui-elements/examples.nestable.js"></script>
+		
+		
+		<script src="assets/javascripts/ui-elements/examples.nestable_.js"></script>
 		
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>
@@ -190,7 +197,5 @@
 		<script src="js/fn-sujeto.js"></script>
 		<script src="js/fn-objeto.js"></script>
 		<script src="js/validate-extend.js"></script>
-		
-		
 	</body>
 </html>

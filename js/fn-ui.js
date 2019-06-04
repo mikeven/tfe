@@ -45,13 +45,17 @@ function ventanaMensaje( exito, mensaje, enlace ){
 	$("#enl_vmsj").click();
 }
 /* --------------------------------------------------------- */
-/*function ventanaMensaje( exito, mensaje, enlace ){
-	var clase_m = ["modal-danger", "modal-success"];
-	$("#tx-vmsj").html( "" );	
-	$("#ventana_mensaje").addClass( clase_m[exito] );
-	$("#tit_vmsj").html( mensaje );
-	$("#enl_vmsj").click();
-}*/
+function agregarElementoLista( lista, elem ){
+
+	var o = new Option( elem.nombre, elem.id );
+	$(o).html( elem.nombre );
+	$( lista ).append(o);
+	$(lista).select2('destroy');
+	$( lista + ' option' ).filter(function() { 
+	    return ($(this).text() == elem.nombre); //To select Blue
+	}).prop('selected', true);
+	$(lista).select2();
+}
 /* --------------------------------------------------------- */
 function isNumberKey(evt){
 	var charCode = (evt.which) ? evt.which : evt.keyCode;

@@ -4,7 +4,13 @@
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
-	function obtenerListaSujetos( $dbh, $ida ){
+	function obtenerListaSujetos( $dbh ){
+		// Devuelve todos los registros de sujetos de un usuario por área
+		$q = "select * from sujeto";
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
+	function obtenerListaSujetosArea( $dbh, $ida ){
 		// Devuelve todos los registros de sujetos de un usuario por área
 		$q = "select * from sujeto where area_id = $ida";
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
@@ -23,9 +29,8 @@
 	}
 	/* --------------------------------------------------------- */
 	function agregarSujeto( $dbh, $sujeto ){
-		// Procesa el registro de nueva área
-		$q = "insert into sujeto ( nombre, area_id, creado ) values 
-		('$sujeto[nombre]', $sujeto[area], NOW() )";
+		// Procesa el registro de nuevo sujeto
+		$q = "insert into sujeto ( nombre, creado ) values ('$sujeto[nombre]', NOW())";
 
 		$data = mysqli_query( $dbh, $q );
 		return mysqli_insert_id( $dbh );
@@ -52,16 +57,20 @@
 		parse_str( $_POST["nsujeto"], $sujeto );
 		$sujeto = escaparCampos( $dbh, $sujeto );
 		
-		$ids = agregarSujeto( $dbh, $sujeto );
-		$sujeto["id"] = $ids;
-		
-		if( $ids != 0 ){
-			$res["exito"] = 1;
-			$res["mje"] = "Sujeto registrado con éxito";
-			$res["reg"] = $sujeto;
-		}else{
-			$res["exito"] = 1;
-			$res["mje"] = "Error al registrar sujeto";
+		if( nombreDisponible( $dbh, "sujeto", "nombre", $sujeto["nombre"], "", "" ) ){
+			$ids = agregarSujeto( $dbh, $sujeto );
+			$sujeto["id"] = $ids;
+			if( $ids != 0 ){
+				$res["exito"] = 1;
+				$res["mje"] = "Sujeto registrado con éxito";
+				$res["reg"] = $sujeto;
+			}else{
+				$res["exito"] = -1;
+				$res["mje"] = "Error al registrar sujeto";
+			}
+		}else{ 
+			$res["exito"] = -2;
+			$res["mje"] = "Nombre de sujeto ya registrado";
 		}
 
 		echo json_encode( $res );

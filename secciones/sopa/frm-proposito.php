@@ -2,7 +2,7 @@
 	<section class="panel">
 		<form id="frm-nproposito" class="form-horizontal mb-lg" novalidate="novalidate">
 			<header class="panel-heading">
-				<h2 class="panel-title">Agregar propósito</h2>
+				<h2 class="panel-title">Crear propósito</h2>
 			</header>
 			<div class="panel-body">
 				<input id="id_obj" type="hidden" name="idobjeto" value="">

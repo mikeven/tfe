@@ -8,12 +8,16 @@
     include( "database/bd.php" );
     include( "database/data-acceso.php" );
     include( "database/data-area.php" );
+    include( "database/data-sujeto.php" );
+    include( "database/data-objeto.php" );
     include( "fn/fn-forms.php" );
     checkSession( "" );
     $titulo_pagina = "Cargar fórmula S.O.P.A";
 
+    $ida = NULL;
     $idu = $_SESSION["user"]["id"];
     $areas = obtenerListaAreas( $dbh, $idu );
+    $sujetos = obtenerListaSujetos( $dbh );
     if( isset( $_GET["id_area"] ) ){
         $ida = $_GET["id_area"];
         $area = obtenerAreaPorId( $dbh, $ida );
@@ -21,6 +25,7 @@
     if( isset( $_GET["id_s"] ) ){
     	$ids = $_GET["id_s"];
     	$sujeto = obtenerSujetoPorId( $dbh, $ids );
+    	$objetos = obtenerListaObjetos( $dbh, $ids );
     }
     
 ?>
@@ -41,6 +46,7 @@
 		<link rel="stylesheet" href="assets/vendor/pnotify/pnotify.custom.css" />
 		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
 		
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
@@ -54,9 +60,16 @@
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style type="text/css">
-			.icon-xx{
-				float: right;
+			.icon-xx{ float: right; }
+			.btn-no-ft{ float: right; }
+			.drag_disabled{
+			    -webkit-user-select: none;
+				-webkit-user-drag: none;
+				-webkit-app-region: no-drag;
+				cursor: default;
 			}
+			.ssel, .ssel .btn-group, .ssel button{ width: 100%; }
+			.ssel button{ text-align: left; }
 		</style>
 	</head>
 	
@@ -73,115 +86,70 @@
 				<!-- end: sidebar -->
 				<section role="main" class="content-body">
 					<?php include( "secciones/titulo_pagina.php" ); ?>
-					<section class="panel panel-transparent">
-						<div class="panel-body">
-								
-							<form id="frm_agr_sujeto" class="form-inline hidden">
-								<div class="row">
-									<div class="col-sm-5">
-										<div class="form-group">
-											<label class="control-label">Área</label>
-											<select class="form-control" name="area">
-												<?php foreach ( $areas as $a ) { ?>
-												<option value="<?php echo $a["id"] ?>" 
-													<?php 
-													echo sop( $a["id"], $area["id"] ) 
-													?>><?php echo $a["nombre"] ?>
-												</option>
-												<?php } ?>
-											</select>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label class="control-label">Sujeto</label>
-											<input type="text" name="nombre" class="form-control" required>
-											<button type="submit" class="mb-xs mt-xs mr-xs btn btn-sm btn-primary">Agregar</button>
-										</div>
-									</div>
-								</div>
-							</form>
-							<?php } ?>
+					<div class="row">
+						<div class="col-md-4 col-sm-6 col-xs-12">
+							<?php 
+								if( isset( $sujeto ) )
+									include("secciones/sopa/panel_sujeto.php");
+								else
+									include("secciones/sopa/panel_crear_sujeto.php");
+							?>
 						</div>
-					</section>
-					<?php if( isset($sujeto) ) { ?>
-					<section class="panel">
-						<form id="frm_edit_area" class="form-horizontal">
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-md-6 col-sm-6 col-xs-12">
-										
-										<div class="row form-group">
-											<div class="col-lg-12">
-												<label class="control-label">Sujeto</label>
-												<input type="text" name="sujeto" 
-												class="form-control">
-											</div>
-										</div>
-										
-										<label class="control-label">Objeto</label>
-										<div class="input-group mb-md">
-											<input type="text" class="form-control">
-											<span class="input-group-btn">
-											<button class="btn btn-success" type="button">
-											 Agregar
-											</button>
-											</span>
-										</div>
-										<div class="col-sm-9 col-sm-offset-3">
-										<ol class="dd-list">
-											<li class="dd-item" data-id="1">
-												<div class="dd-handle">Obj 1
-													<div class="icon-xx">
-														<i class="fa fa-times"></i>
-													</div>
+					
+						<?php if( isset( $sujeto ) ) { ?>
+						<div class="col-md-8 col-sm-6 col-xs-12">
+							<section class="panel">
+								<div class="panel-body">
+									<div class="dd dd-nodrag" id="nestable">
+										<ol class="dd-list drag_disabled" onmousedown="return false">
+											<?php 
+											if( count( $objetos ) > 0 )
+												foreach ( $objetos as $o ) { 
+											?>
+											<li class="dd-item drag_disabled" 
+											data-id="<?php echo $o["id"]?>">
+								
+												<div class="dd-handle ">
+													<?php echo $o["descripcion"]?>
+													<a href="#frm-proposito" class="modal-sizes modal-with-zoom-anim" 
+													data-ido="<?php echo $o["id"]?>">
+														<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-success btn-no-ft">
+															<i class="fa fa-plus" aria-hidden="true"></i> Propósito
+														</button>
+													</a>
 												</div>
+											
 											</li>
-											<li class="dd-item" data-id="2">
-												<div class="dd-handle">Obj 2
-													<div class="icon-xx">
-														<i class="fa fa-times"></i>
-													</div>
-												</div>
+											<?php } 
+											else 
+												include( "secciones/sopa/panel_agr_obj.php" ); 
+											?>
+												
+											<li class="dd-item hidden" data-id="2">
+												<div class="dd-handle">Item 2</div>
+												<ol class="dd-list">
+													<li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
+													<li class="dd-item" data-id="4"><div class="dd-handle">Item 4</div></li>
+													<li class="dd-item" data-id="5">
+														<div class="dd-handle">Item 5</div>
+														<ol class="dd-list">
+															<li class="dd-item" data-id="6"><div class="dd-handle">Item 6</div></li>
+															<li class="dd-item" data-id="7"><div class="dd-handle">Item 7</div></li>
+															<li class="dd-item" data-id="8"><div class="dd-handle">Item 8</div></li>
+														</ol>
+													</li>
+													<li class="dd-item" data-id="9"><div class="dd-handle">Item 9</div></li>
+													<li class="dd-item" data-id="10"><div class="dd-handle">Item 10</div></li>
+												</ol>
 											</li>
+											
 										</ol>
-										</div>
-										<div class="row form-group">
-											<div class="col-lg-12">
-												<label class="control-label">Propósito</label>
-												<input type="text" name="proposisto" 
-												class="form-control">
-											</div>
-										</div>
 									</div>
-									
-									<div class="col-md-6 col-sm-6 col-xs-12">
-										<label class="control-label">Actividades</label>
-										<div class="input-group mb-md">
-											<input type="text" class="form-control">
-											<span class="input-group-btn">
-											<button class="btn btn-success" type="button"> Agregar</button>
-											</span>
-										</div>
-										<div class="dd" id="nestable">
-											<ol class="dd-list">
-												<li class="dd-item" data-id="1">
-													<div class="dd-handle">Item 1</div>
-												</li>
-												<li class="dd-item" data-id="1">
-													<div class="dd-handle">Item 2</div>
-												</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-							</div>
-							<footer class="panel-footer">
-								<button class="btn btn-primary" type="submit">Guardar</button>
-							</footer>
-						</form>
-					</section>
-					<?php } ?>	
+								</div>									
+							</section>
+						</div>
+						<?php } ?>
+					</div>	
 				</section>
 			</div>
 		</section>
@@ -202,6 +170,8 @@
 		<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
 		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
+		<script src="assets/vendor/jquery-nestable/jquery.nestable.js"></script>
+		<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="assets/javascripts/theme.js"></script>
@@ -217,12 +187,15 @@
 		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
-
+		
+		
+		<script src="assets/javascripts/ui-elements/examples.nestable_.js"></script>
+		
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>
 		<script src="js/fn-area.js"></script>
 		<script src="js/fn-sujeto.js"></script>
+		<script src="js/fn-objeto.js"></script>
 		<script src="js/validate-extend.js"></script>
-		
 	</body>
 </html>

@@ -10,7 +10,7 @@
     'use strict';
 
     // Formulario agregar área
-    $("#frm_agr_sujeto").validate({
+    $("#frm-nsujeto").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -29,7 +29,30 @@
             }
         },
         submitHandler: function(form) {
-            agregarSujeto();
+            agregarSujeto( '#frm-nsujeto' );
+        }
+    });
+
+    $("#frm_area_sujeto").validate({
+        highlight: function( label ) {
+            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function( label ) {
+            $(label).closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+        onkeyup: false,
+        errorPlacement: function( error, element ) {
+            var placement = element.closest('.input-group');
+            if (!placement.get(0)) {
+                placement = element;
+            }
+            if (error.text() !== '') {
+                placement.after(error);
+            }
+        },
+        submitHandler: function(form) {
+            alert("EXITO");
         }
     });
     /* --------------------------------------------------------- */
@@ -82,9 +105,9 @@ function iniciarBotonBorrarArea(){
                          "Confirmar acción" );
 }
 /* --------------------------------------------------------- */
-function agregarSujeto(){
-	//Invoca al servidor para agregar nueva área
-	var frm_asuj = $('#frm_agr_sujeto').serialize();
+function agregarSujeto( frm ){
+	//Invoca al servidor para agregar nuevo sujeto
+	var frm_asuj = $(frm).serialize();
 	var espera = "<img src='img/loading.gif' width='60'>";
 	
 	$.ajax({
@@ -97,10 +120,15 @@ function agregarSujeto(){
         success: function( response ){
         	console.log( response );
         	res = jQuery.parseJSON( response );
-            if( res.exito == 1 )
-                enviarRespuesta( res, "redireccion", "cargar-sopa.php?id_s=" + res.reg.id );
-            else
-                notificar( "Área", res.mje, "error" );
+            if( res.exito == 1 ){
+                if( frm == "#frm-nsujeto" ){
+                    notificar( "Sujeto", res.mje, "success" );
+                    agregarElementoLista( "#lsujetos", res.reg );
+                }
+            }else
+                notificar( "Sujeto", res.mje, "error" );
+
+            $("#cl_frm-sujeto").click();
         }
     });
 }
