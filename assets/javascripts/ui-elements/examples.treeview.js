@@ -20,7 +20,10 @@
 				'icon' : 'fa fa-file'
 			}
 		},
-		'plugins': ['types']
+		'conditionalselect' : function (node, event) {
+	      return false;
+	    },
+		'plugins': ['types', 'conditionalselect']
 	});
 
 	/*

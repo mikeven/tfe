@@ -6,7 +6,7 @@
 	/* --------------------------------------------------------- */
 	function obtenerListaPropositos( $dbh, $ido ){
 		// Devuelve todos los registros de propósitos asociados a un objeto (id)
-		$q = "select * from area where usuario_id = $idu";
+		$q = "select * from proposito where id = $ido";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}

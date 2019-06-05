@@ -91,10 +91,7 @@
 								<div class="panel-body">
 									<div id="treeBasic">
 										<ul>
-											<li data-jstree='{ "icon" : "assets/images/icon.png" }'>
-												 <span>
-												 	(O) Objeto 1 
-												 </span>
+											<li data-jstree='{ "icon" : "assets/images/icon.png" }'> (O) Objeto 1 									
 												<ul>
 													<li data-jstree='{ "icon" : "assets/images/icon.png" }'>
 														(P) Propósito 1 
@@ -163,6 +160,28 @@
 		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
+		<script>
+			(function ($) {
+		        $.jstree.defaults.conditionalselect = function () { return true; };
+
+		        $.jstree.plugins.conditionalselect = function (options, parent) {
+		            // own function
+		            this.select_node = function (obj, supress_event, prevent_open) {
+		                if(this.settings.conditionalselect.call(this, this.get_node(obj))) {
+		                    parent.select_node.call(this, obj, supress_event, prevent_open);
+		                }
+		            };
+		        };
+		        
+		        $('#treeBasic').on('activate_node.jstree', function (e, data) {
+				     if (data == undefined || data.node == undefined || data.node.id == undefined)
+				                return;
+				    alert(JSON.stringify(data.node, null, 4));
+				    
+				});
+		    })(jQuery);
+
+		</script>
 		<script src="assets/javascripts/ui-elements/examples.treeview.js"></script>
 		
 		<script src="js/fn-ui.js"></script>

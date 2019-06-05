@@ -44,9 +44,7 @@ INSERT INTO `area` (`id`, `nombre`, `creado`, `modificado`, `usuario_id`) VALUES
 (10, 'Hábitos', '2019-05-27 16:56:20', NULL, 1),
 (11, 'Mejoramiento Profesional', '2019-05-27 16:56:44', NULL, 1),
 (12, 'Mejoramiento Personal', '2019-05-27 16:57:26', NULL, 1),
-(14, 'Proyectos', '2019-05-27 16:57:39', NULL, 1),
-(15, 'Call of duty', '2019-05-29 08:14:38', NULL, 3),
-(16, 'MG ideas', '2019-05-29 22:32:47', NULL, 2);
+(14, 'Proyectos', '2019-05-27 16:57:39', NULL, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

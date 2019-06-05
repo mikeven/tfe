@@ -15,7 +15,7 @@
 		// Devuelve el registro de un área dado su id
 		$q = "select id, nombre, date_format(creado,'%d/%m/%Y') as fregistro 
 		from area where id = $id";
-
+		
 		$rst = mysqli_query( $dbh, $q );
 		$data = mysqli_fetch_array( $rst );
 

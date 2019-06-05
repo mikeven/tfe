@@ -5,7 +5,7 @@
 	<div class="container_">
 		<div class="logo-container">
 			<a href="home.php" class="logo">
-				<img src="img/logo-navbar.png" height="25" alt="TFE"/>
+				<img src="img/logo-navbar.png" alt="TFE" width="80%" />
 			</a>
 			<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
 				<i class="fa fa-bars" aria-label="Toggle sidebar"></i>

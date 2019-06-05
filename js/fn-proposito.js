@@ -9,8 +9,8 @@
     
     'use strict';
 
-    // Formulario agregar objeto
-    $("#frm_sujeto_objeto").validate({
+    // Formulario agregar sujeto-objeto
+    $("#frm_nproposito").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -81,6 +81,29 @@ function iniciarBotonBorrarProposito(){
                          "Eliminar área", 
                          "¿Confirma que desea eliminar área", 
                          "Confirmar acción" );
+}
+/* --------------------------------------------------------- */
+function agregarProposito(){
+    //Invoca al servidor para agregar nuevo registro sujeto - objeto
+    var frm_nso = $('#frm_sujeto_objeto').serialize();
+    var espera = "<img src='img/loading.gif' width='60'>";
+    
+    $.ajax({
+        type:"POST",
+        url:"database/data-proposito.php",
+        data:{ n_sub_obj: frm_nso },
+        beforeSend: function() {
+            $("#response-reg").html( espera );
+        },
+        success: function( response ){
+            console.log( response );
+            res = jQuery.parseJSON( response );
+            if( res.exito == 1 )
+                enviarRespuesta( res, "redireccion", "cargar-sopa.php?id_s=" + res.reg.id );
+            else
+                notificar( "Área", res.mje, "error" );
+        }
+    });
 }
 /* --------------------------------------------------------- */
 function agregarProposito(){

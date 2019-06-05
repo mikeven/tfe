@@ -22,7 +22,12 @@
 	Nestable 1
 	*/
 	$('#nestable').nestable({
-		group: 1,noDragClass:'dd-nodrag'
+		group: 1, 
+		maxDepth: 0,
+		noDragClass:'dd-nodrag',
+		onDragStart: function (l, e) {
+			return false;
+		}
 	}).on('change', updateOutput);
 
 	/*

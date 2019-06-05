@@ -82,6 +82,12 @@ function aggObj(){
     $("#agg_objeto").fadeIn(300);
 }
 /* --------------------------------------------------------- */
+function bloquearListasAreaSujeto(){
+    $("#lareas").prop('disabled', true );
+    $("#lsujetos").prop( 'disabled', true );
+    $("#agg_objeto, #agg-s-o").show();
+}
+/* --------------------------------------------------------- */
 function iniciarBotonBorrarArea(){
     //Asigna los textos de la ventana de confirmación para borrar un área
     iniciarVentanaModal( "btn_borrar_area", "btn_canc", 
