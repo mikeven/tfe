@@ -89,41 +89,36 @@
 						<div class="col-md-8 col-sm-6 col-xs-12">
 							<section id="tree_so" class="panel">
 								<div class="panel-body">
-									<div class="dd dd-nodrag" id="nestable">
-										<ol class="dd-list dd-nodrag" onmousedown="return false">
-											<?php 
-											if( count( $objetos ) > 0 )
-												foreach ( $objetos as $o ) { 
-											?>
-											<li class="dd-item no-drag" 
-											data-id="<?php echo $o["id"]?>">
-								
-												<div class="dd-handle dd-nodrag">
-													<?php echo $o["nombre"]?>
-													<a href="#frm-proposito" class="modal-sizes modal-with-zoom-anim" 
-													data-ido="<?php echo $o["id"]?>">
-														<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-success btn-no-ft">
-															<i class="fa fa-plus" aria-hidden="true"></i> Propósito
-														</button>
-													</a>
-												</div>
-											
+									<div id="treeBasic">
+										<ul>
+											<li data-jstree='{ "icon" : "assets/images/icon.png" }'>
+												 <span>
+												 	(O) Objeto 1 
+												 </span>
+												<ul>
+													<li data-jstree='{ "icon" : "assets/images/icon.png" }'>
+														(P) Propósito 1 
+													</li>
+													<li>
+														<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-success 
+														frm_np"><i class="fa fa-plus"></i> Propósito</button>
+													</li>
+												</ul>
 											</li>
-											<?php } 
-											else 
-												include( "secciones/sopa/panel_agr_obj.php" ); 
-											?>
-												
-											<li class="dd-item no-drag" data-id="2">
-												<div class="dd-handle">Item 2</div>
-												<ol class="dd-list">
-													<li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
-													<li class="dd-item" data-id="4"><div class="dd-handle">Item 4</div></li>
-												</ol>
+											<li class="colored">
+												 Colored
 											</li>
-											
-										</ol>
+											<li class="colored-icon">
+												 Colored Icon Only
+											</li>
+											<li class="folder">
+												 Folder Style
+											</li>
+										</ul>
 									</div>
+									<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-success 
+														frm_np"><i class="fa fa-plus"></i> Propósito</button>
+									<a id="fire_np" href="#frm-proposito" class="modal-sizes modal-with-zoom-anim">P</a>
 								</div>									
 							</section>
 						</div>
@@ -168,7 +163,7 @@
 		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
-		<script src="assets/javascripts/ui-elements/examples.nestable.js"></script>
+		<script src="assets/javascripts/ui-elements/examples.treeview.js"></script>
 		
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>

@@ -5,6 +5,7 @@
 				<h2 class="panel-title">Crear sujeto</h2>
 			</header>
 			<div class="panel-body">
+				<input type="hidden" name="idu" value="<?php echo $idu;?>">
 				<div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nombre</label>
 					<div class="col-sm-9">

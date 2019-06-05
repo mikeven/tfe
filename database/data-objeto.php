@@ -4,7 +4,14 @@
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
-	function obtenerListaObjetos( $dbh, $ids ){
+	function obtenerListaObjetos( $dbh ){
+		// Devuelve todos los registros de objetos asociados a un sujeto (id)
+		$q = "select * from objeto";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
+	function obtenerListaObjetosSujeto( $dbh, $ids ){
 		// Devuelve todos los registros de objetos asociados a un sujeto (id)
 		$q = "select * from objeto where sujeto_id = $ids";
 
@@ -24,8 +31,8 @@
 	/* --------------------------------------------------------- */
 	function agregarObjeto( $dbh, $objeto ){
 		// Guarda un nuevo registro de objeto
-		$q = "insert into objeto ( descripcion, sujeto_id, creado ) values 
-		('$objeto[descripcion]', $objeto[idsujeto], NOW() )";
+		$q = "insert into objeto ( nombre, usuario_id, creado ) 
+		values ('$objeto[nombre]', $objeto[idu], NOW())";
 
 		$data = mysqli_query( $dbh, $q );
 		return mysqli_insert_id( $dbh );
@@ -33,7 +40,7 @@
 	/* --------------------------------------------------------- */
 	function editarObjeto( $dbh, $objeto ){
 		//Modifica los datos de un registro de objeto
-		$q = "update objeto set nombre = '$objeto[descripcion]' where id = $objeto[id]";
+		$q = "update objeto set nombre = '$objeto[nombre]' where id = $objeto[id]";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
@@ -50,16 +57,21 @@
 
 		parse_str( $_POST["nobjeto"], $objeto );
 		$objeto = escaparCampos( $dbh, $objeto );
-		$sujeto["id"] = $_POST["ids"];
 		
-		$rsp = agregarObjeto( $dbh, $objeto );
-		if( $rsp != 0 ){
-			$res["exito"] = 1;
-			$res["mje"] = "Objeto registrado con éxito";
-			$res["reg"] = $sujeto;
-		}else{
-			$res["exito"] = 1;
-			$res["mje"] = "Error al registrar objeto";
+		if( nombreDisponible( $dbh, "objeto", "nombre", $objeto["nombre"], "", "" ) ){
+			$id = agregarObjeto( $dbh, $objeto );
+			$objeto["id"] = $id;
+			if( $id != 0 ){
+				$res["exito"] = 1;
+				$res["mje"] = "Objeto registrado con éxito";
+				$res["reg"] = $objeto;
+			}else{
+				$res["exito"] = 1;
+				$res["mje"] = "Error al registrar objeto";
+			}
+		}else{ 
+			$res["exito"] = -2;
+			$res["mje"] = "Nombre de área ya registrado";
 		}
 
 		echo json_encode( $res );

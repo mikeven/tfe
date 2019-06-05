@@ -10,7 +10,7 @@
     'use strict';
 
     // Formulario agregar objeto
-    $("#frm-nobjeto").validate({
+    $("#frm_sujeto_objeto").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -29,12 +29,12 @@
             }
         },
         submitHandler: function(form) {
-            agregarObjeto();
+            agregarProposito();
         }
     });
     /* --------------------------------------------------------- */
-    // Formulario editar objeto
-    $("#frm_edit_objeto").validate({
+    // Formulario editar propósito
+    $("#frm_edit_proposito").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -53,39 +53,39 @@
             }
         },
         submitHandler: function(form) {
-            editarArea();
+            editarProposito();
         }
     });
 
     /* Inits */
     /* --------------------------------------------------------- */
-    $("#tabla_areas").on( "click", ".elim_area", function(){
-        // Evento invocador de ventana modal para confirmar la eliminación de área
-        $("#id-area-e").val( $(this).attr( "data-ida" ) );
-        iniciarBotonBorrarArea();
+    $(".frm_np").on( "click", function(){
+        // Evento invocador de ventana modal para confirmar la eliminación de propósito
+        alert("NP");//$("#fire_np").click();
     });
 
-    $(document).on( 'click', '#btn_borrar_area', function(){
-        $("#btn_canc").click();
-        eliminarArea( $("#id-area-e").val() );
-    });
+    $('#treeBasic').on('select_node.jstree', function (e, data) {
+            if (data.node.children.length > 0) {
+                $('#treeBasic').jstree(true).deselect_node(data.node);                    
+                $('#treeBasic').jstree(true).toggle_node(data.node);                    
+            }
+        })
     /* --------------------------------------------------------- */
 
 }).apply( this, [ jQuery ]);
 
 /* --------------------------------------------------------- */
-function iniciarBotonBorrarArea(){
-    //Asigna los textos de la ventana de confirmación para borrar un área
+function iniciarBotonBorrarProposito(){
+    //Asigna los textos de la ventana de confirmación para borrar un propósito
     iniciarVentanaModal( "btn_borrar_area", "btn_canc", 
                          "Eliminar área", 
                          "¿Confirma que desea eliminar área", 
                          "Confirmar acción" );
 }
 /* --------------------------------------------------------- */
-function agregarObjeto(){
-	//Invoca al servidor para agregar nuevo objeto
-	var frm_aobj = $('#frm-nobjeto').serialize();
-    var id_s = $('#id_s').val();
+function agregarProposito(){
+	//Invoca al servidor para agregar nuevo propósito
+	var frm_aobj = $('#frm_sujeto_objeto').serialize();
 	var espera = "<img src='img/loading.gif' width='60'>";
 	
 	$.ajax({
@@ -106,8 +106,8 @@ function agregarObjeto(){
     });
 }
 /* --------------------------------------------------------- */
-function editarArea(){
-    //Invoca al servidor para editar datos de área
+function editarProposito(){
+    //Invoca al servidor para editar datos de propósito
     var frm_ea = $('#frm_edit_area').serialize();
     var espera = "<img src='img/loading.gif' width='60'>";
     
@@ -131,8 +131,8 @@ function editarArea(){
     });
 }
 /* --------------------------------------------------------- */
-function eliminarArea( id ){
-    //Invoca al servidor para eliminar área
+function eliminarProposito( id ){
+    //Invoca al servidor para eliminar propósito
     $.ajax({
         type:"POST",
         url:"database/data-area.php",
@@ -141,11 +141,11 @@ function eliminarArea( id ){
             console.log( response );
             res = jQuery.parseJSON(response);
             if( res.exito == 1 ){ 
-                notificar( "Área", res.mje, "success" );
+                notificar( "Propósito", res.mje, "success" );
                 setTimeout( function() { window.location = "areas.php"; }, 3000 );
             }
             if( res.exito == -1 ){ 
-                notificar( "Eliminar área", res.mje, "error" );
+                notificar( "Eliminar propósito", res.mje, "error" );
             }
         }
     });

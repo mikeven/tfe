@@ -29,7 +29,7 @@
             }
         },
         submitHandler: function(form) {
-            agregarObjeto();
+            agregarObjeto( "#frm-nobjeto" );
         }
     });
     /* --------------------------------------------------------- */
@@ -53,7 +53,7 @@
             }
         },
         submitHandler: function(form) {
-            editarArea();
+            editarObjeto();
         }
     });
 
@@ -69,10 +69,18 @@
         $("#btn_canc").click();
         eliminarArea( $("#id-area-e").val() );
     });
+
+    $("#lobjetos").on( 'change', function(){
+        aggS_O();
+    });
     /* --------------------------------------------------------- */
 
 }).apply( this, [ jQuery ]);
 
+/* --------------------------------------------------------- */
+function aggS_O(){
+    $("#agg-s-o").fadeIn(300);
+}
 /* --------------------------------------------------------- */
 function iniciarBotonBorrarArea(){
     //Asigna los textos de la ventana de confirmación para borrar un área
@@ -82,26 +90,32 @@ function iniciarBotonBorrarArea(){
                          "Confirmar acción" );
 }
 /* --------------------------------------------------------- */
-function agregarObjeto(){
+function agregarObjeto( frm ){
 	//Invoca al servidor para agregar nuevo objeto
-	var frm_aobj = $('#frm-nobjeto').serialize();
+	var frm_aobj = $( frm ).serialize();
     var id_s = $('#id_s').val();
 	var espera = "<img src='img/loading.gif' width='60'>";
 	
 	$.ajax({
         type:"POST",
         url:"database/data-objeto.php",
-        data:{ nobjeto: frm_aobj, ids: id_s },
+        data:{ nobjeto: frm_aobj },
         beforeSend: function() {
         	$("#response-reg").html( espera );
         },
         success: function( response ){
         	console.log( response );
         	res = jQuery.parseJSON( response );
-            if( res.exito == 1 )
-                enviarRespuesta( res, "redireccion", "cargar-sopa.php?id_s=" + res.reg.id );
-            else
-                notificar( "Área", res.mje, "error" );
+            if( res.exito == 1 ){
+                if( frm == '#frm-nobjeto' ){
+                    notificar( "Objeto", res.mje, "success" );
+                    agregarElementoLista( "#lobjetos", res.reg );
+                    aggS_O();
+                }
+            }else
+                notificar( "Objeto", res.mje, "error" );
+
+            $("#cl_frm-objeto").click();
         }
     });
 }

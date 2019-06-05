@@ -30,7 +30,8 @@
 	/* --------------------------------------------------------- */
 	function agregarSujeto( $dbh, $sujeto ){
 		// Procesa el registro de nuevo sujeto
-		$q = "insert into sujeto ( nombre, creado ) values ('$sujeto[nombre]', NOW())";
+		$q = "insert into sujeto ( nombre, usuario_id, creado ) 
+		values ('$sujeto[nombre]', $sujeto[idu], NOW())";
 
 		$data = mysqli_query( $dbh, $q );
 		return mysqli_insert_id( $dbh );
@@ -76,7 +77,7 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["earea"] ) ){ 
+	if( isset( $_POST["esujeto"] ) ){ 
 		// Editar área Invocación desde: js/fn-area.js
 		include( "bd.php" );
 		include( "data-sistema.php" );
@@ -84,7 +85,7 @@
 		parse_str( $_POST["earea"], $area );
 		$area = escaparCampos( $dbh, $area );
 		
-		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], $area["id"], "" ) ){
+		if( nombreDisponible( $dbh, "sujeto", "nombre", $sujeto["nombre"], $sujeto["id"], "" ) ){
 			$rsp = editarArea( $dbh, $area );
 			if( $rsp != 0 ){
 				$res["exito"] = 1;

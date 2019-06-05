@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-06-2019 a las 08:57:12
+-- Tiempo de generación: 05-06-2019 a las 10:02:54
 -- Versión del servidor: 5.6.15-log
 -- Versión de PHP: 5.4.24
 
@@ -34,11 +34,11 @@ CREATE TABLE IF NOT EXISTS `actividad` (
   `direccion` varchar(45) DEFAULT NULL,
   `motivo` varchar(45) DEFAULT NULL,
   `contacto` varchar(45) DEFAULT NULL,
-  `proposito_id` int(11) NOT NULL,
   `creado` datetime DEFAULT NULL,
   `modificado` datetime DEFAULT NULL,
+  `proposito_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `proposito_id` (`proposito_id`)
+  KEY `fk_actividad_proposito1_idx` (`proposito_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `area` (
   `modificado` datetime DEFAULT NULL,
   `usuario_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `usuario_id` (`usuario_id`)
+  KEY `fk_area_usuario_idx` (`usuario_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
@@ -79,31 +79,26 @@ INSERT INTO `area` (`id`, `nombre`, `creado`, `modificado`, `usuario_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `area_sujeto`
---
-
-CREATE TABLE IF NOT EXISTS `area_sujeto` (
-  `area_id` int(11) NOT NULL,
-  `sujeto_id` int(11) NOT NULL,
-  PRIMARY KEY (`area_id`,`sujeto_id`),
-  KEY `fk_area_has_sujeto_sujeto1` (`sujeto_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `objeto`
 --
 
 CREATE TABLE IF NOT EXISTS `objeto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(140) NOT NULL,
-  `sujeto_id` int(11) NOT NULL,
+  `nombre` varchar(140) NOT NULL,
   `creado` datetime DEFAULT NULL,
   `modificado` datetime DEFAULT NULL,
+  `usuario_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `sujeto_id` (`sujeto_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `fk_objeto_usuario1_idx` (`usuario_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Volcado de datos para la tabla `objeto`
+--
+
+INSERT INTO `objeto` (`id`, `nombre`, `creado`, `modificado`, `usuario_id`) VALUES
+(7, 'O1', '2019-06-05 01:06:18', NULL, 1),
+(8, 'O2', '2019-06-05 03:07:02', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -114,11 +109,15 @@ CREATE TABLE IF NOT EXISTS `objeto` (
 CREATE TABLE IF NOT EXISTS `proposito` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(250) NOT NULL,
-  `objeto_id` int(11) NOT NULL,
   `creado` datetime DEFAULT NULL,
   `modificado` datetime DEFAULT NULL,
+  `area_id` int(11) NOT NULL,
+  `sujeto_id` int(11) NOT NULL,
+  `objeto_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `objeto_id` (`objeto_id`)
+  KEY `fk_proposito_area1_idx` (`area_id`),
+  KEY `fk_proposito_sujeto1_idx` (`sujeto_id`),
+  KEY `fk_proposito_objeto1_idx` (`objeto_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -132,25 +131,20 @@ CREATE TABLE IF NOT EXISTS `sujeto` (
   `nombre` varchar(140) NOT NULL,
   `creado` datetime DEFAULT NULL,
   `modificado` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+  `usuario_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_sujeto_usuario1_idx` (`usuario_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Volcado de datos para la tabla `sujeto`
 --
 
-INSERT INTO `sujeto` (`id`, `nombre`, `creado`, `modificado`) VALUES
-(1, 'Dainca', '2019-05-31 01:43:26', NULL),
-(2, 'Fiesta', '2019-05-31 01:59:43', NULL),
-(3, 'S3', '2019-06-04 00:54:37', NULL),
-(4, 'S4', '2019-06-04 00:58:01', NULL),
-(5, 'S5', '2019-06-04 01:00:24', NULL),
-(6, 'S6', '2019-06-04 01:10:09', NULL),
-(7, 'S7', '2019-06-04 01:11:43', NULL),
-(8, 'S8', '2019-06-04 01:12:49', NULL),
-(9, 'S9', '2019-06-04 01:21:05', NULL),
-(10, 'S10', '2019-06-04 01:27:14', NULL),
-(11, 'S11', '2019-06-04 01:28:10', NULL);
+INSERT INTO `sujeto` (`id`, `nombre`, `creado`, `modificado`, `usuario_id`) VALUES
+(12, 'S1', '2019-06-05 01:00:33', NULL, 1),
+(13, 'S2', '2019-06-05 01:03:24', NULL, 1),
+(14, 'S3', '2019-06-05 01:04:11', NULL, 1),
+(15, 'S4', '2019-06-05 01:05:58', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -173,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `email`, `password`, `creado`, `ultimo_ingreso`) VALUES
-(1, 'Miguel', 'mikeven@gmail.com', '121212', '2019-05-30', '2019-06-03 20:41:19');
+(1, 'Miguel R', 'mikeven@gmail.com', '121212', '2019-06-05', '2019-06-05 00:55:19');
 
 --
 -- Restricciones para tablas volcadas
@@ -183,32 +177,33 @@ INSERT INTO `usuario` (`id`, `nombre`, `email`, `password`, `creado`, `ultimo_in
 -- Filtros para la tabla `actividad`
 --
 ALTER TABLE `actividad`
-  ADD CONSTRAINT `proposito_id` FOREIGN KEY (`proposito_id`) REFERENCES `proposito` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_actividad_proposito1` FOREIGN KEY (`proposito_id`) REFERENCES `proposito` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `area`
 --
 ALTER TABLE `area`
-  ADD CONSTRAINT `usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `area_sujeto`
---
-ALTER TABLE `area_sujeto`
-  ADD CONSTRAINT `fk_area_has_sujeto_area1` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_area_has_sujeto_sujeto1` FOREIGN KEY (`sujeto_id`) REFERENCES `sujeto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_area_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `objeto`
 --
 ALTER TABLE `objeto`
-  ADD CONSTRAINT `sujeto_id` FOREIGN KEY (`sujeto_id`) REFERENCES `sujeto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_objeto_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `proposito`
 --
 ALTER TABLE `proposito`
-  ADD CONSTRAINT `objeto_id` FOREIGN KEY (`objeto_id`) REFERENCES `objeto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_proposito_area1` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_proposito_sujeto1` FOREIGN KEY (`sujeto_id`) REFERENCES `sujeto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_proposito_objeto1` FOREIGN KEY (`objeto_id`) REFERENCES `objeto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `sujeto`
+--
+ALTER TABLE `sujeto`
+  ADD CONSTRAINT `fk_sujeto_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

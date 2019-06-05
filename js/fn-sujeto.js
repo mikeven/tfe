@@ -9,7 +9,7 @@
     
     'use strict';
 
-    // Formulario agregar área
+    // Formulario agregar sujeto
     $("#frm-nsujeto").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -32,32 +32,9 @@
             agregarSujeto( '#frm-nsujeto' );
         }
     });
-
-    $("#frm_area_sujeto").validate({
-        highlight: function( label ) {
-            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-        },
-        success: function( label ) {
-            $(label).closest('.form-group').removeClass('has-error');
-            label.remove();
-        },
-        onkeyup: false,
-        errorPlacement: function( error, element ) {
-            var placement = element.closest('.input-group');
-            if (!placement.get(0)) {
-                placement = element;
-            }
-            if (error.text() !== '') {
-                placement.after(error);
-            }
-        },
-        submitHandler: function(form) {
-            alert("EXITO");
-        }
-    });
     /* --------------------------------------------------------- */
-    // Formulario editar área
-    $("#frm_edit_area").validate({
+    // Formulario editar sujeto
+    $("#frm_edit_sujeto").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -76,7 +53,7 @@
             }
         },
         submitHandler: function(form) {
-            editarArea();
+            editarSujeto();
         }
     });
 
@@ -90,12 +67,20 @@
 
     $(document).on( 'click', '#btn_borrar_area', function(){
         $("#btn_canc").click();
-        eliminarArea( $("#id-area-e").val() );
+        eliminarSujeto( $("#id-area-e").val() );
+    });
+
+    $("#lsujetos").on( 'change', function(){
+        aggObj();
     });
     /* --------------------------------------------------------- */
 
 }).apply( this, [ jQuery ]);
 
+/* --------------------------------------------------------- */
+function aggObj(){
+    $("#agg_objeto").fadeIn(300);
+}
 /* --------------------------------------------------------- */
 function iniciarBotonBorrarArea(){
     //Asigna los textos de la ventana de confirmación para borrar un área
@@ -124,6 +109,7 @@ function agregarSujeto( frm ){
                 if( frm == "#frm-nsujeto" ){
                     notificar( "Sujeto", res.mje, "success" );
                     agregarElementoLista( "#lsujetos", res.reg );
+                    aggObj();
                 }
             }else
                 notificar( "Sujeto", res.mje, "error" );
@@ -133,7 +119,7 @@ function agregarSujeto( frm ){
     });
 }
 /* --------------------------------------------------------- */
-function editarArea(){
+function editarSujeto(){
     //Invoca al servidor para editar datos de área
     var frm_ea = $('#frm_edit_area').serialize();
     var espera = "<img src='img/loading.gif' width='60'>";
@@ -158,7 +144,7 @@ function editarArea(){
     });
 }
 /* --------------------------------------------------------- */
-function eliminarArea( id ){
+function eliminarSujeto( id ){
     //Invoca al servidor para eliminar área
     $.ajax({
         type:"POST",

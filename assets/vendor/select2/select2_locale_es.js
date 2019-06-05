@@ -5,7 +5,7 @@
     "use strict";
 
     $.extend($.fn.select2.defaults, {
-        formatNoMatches: function () { return "No se encontraron resultados"; },
+        formatNoMatches: function () { return "Sin resultados"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Por favor, introduzca " + n + " car" + (n == 1? "ácter" : "acteres"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Por favor, elimine " + n + " car" + (n == 1? "ácter" : "acteres"); },
         formatSelectionTooBig: function (limit) { return "Sólo puede seleccionar " + limit + " elemento" + (limit == 1 ? "" : "s"); },

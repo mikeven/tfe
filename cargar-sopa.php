@@ -18,14 +18,15 @@
     $idu = $_SESSION["user"]["id"];
     $areas = obtenerListaAreas( $dbh, $idu );
     $sujetos = obtenerListaSujetos( $dbh );
+    $objetos = obtenerListaObjetos( $dbh );
+
     if( isset( $_GET["id_area"] ) ){
         $ida = $_GET["id_area"];
         $area = obtenerAreaPorId( $dbh, $ida );
     }
-    if( isset( $_GET["id_s"] ) ){
+    if( isset( $_GET["id_p"] ) ){
     	$ids = $_GET["id_s"];
-    	$sujeto = obtenerSujetoPorId( $dbh, $ids );
-    	$objetos = obtenerListaObjetos( $dbh, $ids );
+    	$s_o = obtenerSujetoPorId( $dbh, $ids );
     }
     
 ?>
@@ -47,6 +48,7 @@
 		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
 		<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+		<link rel="stylesheet" href="assets/vendor/jstree/themes/default/style.css" />
 		
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
@@ -60,16 +62,7 @@
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style type="text/css">
-			.icon-xx{ float: right; }
-			.btn-no-ft{ float: right; }
-			.drag_disabled{
-			    -webkit-user-select: none;
-				-webkit-user-drag: none;
-				-webkit-app-region: no-drag;
-				cursor: default;
-			}
-			.ssel, .ssel .btn-group, .ssel button{ width: 100%; }
-			.ssel button{ text-align: left; }
+			#agg_objeto, #agg-s-o{ display: none; }
 		</style>
 	</head>
 	
@@ -89,66 +82,80 @@
 					<div class="row">
 						<div class="col-md-4 col-sm-6 col-xs-12">
 							<?php 
-								if( isset( $sujeto ) )
-									include("secciones/sopa/panel_sujeto.php");
-								else
-									include("secciones/sopa/panel_crear_sujeto.php");
+								include("secciones/sopa/panel_sujeto_objeto.php");
 							?>
 						</div>
 					
-						<?php if( isset( $sujeto ) ) { ?>
 						<div class="col-md-8 col-sm-6 col-xs-12">
-							<section class="panel">
+							<section id="tree_so" class="panel">
 								<div class="panel-body">
-									<div class="dd dd-nodrag" id="nestable">
-										<ol class="dd-list drag_disabled" onmousedown="return false">
-											<?php 
-											if( count( $objetos ) > 0 )
-												foreach ( $objetos as $o ) { 
-											?>
-											<li class="dd-item drag_disabled" 
-											data-id="<?php echo $o["id"]?>">
-								
-												<div class="dd-handle ">
-													<?php echo $o["descripcion"]?>
-													<a href="#frm-proposito" class="modal-sizes modal-with-zoom-anim" 
-													data-ido="<?php echo $o["id"]?>">
-														<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-success btn-no-ft">
-															<i class="fa fa-plus" aria-hidden="true"></i> Propósito
-														</button>
-													</a>
-												</div>
-											
-											</li>
-											<?php } 
-											else 
-												include( "secciones/sopa/panel_agr_obj.php" ); 
-											?>
-												
-											<li class="dd-item hidden" data-id="2">
-												<div class="dd-handle">Item 2</div>
-												<ol class="dd-list">
-													<li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
-													<li class="dd-item" data-id="4"><div class="dd-handle">Item 4</div></li>
-													<li class="dd-item" data-id="5">
-														<div class="dd-handle">Item 5</div>
-														<ol class="dd-list">
-															<li class="dd-item" data-id="6"><div class="dd-handle">Item 6</div></li>
-															<li class="dd-item" data-id="7"><div class="dd-handle">Item 7</div></li>
-															<li class="dd-item" data-id="8"><div class="dd-handle">Item 8</div></li>
-														</ol>
-													</li>
-													<li class="dd-item" data-id="9"><div class="dd-handle">Item 9</div></li>
-													<li class="dd-item" data-id="10"><div class="dd-handle">Item 10</div></li>
-												</ol>
-											</li>
-											
-										</ol>
+									<div class="panel-group" id="accordion2">
+								<div class="panel panel-accordion panel-accordion-primary">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2One">
+												<i class="fa fa-star"></i> Donec tellus massa
+											</a>
+										</h4>
 									</div>
+									<div id="collapse2One" class="accordion-body collapse in">
+										<div class="panel-body">
+											<div class="toggle" data-plugin-toggle data-plugin-options='{ "isAccordion": true }'>
+								<section class="toggle active">
+									<label>Curabitur eget leo at velit imperdiet vague iaculis vitaes?</label>
+									<div class="toggle-content">
+										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc <a href="#">vehicula</a> lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet. In eu justo a felis faucibus ornare vel id metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In eu libero ligula. Fusce eget metus lorem, ac viverra leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc <a href="#">vehicula</a> lacinia. </p>
+									</div>
+								</section>
+								<section class="toggle">
+									<label>Curabitur eget leo at velit imperdiet vague iaculis vitaes?</label>
+									<div class="toggle-content">
+										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget leo at velit imperdiet varius. In eu ipsum vitae velit congue iaculis vitae at risus. Nullam tortor nunc, bibendum vitae semper a, volutpat eget massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fringilla, orci sit amet posuere auctor, orci eros pellentesque odio, nec pellentesque erat ligula nec massa. Aenean consequat lorem ut felis ullamcorper posuere gravida tellus faucibus. Maecenas dolor elit, pulvinar eu vehicula eu, consequat et lacus. Duis et purus ipsum. In auctor mattis ipsum id molestie. Donec risus nulla, fringilla a rhoncus vitae, semper a massa. Vivamus ullamcorper, enim sit amet consequat laoreet, tortor tortor dictum urna, ut egestas urna ipsum nec libero. Nulla justo leo, molestie vel tempor nec, egestas at massa. Aenean pulvinar, felis porttitor iaculis pulvinar, odio orci sodales odio, ac pulvinar felis quam sit.</p>
+									</div>
+								</section>
+								<section class="toggle">
+									<label>Curabitur eget leo at velit imperdiet vague iaculis vitaes?</label>
+									<div class="toggle-content">
+										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget leo at velit imperdiet varius. In eu ipsum vitae velit congue iaculis vitae at risus. Nullam tortor nunc, bibendum vitae semper a, volutpat eget massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fringilla, orci sit amet posuere auctor, orci eros pellentesque odio, nec pellentesque erat ligula nec massa. Aenean consequat lorem ut felis ullamcorper posuere gravida tellus faucibus. Maecenas dolor elit, pulvinar eu vehicula eu, consequat et lacus. Duis et purus ipsum. In auctor mattis ipsum id molestie. Donec risus nulla, fringilla a rhoncus vitae, semper a massa. Vivamus ullamcorper, enim sit amet consequat laoreet, tortor tortor dictum urna, ut egestas urna ipsum nec libero. Nulla justo leo, molestie vel tempor nec, egestas at massa. Aenean pulvinar, felis porttitor iaculis pulvinar, odio orci sodales odio, ac pulvinar felis quam sit.</p>
+									</div>
+								</section>
+							</div>
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-accordion panel-accordion-primary">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2Two">
+												<i class="fa fa-cogs"></i> Praesent id enim
+											</a>
+										</h4>
+									</div>
+									<div id="collapse2Two" class="accordion-body collapse">
+										<div class="panel-body">
+											Donec tellus massa, tristique sit amet condimentum vel, facilisis quis sapien.
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-accordion panel-accordion-primary">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2Three">
+												<i class="fa fa-cloud"></i> Lorem ipsum dolor
+											</a>
+										</h4>
+									</div>
+									<div id="collapse2Three" class="accordion-body collapse">
+										<div class="panel-body">
+											Donec tellus massa, tristique sit amet condimentum vel, facilisis quis sapien.
+										</div>
+									</div>
+								</div>
+							</div>
 								</div>									
 							</section>
 						</div>
-						<?php } ?>
+						<?php include( "secciones/sopa/frm-proposito.php" ); ?>
 					</div>	
 				</section>
 			</div>
@@ -172,9 +179,11 @@
 		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
 		<script src="assets/vendor/jquery-nestable/jquery.nestable.js"></script>
 		<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+		<script src="assets/vendor/jstree/jstree.js"></script>
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="assets/javascripts/theme.js"></script>
+		<script src="assets/vendor/select2/select2_locale_es.js"></script>
 		
 		<!-- Theme Custom -->
 		<script src="assets/javascripts/theme.custom.js"></script>
@@ -187,15 +196,14 @@
 		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
-		
-		
-		<script src="assets/javascripts/ui-elements/examples.nestable_.js"></script>
+		<script src="assets/javascripts/ui-elements/examples.nestable.js"></script>
 		
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>
 		<script src="js/fn-area.js"></script>
 		<script src="js/fn-sujeto.js"></script>
 		<script src="js/fn-objeto.js"></script>
+		<script src="js/fn-proposito.js"></script>
 		<script src="js/validate-extend.js"></script>
 	</body>
 </html>
