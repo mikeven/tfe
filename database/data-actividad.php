@@ -4,17 +4,19 @@
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
-	function obtenerListaActividades( $dbh, $id ){
-		// Devuelve todos los registros de áreas
-		$q = "select * from actividad where id = $id";
+	function obtenerListaActividades( $dbh, $idp ){
+		// Devuelve todos los registros de actividades de un propósito
+		$q = "select * from actividad where proposito_id = $idp";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
-	function obtenerActividPorId( $dbh, $id ){
+	function obtenerActividadPorId( $dbh, $id ){
 		// Devuelve el registro de un área dado su id
-		$q = "select id, nombre, date_format(creado,'%d/%m/%Y') as fregistro 
-		from area where id = $id";
+		$q = "select act.id, act.tipo, act.tarea, act.lugar, act.direccion, 
+		act.motivo, act.contacto, date_format(act.creado,'%d/%m/%Y') as fregistro, 
+		p.descripcion as proposito from actividad act, proposito p 
+		where act.proposito_id = p.id and act.id = $id";
 
 		$rst = mysqli_query( $dbh, $q );
 		$data = mysqli_fetch_array( $rst );
@@ -22,59 +24,53 @@
 		return $data;
 	}
 	/* --------------------------------------------------------- */
-	function agregarAreaUsuario( $dbh, $area ){
+	function agregarActividad( $dbh, $a ){
 		// Procesa el registro de nueva área
-		$q = "insert into area ( nombre, creado, usuario_id ) values 
-		('$area[nombre]', NOW(), $area[idu] )";
+		$q = "insert into actividad ( tipo, tarea, lugar, direccion, motivo, contacto, 
+		creado, proposito_id ) values ('$a[tipo]', '$a[tarea]', '$a[lugar]', 
+		'$a[direccion]', '$a[motivo]', '$a[contacto]', NOW(), $a[id_prop_act] )";
 
 		$data = mysqli_query( $dbh, $q );
 		return mysqli_insert_id( $dbh );
 	}
 	/* --------------------------------------------------------- */
-	function editarArea( $dbh, $area ){
+	function editarActividad( $dbh, $a ){
 		//Elimina un registro de área
-		$q = "update area set nombre = '$area[nombre]' where id = $area[id]";
+		$q = "update actividad set tipo = '$a[tipo]' where id = $a[id]";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
-	function eliminarArea( $dbh, $id ){
+	function eliminarActividad( $dbh, $id ){
 		//Elimina un registro de área
-		$q = "delete from area where id = $id";
+		$q = "delete from actividad where id = $id";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["narea"] ) ){ 
-		// Invocación desde: js/fn-area.js
+	if( isset( $_POST["nactividad"] ) ){ 
+		// Invocación desde: js/fn-actividad.js
 		include( "bd.php" );
-		include( "data-sistema.php" );
 
-		parse_str( $_POST["narea"], $area );
-		$area = escaparCampos( $dbh, $area );
+		parse_str( $_POST["nactividad"], $actividad );
+		$actividad = escaparCampos( $dbh, $actividad );
 		
-		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], "", "" ) ){
-			$rsp = agregarAreaUsuario( $dbh, $area );
-			if( $rsp != 0 ){
-				$res["exito"] = 1;
-				$res["mje"] = "Área registrada con éxito";
-			}else{
-				$res["exito"] = 1;
-				$res["mje"] = "Error al registrar área";
-			}
-		}
-		else{ 
-			$rsp = -2;
-			$res["mje"] = "Nombre de área ya registrado";
+		$rsp = agregarActividad( $dbh, $actividad );
+		if( $rsp != 0 ){
+			$res["exito"] = 1;
+			$res["mje"] = "Actividad registrada con éxito";
+		}else{
+			$res["exito"] = 1;
+			$res["mje"] = "Error al registrar actividad";
 		}
 
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["earea"] ) ){ 
+	if( isset( $_POST["edit_actividad"] ) ){ 
 		// Editar área Invocación desde: js/fn-area.js
 		include( "bd.php" );
 		include( "data-sistema.php" );
 
-		parse_str( $_POST["earea"], $area );
+		parse_str( $_POST["edit_area"], $area );
 		$area = escaparCampos( $dbh, $area );
 		
 		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], $area["id"], "" ) ){
@@ -95,7 +91,7 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["elim_area"] ) ){
+	if( isset( $_POST["elim_actividad"] ) ){
 		// Invocación desde: js/fn-area.js
 		include( "bd.php" );	
 		//include( "data-sistema.php" );

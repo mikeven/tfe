@@ -1,6 +1,6 @@
 <div id="frm-sujeto" class="modal-block modal-block-primary mfp-hide">
 	<section class="panel">
-		<form id="frm-nsujeto" class="form-horizontal mb-lg" novalidate="novalidate">
+		<form id="frm-nsujeto" class="form-horizontal mb-lg">
 			<header class="panel-heading">
 				<h2 class="panel-title">Crear sujeto</h2>
 			</header>

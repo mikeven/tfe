@@ -1,6 +1,6 @@
 <div id="frm-objeto" class="modal-block modal-block-primary mfp-hide">
 	<section class="panel">
-		<form id="frm-nobjeto" class="form-horizontal mb-lg" novalidate="novalidate">
+		<form id="frm-nobjeto" class="form-horizontal mb-lg">
 			<header class="panel-heading">
 				<h2 class="panel-title">Crear objeto</h2>
 			</header>

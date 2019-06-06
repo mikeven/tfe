@@ -4,9 +4,9 @@
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
-	function obtenerListaPropositos( $dbh, $ido ){
-		// Devuelve todos los registros de propósitos asociados a un objeto (id)
-		$q = "select * from proposito where id = $ido";
+	function obtenerListaPropositos( $dbh, $idso ){
+		// Devuelve los propósitos asociados a un registro sujeto-objeto (id)
+		$q = "select * from proposito where sujeto_objeto_id = $idso";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
@@ -24,8 +24,8 @@
 	/* --------------------------------------------------------- */
 	function agregarProposito( $dbh, $proposito ){
 		// Procesa el registro de nueva área
-		$q = "insert into proposito ( descripcion, objeto_id, creado ) values 
-		('$proposito[descripcion]', $proposito[idobjeto], NOW() )";
+		$q = "insert into proposito ( descripcion, sujeto_objeto_id, creado ) values 
+		('$proposito[descripcion]', $proposito[id_sujobj], NOW() )";
 
 		$data = mysqli_query( $dbh, $q );
 		return mysqli_insert_id( $dbh );
@@ -51,19 +51,13 @@
 		parse_str( $_POST["nproposito"], $proposito );
 		$proposito = escaparCampos( $dbh, $proposito );
 		
-		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], "", "" ) ){
-			$rsp = agregarAreaUsuario( $dbh, $area );
-			if( $rsp != 0 ){
-				$res["exito"] = 1;
-				$res["mje"] = "Área registrada con éxito";
-			}else{
-				$res["exito"] = 1;
-				$res["mje"] = "Error al registrar área";
-			}
-		}
-		else{ 
-			$rsp = -2;
-			$res["mje"] = "Nombre de área ya registrado";
+		$rsp = agregarProposito( $dbh, $proposito );
+		if( $rsp != 0 ){
+			$res["exito"] = 1;
+			$res["mje"] = "Propósito registrado con éxito";
+		}else{
+			$res["exito"] = 1;
+			$res["mje"] = "Error al registrar propósito";
 		}
 
 		echo json_encode( $res );

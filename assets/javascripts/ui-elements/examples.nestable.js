@@ -29,6 +29,7 @@
 			return false;
 		}
 	}).on('change', updateOutput);
+	//.nestable('collapseAll');
 
 	/*
 	Output Initial Serialised Data

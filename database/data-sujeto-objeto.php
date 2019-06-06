@@ -1,13 +1,13 @@
 <?php
 	/* --------------------------------------------------------- */
-	/* TFE Life Planner - Acceso a propósitos */
+	/* TFE Life Planner - Acceso a sujeto - objeto */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	function obtenerSujetoObjetoPorSesion( $dbh, $idss ){
 		// Devuelve todos los registros de sujeto-objeto realizados en una sesión
-		$q = "select s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto, 
-		a.id as idarea, a.nombre as narea 
+		$q = "select so.id as id_so, s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, 
+		o.nombre as nobjeto, a.id as idarea, a.nombre as narea 
 		from sujeto_objeto so, sujeto s, objeto o, area a, sesion ss 
 		where s.id = so.sujeto_id and o.id = so.objeto_id and a.id = so.area_id 
 		and so.sesion_id = ss.id and ss.id = $idss";
@@ -50,36 +50,59 @@
 		return mysqli_insert_id( $dbh );
 	}
 	/* --------------------------------------------------------- */
+	function soExistente( $dbh, $s_o, $idss ){
+		// Devuelve verdadero si ya existe un registro existente sesion-sujeto-objeto
+		// Evita duplicidad dos o más objetos con el mismo sujeto en una misma sesión
+		$existe = false;
+		$q = "select * from sujeto_objeto where sujeto_id = $s_o[idsujeto] and 
+		objeto_id = $s_o[idobjeto] and sesion_id = $idss";
+		
+		$data 	= mysqli_query ( $dbh, $q );
+		$nregs 	= mysqli_num_rows( $data );
+		if( $nregs > 0 ) $existe = true;
+		
+		return $existe;
+	}
+	/* --------------------------------------------------------- */
 	function obtenerIdSesionNuevoSO( $dbh, $s_o ){
-		//
+		// Devuelve el id de la sesión para un nuevo registro sujeto-objeto
 
 		if( isset( $s_o["idsesion"] ) )
-			$idss = $s_o["idsesion"];
+			$idss = $s_o["idsesion"]; 						// Sesión ya existente
 		else
-			$idss = agregarSesionSO( $dbh, $s_o["idu"] );
+			$idss = agregarSesionSO( $dbh, $s_o["idu"] ); 	// Nueva sesión
 		return $idss;
 	}
 	/* --------------------------------------------------------- */
+	// Nuevo registro Sujeto - Objeto
 	if( isset( $_POST["n_sub_obj"] ) ){ 
 		// Invocación desde: js/fn-proposito.js
 		include( "bd.php" );
+		$exito = -1; $rsp = 0;
 		parse_str( $_POST["n_sub_obj"], $s_o );
 		
 		$idss = obtenerIdSesionNuevoSO( $dbh, $s_o );
-		if( $idss != 0 ){
-			$rsp = agregarSujetoObjeto( $dbh, $s_o, $idss );
-			if( $rsp != 0 ){
-				$res["exito"] = 1;
-				$res["mje"] = "Registro realizado con éxito";
-				$res["idss"] = $idss;
-			}else{
-				$res["exito"] = -1;
-				$res["mje"] = "Error al realizar registro de sujeto-objeto";
+		
+		if( $idss != 0 ){ // Registro exitoso de sesión
+			
+			if( soExistente( $dbh, $s_o, $idss ) == false ){
+				// Registro no duplicado de sujeto-objeto en misma sesión
+				$rsp = agregarSujetoObjeto( $dbh, $s_o, $idss );
+				if( $rsp != 0 ){
+					// Registro exitoso de sujeto-objeto
+					$exito = 1;
+					$res["idss"] = $idss;
+				
+				}else
+					$res["mje"] = "Error al realizar registro de sujeto-objeto";
 			}
-		}else{
-			$res["exito"] = -2;
+			else 
+				$res["mje"] = "Registro sujeto-objeto ya existente para esta sesión";
+			
+		}else
 			$res["mje"] = "Error al realizar registro de sesión sujeto-objeto";
-		}
+		
+		$res["exito"] = $exito;
 
 		echo json_encode( $res );
 	}

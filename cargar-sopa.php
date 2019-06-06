@@ -12,6 +12,7 @@
     include( "database/data-objeto.php" );
     include( "database/data-sujeto-objeto.php" );
     include( "database/data-proposito.php" );
+    include( "database/data-actividad.php" );
     
     include( "fn/fn-forms.php" );
     include( "fn/fn-sopa.php" );
@@ -51,7 +52,12 @@
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style type="text/css">
-			#agg_objeto, #agg-s-o{ display: none; }
+			#agg_objeto, #agg-s-o, .campos_act{ display: none; }
+			.icon_obj{ font-family: Arial; color: #ccc; font-size: 14px; margin-left: 10px; }
+			.nopa{ background-color: transparent; }
+			.item_obj{ background-color: #388de0 }
+			.item_pro{ background-color: #daedf7 }
+			.item_act{ background-color: #f7f7f7 }
 		</style>
 	</head>
 	
@@ -90,7 +96,7 @@
 						</div>
 						<?php } ?>
 						
-						<?php include( "secciones/sopa/frm-proposito.php" ); ?>
+						
 					
 					</div>	
 				</section>
@@ -143,9 +149,12 @@
 		<script src="js/fn-objeto.js"></script>
 		<script src="js/fn-sujeto-objeto.js"></script>
 		<script src="js/fn-proposito.js"></script>
+		<script src="js/fn-actividad.js"></script>
 		<script src="js/validate-extend.js"></script>
+		
 		<?php if( isset( $s_o ) ) { ?>
 			<script>  bloquearListasAreaSujeto(); </script>
 		<?php } ?>
+		
 	</body>
 </html>

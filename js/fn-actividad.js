@@ -1,6 +1,6 @@
-// Funciones sobre propósitos
+// Funciones sobre actividades
 /*
- * fn-proposito.js
+ * fn-actividad.js
  *
  */
 /* --------------------------------------------------------- */	
@@ -9,8 +9,8 @@
     
     'use strict';
 
-    // Formulario agregar propósito
-    $("#frm-nproposito").validate({
+    // Formulario agregar actividad
+    $("#frm-nactividad").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -29,7 +29,7 @@
             }
         },
         submitHandler: function(form) {
-            agregarProposito();
+            agregarActividad();
         }
     });
     /* --------------------------------------------------------- */
@@ -59,26 +59,29 @@
 
     /* Inits */
     /* --------------------------------------------------------- */
-    $(".btn_nprop").on( "click", function(){
+    $(".btn_nactiv").on( "click", function(){
         // Evento invocador para asignar id de sujeto-objeto en formulario de nuevo propósito
-        var iso = $(this).attr( "data-iso" );
-        var nombre_suj_obj = $(this).attr( "data-n-so" );
-        $( "#id_prop_so" ).val( iso );
-        $( "#lab_np_obj" ).html( nombre_suj_obj );
-    });
+        var form = $("#frm-nactividad");
+        form[0].reset();
 
-    $('#treeBasic').on('select_node.jstree', function (e, data) {
-            if (data.node.children.length > 0) {
-                $('#treeBasic').jstree(true).deselect_node(data.node);                    
-                $('#treeBasic').jstree(true).toggle_node(data.node);                    
-            }
-        })
+        var idp = $(this).attr( "data-idp" );
+        var nombre_prop = $(this).attr( "data-np" );
+        $( "#id_prop_act" ).val( idp );
+        $( "#lab_na_prop" ).html( nombre_prop );
+    });
+    /* --------------------------------------------------------- */
+    $(".radio-custom").on( "click", function(){
+        // Evento invocador para mostrar los campos de actividad según tipo
+        $( ".campos_act" ).fadeOut();
+        var clase_trg = $(this).attr( "data-tipo" );
+        $( "." + clase_trg ).fadeIn( 300 );
+    });
     /* --------------------------------------------------------- */
 
 }).apply( this, [ jQuery ]);
 
 /* --------------------------------------------------------- */
-function iniciarBotonBorrarProposito(){
+function iniciarBotonBorrarActividad(){
     //Asigna los textos de la ventana de confirmación para borrar un propósito
     iniciarVentanaModal( "btn_borrar_area", "btn_canc", 
                          "Eliminar área", 
@@ -86,15 +89,16 @@ function iniciarBotonBorrarProposito(){
                          "Confirmar acción" );
 }
 /* --------------------------------------------------------- */
-function agregarProposito(){
-    //Invoca al servidor para agregar nuevo registro sujeto - objeto
-    var frm_nprop = $('#frm-nproposito').serialize();
+function agregarActividad(){
+    //Invoca al servidor para agregar nuevo registro de actividad
+    var frm_nactiv = $('#frm-nactividad').serialize();
+
     var espera = "<img src='img/loading.gif' width='60'>";
     
     $.ajax({
         type:"POST",
-        url:"database/data-proposito.php",
-        data:{ nproposito: frm_nprop },
+        url:"database/data-actividad.php",
+        data:{ nactividad: frm_nactiv },
         beforeSend: function() {
             $("#response-reg").html( espera );
         },
@@ -104,13 +108,13 @@ function agregarProposito(){
             if( res.exito == 1 )
                 location.reload( true );
             else
-                notificar( "Área", res.mje, "error" );
+                notificar( "Actividad", res.mje, "error" );
         }
     });
 }
 /* --------------------------------------------------------- */
-function editarProposito(){
-    //Invoca al servidor para editar datos de propósito
+function editarActividad(){
+    //Invoca al servidor para editar datos de actividad
     var frm_ea = $('#frm_edit_area').serialize();
     var espera = "<img src='img/loading.gif' width='60'>";
     
@@ -134,8 +138,8 @@ function editarProposito(){
     });
 }
 /* --------------------------------------------------------- */
-function eliminarProposito( id ){
-    //Invoca al servidor para eliminar propósito
+function eliminarActividad( id ){
+    //Invoca al servidor para eliminar actividad
     $.ajax({
         type:"POST",
         url:"database/data-area.php",
