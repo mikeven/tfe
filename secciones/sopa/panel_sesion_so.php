@@ -1,7 +1,7 @@
 <section class="panel">
 	<form id="frm_sujeto_objeto">
 		<header class="panel-heading">
-			<h2 class="panel-title">Seleccionar Sujeto - Objeto</h2>
+			<h2 class="panel-title">Sujeto - Objeto</h2>
 		</header>
 		<input type="hidden" name="idu" value="<?php echo $idu ?>">
 		<input type="hidden" name="idsesion" value="<?php echo $idsesion ?>">

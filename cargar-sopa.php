@@ -95,9 +95,6 @@
 							</section>
 						</div>
 						<?php } ?>
-						
-						
-					
 					</div>	
 				</section>
 			</div>
