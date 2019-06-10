@@ -32,7 +32,7 @@
 		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
 		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
 		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
-
+		
 		<!-- Specific Page Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/pnotify/pnotify.custom.css" />
 		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
