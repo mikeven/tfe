@@ -22,7 +22,7 @@
 <html class="fixed">
 	<head>
 		<!-- Título -->
-		<title>Editar área | TFE Life Planner</title>
+		<title><?php echo $titulo_pagina ?> | TFE Life Planner</title>
 		<?php include( "secciones/meta-tags.html" );?>
 
 		<!-- Vendor CSS -->

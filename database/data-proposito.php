@@ -11,6 +11,18 @@
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
+	function obtenerPropositosPorSesion( $dbh, $idss ){
+		// Procesa el registro de nueva área
+		$q = "select p.id as id, p.descripcion as descripcion, s.id as idsujeto, 
+		s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
+		from proposito p, sujeto_objeto so, sesion ss, sujeto s, objeto o, area a
+		where p.sujeto_objeto_id = so.id and s.id = so.sujeto_id 
+		and o.id = so.objeto_id and a.id = so.area_id 
+		and so.sesion_id = ss.id and ss.id = $idss";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
 	function obtenerPropositoPorId( $dbh, $id ){
 		// Devuelve el registro de un área dado su id
 		$q = "select id, descripcion, date_format(creado,'%d/%m/%Y') as fregistro 

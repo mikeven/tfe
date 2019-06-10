@@ -21,4 +21,8 @@
     	$ids = $s_o[0]["idsujeto"];
     	$area = obtenerAreaPorId( $dbh, $ida );
     }
+
+    function etiquetaTipoTarea(){
+        
+    }
 ?>

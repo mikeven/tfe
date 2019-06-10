@@ -26,7 +26,7 @@
 						</a>
 					</li>
 					<li class="nav-active">
-						<a href="#!">
+						<a href="s-o-p-a.php">
 							<i class="fa fa-database" aria-hidden="true"></i>
 							<span>S.O.P.A.</span>
 						</a>

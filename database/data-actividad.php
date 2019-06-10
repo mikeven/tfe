@@ -4,6 +4,13 @@
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
+	function obtenerTodasActividades( $dbh, $idu ){
+		// Devuelve todos los registros de actividades de un propósito
+		$q = "select * from actividad where proposito_id = $idp";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
 	function obtenerListaActividades( $dbh, $idp ){
 		// Devuelve todos los registros de actividades de un propósito
 		$q = "select * from actividad where proposito_id = $idp";

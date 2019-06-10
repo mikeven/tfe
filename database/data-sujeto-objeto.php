@@ -4,6 +4,17 @@
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
+	function obtenerSujetoObjetoPorUsuario( $dbh, $idu ){
+		// Devuelve todos los registros de sujeto-objeto realizados en una sesión
+		$q = "select so.id as id_so, s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, 
+		o.nombre as nobjeto, a.id as idarea, a.nombre as narea 
+		from sujeto_objeto so, sujeto s, objeto o, area a, sesion ss, usuario u 
+		where s.id = so.sujeto_id and o.id = so.objeto_id and a.id = so.area_id 
+		and so.sesion_id = ss.id and ss.usuario_id = u.id and u.id = $idu";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
 	function obtenerSujetoObjetoPorSesion( $dbh, $idss ){
 		// Devuelve todos los registros de sujeto-objeto realizados en una sesión
 		$q = "select so.id as id_so, s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, 
