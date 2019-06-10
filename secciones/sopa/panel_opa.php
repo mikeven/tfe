@@ -8,7 +8,9 @@
 		?>
 		<li class="dd-item" data-id="<?php echo $o['id']?>">
 			<div class="dd-handle item_obj">
-				<span class="icon_obj">OBJ</span> | <?php echo $o["nombre"]?>
+				<span class="icon_obj">
+					<i class="fa fa-puzzle-piece" aria-hidden="true"></i>
+				</span> | <?php echo $o["nombre"]?>
 			</div>
 			<ol class="dd-list">
 				
@@ -19,14 +21,17 @@
 				
 					<li class="dd-item" data-id="<?php echo $p['id']?>">
 						<div class="dd-handle item_pro">
-							<span class="icon_obj">PRO</span> | <?php echo $p["descripcion"]?>
+							<span class="icon_obj">
+								<i class="fa fa-crosshairs" aria-hidden="true"></i>
+							</span> | <?php echo $p["descripcion"]?>
 						</div>
 						<ol class="dd-list">
 							<?php foreach ( $actividades as $a ) { ?>
 								<li class="dd-item" data-id="<?php echo $a['id']?>">
 									<div class="dd-handle item_act">
-										<span class="icon_obj">ACT</span> | 
-										<?php echo "(".strtoupper( $a["tipo"] ).") ".
+										<span class="icon_obj">
+											<i class="fa fa-thumb-tack" aria-hidden="true"></i>
+										</span> | <?php echo "(".strtoupper( $a["tipo"] ).") ".
 									"$a[tarea] $a[lugar] $a[direccion] $a[contacto] $a[motivo]" ?>
 									</div>
 								</li>
@@ -36,7 +41,7 @@
 									<a href="#frm-actividad" class="modal-sizes modal-with-zoom-anim btn_nactiv" 
 									data-idp="<?php echo $p["id"]?>" 
 									data-np="<?php echo $p['descripcion']?>">
-										<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info btn-no-ft">
+										<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-act btn-no-ft">
 											<i class="fa fa-plus" aria-hidden="true"></i> Actividad
 										</button>
 									</a>
@@ -49,10 +54,10 @@
 				
 				<li class="dd-item" data-id="nuevo_proposito">
 					<div class="dd-handle nopa">
-						<a href="#frm-proposito" class="modal-sizes modal-with-zoom-anim btn_nprop" 
+					<a href="#frm-proposito" class="modal-sizes modal-with-zoom-anim btn_nprop" 
 						data-iso="<?php echo $so["id_so"]?>" 
 						data-n-so="<?php echo $so['nsujeto'].' :: '.$o['nombre']?>">
-							<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-success btn-no-ft">
+							<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-pro btn-no-ft">
 								<i class="fa fa-plus" aria-hidden="true"></i> Propósito
 							</button>
 						</a>

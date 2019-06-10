@@ -81,11 +81,11 @@
 										<tbody>
 											<?php foreach ( $indice as $i ) { ?>
 											<tr class="gradeX">
-						<td>
-							<a href="actividad.php?id=<?php echo $i["idact"] ?>"> 
-								<?php echo $i["nsujeto"]."-".$i["nobjeto"] ?>
-							</a>
-						</td>
+									<td>
+										<a href="actividad.php?id=<?php echo $i["idact"] ?>"> 
+											<?php echo $i["nsujeto"]."-".$i["nobjeto"] ?>
+										</a>
+									</td>
 												<td>
 													<?php 
 													echo $i["freg_so"] 

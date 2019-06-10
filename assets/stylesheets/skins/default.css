@@ -266,6 +266,86 @@ body .btn-dark[disabled] {
 	border-color: #4a4a4a !important;
 	background-color: #4a4a4a;
 }
+
+/**/
+body .btn-obj {
+	color: #ffffff;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-color: #388de0;
+	border-color: #388de0;
+}
+
+body .btn-obj:hover {
+	color: #ffffff;
+	border-color: #4597e7 !important;
+	background-color: #4597e7;
+}
+
+body .btn-obj:active,
+body .btn-obj:focus {
+	color: #ffffff;
+	border-color: #4597e7 !important;
+	background-color: #4597e7;
+}
+
+body .btn-obj[disabled] {
+	border-color: #4a4a4a !important;
+	background-color: #4a4a4a;
+}
+
+/* Botones - propósito */
+body .btn-pro {
+	color: #ffffff;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-color: #2762b7;
+	border-color: #2762b7;
+}
+
+body .btn-pro:hover {
+	color: #ffffff;
+	border-color: #3e72be !important;
+	background-color: #3e72be;
+}
+
+body .btn-pro:active,
+body .btn-pro:focus {
+	color: #ffffff;
+	border-color: #3e72be !important;
+	background-color: #3e72be;
+}
+
+body .btn-pro[disabled] {
+	border-color: #4a4a4a !important;
+	background-color: #4a4a4a;
+}
+
+/* Botones - propósito */
+
+body .btn-act {
+	color: #ffffff;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-color: #1F4A89;
+	border-color: #1F4A89;
+}
+
+body .btn-act:hover {
+	color: #ffffff;
+	border-color: #3e72be !important;
+	background-color: #3e72be;
+}
+
+body .btn-act:active,
+body .btn-act:focus {
+	color: #ffffff;
+	border-color: #3e72be !important;
+	background-color: #3e72be;
+}
+
+body .btn-act[disabled] {
+	border-color: #4a4a4a !important;
+	background-color: #4a4a4a;
+}
+
 /* Switch*/
 .switch.switch-primary .ios-switch .on-background {
 	background: #0088cc;

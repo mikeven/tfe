@@ -55,14 +55,14 @@
 					</th>
 					<th width="20%" style="text-align: right;">
 						<a href="#frm-objeto" class="modal-sizes modal-with-zoom-anim">
-						<button type="button" class="mb-xs mt-xs mr-xs btn btn-success"><i class="fa fa-plus"></i> </button>
+						<button type="button" class="mb-xs mt-xs mr-xs btn btn-obj"><i class="fa fa-plus"></i> </button>
 						</a>
 					</th>
 				</table>
 			</div>				
 		</div>
 		<footer id="agg-s-o" class="panel-footer">
-			<button type="submit" class="mb-xs mt-xs mr-xs btn btn-success">
+			<button type="submit" class="mb-xs mt-xs mr-xs btn btn-obj">
 				Agregar <i class="fa fa-arrow-right"></i>
 			</button>
 		</footer>

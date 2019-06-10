@@ -10,6 +10,8 @@
     include( "database/data-sopa.php" );
     include( "database/data-actividad.php" );
     include( "database/data-proposito.php" );
+
+    include( "fn/fn-actividad.php" );
     checkSession( "" );
     
     $idu = $_SESSION["user"]["id"];
@@ -99,12 +101,12 @@
 								</div>
 							</div>
 
-							<section class="panel panel-featured-top panel-featured-info">
+							<section class="panel panel-featured-top panel-featured-primary">
 								<div class="panel-body">
 									<div class="widget-summary">
 										<div class="widget-summary-col widget-summary-col-icon">
-											<div class="summary-icon bg-info icono-tarea">
-												<i class="fa fa-bell"></i>
+											<div class="summary-icon bg-primary icono-tarea">
+											<?php echo iconoActividad( $actividad["tipo_act"] )?>
 											</div>
 										</div>
 										<div class="widget-summary-col">
@@ -112,6 +114,7 @@
 												<h4 class="title"><?php echo $actividad["narea"]?></h4>
 												<hr>
 												<div class="info">
+													<i class="fa fa-flag-o"></i>
 													<strong >Sujeto:</strong>
 													<span>
 														<?php 
@@ -119,6 +122,7 @@
 													</span>
 												</div>
 												<div class="info">
+													<i class="fa fa-puzzle-piece"></i>
 													<strong >Objeto:</strong>
 													<span>
 														<?php 
@@ -126,6 +130,7 @@
 													</span>
 												</div>
 												<div class="info">
+													<i class="fa fa-crosshairs"></i>
 													<strong >Propósito:</strong>
 													<span>
 														<?php 
@@ -133,6 +138,7 @@
 													</span>
 												</div>
 												<div class="info">
+													<i class="fa fa-thumb-tack"></i>
 													<strong >Actividad:</strong>
 													<span>
 										<?php echo etiqAct( $actividad["tipo_act"] ) ?>

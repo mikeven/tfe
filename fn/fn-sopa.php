@@ -17,9 +17,11 @@
     if( isset( $_GET["s"] ) ){
     	$idsesion = $_GET["s"];
     	$s_o = obtenerSujetoObjetoPorSesion( $dbh, $idsesion );
-    	$ida = $s_o[0]["idarea"];
-    	$ids = $s_o[0]["idsujeto"];
-    	$area = obtenerAreaPorId( $dbh, $ida );
+        if( $s_o ){
+        	$ida = $s_o[0]["idarea"];
+        	$ids = $s_o[0]["idsujeto"];
+        	$area = obtenerAreaPorId( $dbh, $ida );
+        }
     }
 
     function etiquetaTipoTarea(){

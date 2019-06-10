@@ -46,15 +46,4 @@
 		return $data;
 	}
 	/* --------------------------------------------------------- */
-	function etiqAct( $t ){
-		// Devuelve la etiqueta del tipo de actvidad según parámetro t
-		$tipo_actividad = array(
-	      'g' => "Gestión",
-	      'e' => "Escritorio",
-	      'l' => "Llamada"
-	    );
-
-    	return $tipo_actividad[$t];
-	}
-	/* --------------------------------------------------------- */
 ?>

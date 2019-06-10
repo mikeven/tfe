@@ -53,11 +53,12 @@
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style type="text/css">
 			#agg_objeto, #agg-s-o, .campos_act{ display: none; }
-			.icon_obj{ font-family: Arial; color: #ccc; font-size: 14px; margin-left: 10px; }
+			.icon_obj{ font-family: Arial; color: #fff; font-size: 14px; margin-left: 10px; }
 			.nopa{ background-color: transparent; }
 			.item_obj{ background-color: #388de0 }
-			.item_pro{ background-color: #daedf7 }
-			.item_act{ background-color: #f7f7f7 }
+			.item_pro{ background-color: #2762B7 }
+			.item_act{ background-color: #1F4A89 }
+			.dd-handle{ color: #fff; }
 		</style>
 	</head>
 	
