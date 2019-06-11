@@ -105,7 +105,8 @@
 								<div class="panel-body">
 									<div class="widget-summary">
 										<div class="widget-summary-col widget-summary-col-icon">
-											<div class="summary-icon bg-primary icono-tarea">
+											<div class="summary-icon bg-primary icono-tarea" data-toggle="tooltip" data-placement="top" 
+									title="<?php echo etiqAct( $actividad['tipo_act'] ) ?>">
 											<?php echo iconoActividad( $actividad["tipo_act"] )?>
 											</div>
 										</div>
