@@ -10,7 +10,7 @@
     'use strict';
 
     // Formulario agregar objeto
-    $("#frm-nobjeto").validate({
+    $( "#frm-sopa-objeto, #frm-nuevo-objeto" ).validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -29,7 +29,7 @@
             }
         },
         submitHandler: function(form) {
-            agregarObjeto( "#frm-nobjeto" );
+            agregarObjeto( "#" + $(form).attr('id') );
         }
     });
     /* --------------------------------------------------------- */
@@ -53,7 +53,7 @@
             }
         },
         submitHandler: function(form) {
-            editarObjeto();
+            editarObjeto( "#" + $(form).attr('id') );
         }
     });
 
@@ -107,11 +107,12 @@ function agregarObjeto( frm ){
         	console.log( response );
         	res = jQuery.parseJSON( response );
             if( res.exito == 1 ){
-                if( frm == '#frm-nobjeto' ){
+                if( frm == "#frm-sopa-objeto" ){
                     notificar( "Objeto", res.mje, "success" );
                     agregarElementoLista( "#lobjetos", res.reg );
                     aggS_O();
                 }
+                if( frm == "#frm-nuevo-objeto" ){ location.reload(); }
             }else
                 notificar( "Objeto", res.mje, "error" );
 
@@ -120,15 +121,15 @@ function agregarObjeto( frm ){
     });
 }
 /* --------------------------------------------------------- */
-function editarArea(){
+function editarObjeto( frm ){
     //Invoca al servidor para editar datos de área
-    var frm_ea = $('#frm_edit_area').serialize();
+    var frm_eo = $(frm).serialize();
     var espera = "<img src='img/loading.gif' width='60'>";
     
     $.ajax({
         type:"POST",
-        url:"database/data-area.php",
-        data:{ earea: frm_ea },
+        url:"database/data-objeto.php",
+        data:{ edit_objeto: frm_eo },
         beforeSend: function() {
             $("#response-reg").html( espera );
         },
@@ -136,11 +137,11 @@ function editarArea(){
             console.log( response );
             res = jQuery.parseJSON( response );
             if( res.exito == 1 ){
-                notificar( "Área", res.mje, "success" );
-                setTimeout( function() { window.location = "areas.php"; }, 3000 );
+                notificar( "Objeto", res.mje, "success" );
+                setTimeout( function() { window.location = "objetos.php"; }, 3000 );
             }
             else
-                notificar( "Área", res.mje, "error" );
+                notificar( "Objeto", res.mje, "error" );
         }
     });
 }

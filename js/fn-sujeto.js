@@ -10,7 +10,7 @@
     'use strict';
 
     // Formulario agregar sujeto
-    $("#frm-nsujeto").validate({
+    $("#frm-sopa-sujeto, #frm-nuevo-sujeto").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -29,7 +29,7 @@
             }
         },
         submitHandler: function(form) {
-            agregarSujeto( '#frm-nsujeto' );
+            agregarSujeto( "#" + $(form).attr('id') );
         }
     });
     /* --------------------------------------------------------- */
@@ -53,13 +53,13 @@
             }
         },
         submitHandler: function(form) {
-            editarSujeto();
+            editarSujeto( "#" + $(form).attr('id') );
         }
     });
 
     /* Inits */
     /* --------------------------------------------------------- */
-    $("#tabla_areas").on( "click", ".elim_area", function(){
+    $("#tabla_areas").on( "click", ".elim_sujeto", function(){
         // Evento invocador de ventana modal para confirmar la eliminación de área
         $("#id-area-e").val( $(this).attr( "data-ida" ) );
         iniciarBotonBorrarArea();
@@ -112,11 +112,14 @@ function agregarSujeto( frm ){
         	console.log( response );
         	res = jQuery.parseJSON( response );
             if( res.exito == 1 ){
-                if( frm == "#frm-nsujeto" ){
-                    notificar( "Sujeto", res.mje, "success" );
+
+                notificar( "Sujeto", res.mje, "success" );
+                if( frm == "#frm-sopa-sujeto" ){
                     agregarElementoLista( "#lsujetos", res.reg );
                     aggObj();
                 }
+                if( frm == "#frm-nuevo-sujeto" ){ location.reload(); }
+
             }else
                 notificar( "Sujeto", res.mje, "error" );
 
@@ -125,15 +128,15 @@ function agregarSujeto( frm ){
     });
 }
 /* --------------------------------------------------------- */
-function editarSujeto(){
+function editarSujeto( frm ){
     //Invoca al servidor para editar datos de área
-    var frm_ea = $('#frm_edit_area').serialize();
+    var frm_es = $(frm).serialize();
     var espera = "<img src='img/loading.gif' width='60'>";
     
     $.ajax({
         type:"POST",
-        url:"database/data-area.php",
-        data:{ earea: frm_ea },
+        url:"database/data-sujeto.php",
+        data:{ edit_sujeto: frm_es },
         beforeSend: function() {
             $("#response-reg").html( espera );
         },
@@ -141,11 +144,11 @@ function editarSujeto(){
             console.log( response );
             res = jQuery.parseJSON( response );
             if( res.exito == 1 ){
-                notificar( "Área", res.mje, "success" );
-                setTimeout( function() { window.location = "areas.php"; }, 3000 );
+                notificar( "Sujeto", res.mje, "success" );
+                setTimeout( function() { window.location = "sujetos.php"; }, 3000 );
             }
             else
-                notificar( "Área", res.mje, "error" );
+                notificar( "Sujeto", res.mje, "error" );
         }
     });
 }

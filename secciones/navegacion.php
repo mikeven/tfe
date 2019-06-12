@@ -19,11 +19,31 @@
 							<span>Inicio</span>
 						</a>
 					</li>
-					<li class="nav-active">
-						<a href="areas.php">
+					<li class="nav-parent">
+						<a>
 							<i class="fa fa-cube" aria-hidden="true"></i>
 							<span>Áreas</span>
 						</a>
+						<ul class="nav nav-children">
+							<li>
+								<a href="areas.php">
+									<i class="fa fa-cube" aria-hidden="true"></i>
+									<span>Áreas</span>
+								</a>
+							</li>
+							<li>
+								<a href="sujetos.php">
+									<i class="fa fa-flag-o" aria-hidden="true"></i>
+									<span>Sujetos</span>
+								</a>
+							</li>
+							<li>
+								<a href="objetos.php">
+									<i class="fa fa-puzzle-piece" aria-hidden="true"></i>
+									<span>Objetos</span>
+								</a>
+							</li>	
+						</ul>
 					</li>
 					<li class="nav-active">
 						<a href="s-o-p-a.php">

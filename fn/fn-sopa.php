@@ -6,8 +6,8 @@
 	$ida = NULL;
     $idu = $_SESSION["user"]["id"];
     $areas = obtenerListaAreas( $dbh, $idu );
-    $sujetos = obtenerListaSujetos( $dbh );
-    $objetos = obtenerListaObjetos( $dbh );
+    $sujetos = obtenerListaSujetos( $dbh, $idu );
+    $objetos = obtenerListaObjetos( $dbh, $idu );
 
     if( isset( $_GET["id_area"] ) ){
     	$init_area = true;

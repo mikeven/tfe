@@ -4,9 +4,9 @@
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
-	function obtenerListaObjetos( $dbh ){
+	function obtenerListaObjetos( $dbh, $idu ){
 		// Devuelve todos los registros de objetos asociados a un sujeto (id)
-		$q = "select * from objeto";
+		$q = "select * from objeto where usuario_id = $idu";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
@@ -20,8 +20,8 @@
 	/* --------------------------------------------------------- */
 	function obtenerObjetoPorId( $dbh, $id ){
 		// Devuelve el registro de un objeto dado su id
-		$q = "select id, descripcion, date_format(creado,'%d/%m/%Y') as fregistro 
-		from area where id = $id";
+		$q = "select id, nombre, date_format(creado,'%d/%m/%Y') as fregistro, 
+		date_format(modificado,'%d/%m/%Y') as fultact from objeto where id = $id";
 
 		$rst = mysqli_query( $dbh, $q );
 		$data = mysqli_fetch_array( $rst );
@@ -40,7 +40,7 @@
 	/* --------------------------------------------------------- */
 	function editarObjeto( $dbh, $objeto ){
 		//Modifica los datos de un registro de objeto
-		$q = "update objeto set nombre = '$objeto[nombre]' where id = $objeto[id]";
+		$q = "update objeto set nombre = '$objeto[nombre]', modificado = NOW() where id = $objeto[id]";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
@@ -77,27 +77,27 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["eobjeto"] ) ){ 
+	if( isset( $_POST["edit_objeto"] ) ){ 
 		// Editar área Invocación desde: js/fn-area.js
 		include( "bd.php" );
 		include( "data-sistema.php" );
 
-		parse_str( $_POST["earea"], $area );
-		$area = escaparCampos( $dbh, $area );
+		parse_str( $_POST["edit_objeto"], $objeto );
+		$objeto = escaparCampos( $dbh, $objeto );
 		
-		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], $area["id"], "" ) ){
-			$rsp = editarArea( $dbh, $area );
+		if( nombreDisponible( $dbh, "objeto", "nombre", $objeto["nombre"], $objeto["id"], "" ) ){
+			$rsp = editarObjeto( $dbh, $objeto );
 			if( $rsp != 0 ){
 				$res["exito"] = 1;
-				$res["mje"] = "Datos de área modificados";
+				$res["mje"] = "Datos de objeto modificados";
 			}else{
 				$res["exito"] = 0;
-				$res["mje"] = "Error al modificar área";
+				$res["mje"] = "Error al modificar objeto";
 			}
 		}
 		else{ 
 			$rsp = -2;
-			$res["mje"] = "Nombre de área ya registrado";
+			$res["mje"] = "Nombre de objeto ya registrado";
 		}
 
 		echo json_encode( $res );

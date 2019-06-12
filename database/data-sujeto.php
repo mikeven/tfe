@@ -4,9 +4,9 @@
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
 	/* --------------------------------------------------------- */
-	function obtenerListaSujetos( $dbh ){
+	function obtenerListaSujetos( $dbh, $idu ){
 		// Devuelve todos los registros de sujetos de un usuario por área
-		$q = "select * from sujeto";
+		$q = "select * from sujeto where usuario_id = $idu";
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
@@ -18,9 +18,8 @@
 	/* --------------------------------------------------------- */
 	function obtenerSujetoPorId( $dbh, $id ){
 		// Devuelve el registro de un área dado su id
-		$q = "select s.id, s.nombre as nombre, a.nombre as area, 
-		date_format(s.creado,'%d/%m/%Y') as fregistro 
-		from sujeto s, area a where s.area_id = a.id and s.id = $id";
+		$q = "select id, nombre, date_format(creado,'%d/%m/%Y') as fregistro, 
+		date_format(modificado,'%d/%m/%Y') as fultact from sujeto where id = $id";
 		
 		$rst = mysqli_query( $dbh, $q );
 		$data = mysqli_fetch_array( $rst );
@@ -39,8 +38,7 @@
 	/* --------------------------------------------------------- */
 	function editarSujeto( $dbh, $sujeto ){
 		//Edita un registro de sujeto
-		$q = "update sujeto set nombre = '$area[nombre]', modificado = NOW() 
-		where id = $area[id]";
+		$q = "update sujeto set nombre = '$sujeto[nombre]', modificado = NOW() where id = $sujeto[id]";
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
@@ -77,27 +75,27 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["esujeto"] ) ){ 
+	if( isset( $_POST["edit_sujeto"] ) ){ 
 		// Editar área Invocación desde: js/fn-area.js
 		include( "bd.php" );
 		include( "data-sistema.php" );
 
-		parse_str( $_POST["earea"], $area );
-		$area = escaparCampos( $dbh, $area );
+		parse_str( $_POST["edit_sujeto"], $sujeto );
+		$sujeto = escaparCampos( $dbh, $sujeto );
 		
 		if( nombreDisponible( $dbh, "sujeto", "nombre", $sujeto["nombre"], $sujeto["id"], "" ) ){
-			$rsp = editarArea( $dbh, $area );
+			$rsp = editarSujeto( $dbh, $sujeto );
 			if( $rsp != 0 ){
 				$res["exito"] = 1;
-				$res["mje"] = "Datos de área modificados";
+				$res["mje"] = "Datos de sujeto modificados";
 			}else{
 				$res["exito"] = 0;
-				$res["mje"] = "Error al modificar área";
+				$res["mje"] = "Error al modificar sujeto";
 			}
 		}
 		else{ 
 			$rsp = -2;
-			$res["mje"] = "Nombre de área ya registrado";
+			$res["mje"] = "Nombre de sujeto ya registrado";
 		}
 
 		echo json_encode( $res );
