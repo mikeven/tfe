@@ -75,7 +75,7 @@
 										<thead>
 											<tr>
 												<th width="50%">Sujeto - Objeto</th>
-												<th width="50%">Fecha</th>
+												<th width="50%">Fecha de registro</th>
 											</tr>
 										</thead>
 										<tbody>

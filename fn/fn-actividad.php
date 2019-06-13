@@ -20,10 +20,20 @@
         $icono_actividad = array(
           'g' => "<i class='fa fa-exchange'></i>",
           'e' => "<i class='fa fa-desktop'></i>",
-          'l' => "<i class='fa fa-mobile'></i>"
+          'l' => "<i class='fa fa-phone'></i>"
         );
 
         return $icono_actividad[$t];
     }
     /* --------------------------------------------------------- */
+    function descActividad( $actividad ){
+        // Devuelve el texto descriptivo de una actividad según tipo
+        $icono_actividad = array(
+          'g' => $actividad["tarea"],
+          'e' => $actividad["tarea"],
+          'l' => $actividad["contacto"]." ($actividad[motivo])"
+        );
+
+        return $icono_actividad[ $actividad["tipo"] ];
+    }
 ?>

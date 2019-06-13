@@ -9,19 +9,24 @@
 			<div class="widget-summary-col">
 				<div class="summary">
 					<h4 class="title">
-						Actividades del propósito de actividad actual
+						Otras actividades para <br> 
+						"<b><?php echo $actividad["proposito"] ?> </b>"
 					<hr>
 					<div class="info">
 					<?php 
 						foreach ( $pactividades as $a ) {
-						if( $a["id"] != $actividad["idact"] ){ 
+							if( $a["id"] != $actividad["idact"] ){ 
 					?>
 						<div>
-						<a href="#!">
-							<?php echo etiqAct($a["tipo"])?>
-						</a>
+							<?php echo iconoActividad( $a["tipo"] )?>
+							<a href="actividad.php?id=<?php echo $a['id'] ?>">
+								<?php echo " ".descActividad( $a ) ?>
+							</a>
 						</div>
-					<?php } } ?>
+					<?php 	
+							} 
+						} 
+					?>
 					</div>
 					
 				</div>

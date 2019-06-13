@@ -16,6 +16,7 @@
     
     include( "fn/fn-forms.php" );
     include( "fn/fn-sopa.php" );
+    include( "fn/fn-actividad.php" );
     
     checkSession( "" );
     $titulo_pagina = "Cargar fórmula S.O.P.A";

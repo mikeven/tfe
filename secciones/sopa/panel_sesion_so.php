@@ -18,7 +18,7 @@
 				</select>
 				<input type="hidden" name="idarea" value="<?php echo $ida ?>">
 			</div>
-			<hr>
+			
 			<div class="form-group">
 				<label class="control-label">Sujeto</label>
 				<select id="lsujetos" data-plugin-selectTwo 
@@ -32,6 +32,7 @@
 				</select>
 				<input type="hidden" name="idsujeto" value="<?php echo $ids?>">
 			</div>
+			<hr>
 			<div id="agg_objeto" class="form-group">
 				<label class="control-label">Objeto</label>
 				<table width="100%">
@@ -47,8 +48,12 @@
 						</select>
 					</th>
 					<th width="20%" style="text-align: right;">
-						<a href="#frm-objeto" class="modal-sizes modal-with-zoom-anim">
-						<button type="button" class="mb-xs mt-xs mr-xs btn btn-obj"><i class="fa fa-plus"></i> </button>
+						<a href="#frm-objeto" class="modal-sizes modal-with-zoom-anim" 
+						data-toggle="tooltip" data-placement="top" 
+						title="Crear nuevo Objeto">
+						<button type="button" class="mb-xs mt-xs mr-xs btn btn-obj">
+							<i class="fa fa-plus"></i> 
+						</button>
 						</a>
 					</th>
 				</table>

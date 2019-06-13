@@ -33,7 +33,8 @@
 						</select>
 					</th>
 					<th width="20%" style="text-align: right;">
-						<a href="#frm-sujeto" class="modal-sizes modal-with-zoom-anim">
+						<a href="#frm-sujeto" class="modal-sizes modal-with-zoom-anim" 
+						data-toggle="tooltip" data-placement="top" title="Crear nuevo sujeto">
 						<button type="button" class="mb-xs mt-xs mr-xs btn btn-success"><i class="fa fa-plus"></i> </button>
 						</a>
 					</th>
@@ -54,7 +55,8 @@
 						</select>
 					</th>
 					<th width="20%" style="text-align: right;">
-						<a href="#frm-objeto" class="modal-sizes modal-with-zoom-anim">
+						<a href="#frm-objeto" class="modal-sizes modal-with-zoom-anim" data-toggle="tooltip" data-placement="top" 
+						title="Crear nuevo objeto">
 						<button type="button" class="mb-xs mt-xs mr-xs btn btn-obj"><i class="fa fa-plus"></i> </button>
 						</a>
 					</th>

@@ -9,7 +9,7 @@
 			<div class="widget-summary-col">
 				<div class="summary">
 					<h4 class="title">
-						Propósitos de la sesión de actividad actual
+						Propósitos de la sesión de Sujeto-Objeto actual
 					<hr>
 					<div class="info">
 					<?php 
@@ -23,10 +23,10 @@
 						</div>
 						
 						<?php  foreach ( $pact as $pa ) { ?>
-							<div>
-								<a href="actividad.php?id=<?php echo $pa['id'] ?>" 
-									class="act_sesion"> 
-									<?php echo etiqAct( $pa["tipo"] ) ?>
+							<div class="act_sesion">
+								<?php echo iconoActividad( $pa["tipo"] )?>
+								<a href="actividad.php?id=<?php echo $pa['id'] ?>">
+									<?php echo " ".descActividad( $pa ) ?>
 								</a>
 							</div>
 						<?php  } ?>
