@@ -25,8 +25,4 @@
             $objetos_s = obtenerObjetosPorSujeto( $dbh, $ids );
         }
     }
-
-    function etiquetaTipoTarea(){
-        
-    }
 ?>
