@@ -24,7 +24,7 @@
 					<th width="80%">
 						<select id="lsujetos" class="form-control" required name="idsujeto">
 							<option value=""></option>
-							<?php foreach ( $sujetos as $s ) { ?>
+							<?php foreach ( $sujetos_a as $s ) { ?>
 								<option value="<?php echo $s["id"] ?>">
 									<?php echo $s["nombre"] ?>
 								</option>
@@ -45,7 +45,7 @@
 					<th width="80%">
 						<select id="lobjetos" class="form-control" required name="idobjeto">
 							<option value=""></option>
-							<?php foreach ( $objetos as $o ) { ?>
+							<?php foreach ( $objetos_o as $o ) { ?>
 								<option value="<?php echo $o["id"] ?>">
 									<?php echo $o["nombre"] ?>
 								</option>

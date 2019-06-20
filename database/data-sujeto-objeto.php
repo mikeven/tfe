@@ -26,6 +26,22 @@
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
+	function obtenerSujetosPorArea( $dbh, $ida ){
+		// Devuelve todos los registros de sujeto-objeto realizados en una sesión
+		$q = "select distinct(s.id) as id, s.nombre as nombre from sujeto_objeto so, sujeto s, area a
+		where s.id = so.sujeto_id and a.id = so.area_id and a.id = $ida order by nombre ASC";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
+	function obtenerObjetosPorSujeto( $dbh, $ids ){
+		// Devuelve todos los registros de sujeto-objeto realizados en una sesión
+		$q = "select distinct(o.id) as id, o.nombre as nombre from sujeto_objeto so, objeto o, sujeto s 
+		where o.id = so.objeto_id and so.sujeto_id = s.id and s.id = $ids order by nombre ASC";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
 	function obtenerListaSujetoObjetos( $dbh, $ido ){
 		// Devuelve todos los registros de propósitos asociados a un objeto (id)
 		$q = "select * from proposito where id = $ido";
@@ -133,6 +149,24 @@
 			$res["mje"] = "Área eliminada con éxito";
 		}
 		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
+	if( isset( $_POST["sujetos_area"] ) ){
+		// Invocación desde: js/fn-sujeto-objeto.js
+		include( "bd.php" );	
+		$ida = $_POST["sujetos_area"];
+		$sujetos = obtenerSujetosPorArea( $dbh, $ida );
+
+		echo json_encode( $sujetos );
+	}
+	/* --------------------------------------------------------- */
+	if( isset( $_POST["objetos_sujetos"] ) ){
+		// Invocación desde: js/fn-sujeto-objeto.js
+		include( "bd.php" );	
+		$ids = $_POST["objetos_sujetos"];
+		$sujetos = obtenerObjetosPorSujeto( $dbh, $ids );
+
+		echo json_encode( $sujetos );
 	}
 	/* --------------------------------------------------------- */
 ?>

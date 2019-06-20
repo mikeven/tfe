@@ -23,7 +23,7 @@
 				<label class="control-label">Sujeto</label>
 				<select id="lsujetos" class="form-control" required >
 					<option value=""></option>
-					<?php foreach ( $sujetos as $s ) { ?>
+					<?php foreach ( $sujetos_a as $s ) { ?>
 						<option value="<?php echo $s["id"] ?>" 
 							<?php echo sop( $s["id"], $ids ) ?>><?php echo $s["nombre"] ?>
 						</option>
@@ -38,7 +38,7 @@
 					<th width="80%">
 						<select id="lobjetos" class="form-control" required name="idobjeto">
 							<option value=""></option>
-							<?php foreach ( $objetos as $o ) { ?>
+							<?php foreach ( $objetos_s as $o ) { ?>
 								<option value="<?php echo $o["id"] ?>">
 									<?php echo $o["nombre"] ?>
 								</option>
