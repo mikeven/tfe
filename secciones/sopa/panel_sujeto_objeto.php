@@ -22,8 +22,7 @@
 				<label class="control-label">Sujeto</label>
 				<table width="100%">
 					<th width="80%">
-						<select id="lsujetos" data-plugin-selectTwo 
-						class="form-control populate" required name="idsujeto">
+						<select id="lsujetos" class="form-control" required name="idsujeto">
 							<option value=""></option>
 							<?php foreach ( $sujetos as $s ) { ?>
 								<option value="<?php echo $s["id"] ?>">
@@ -44,8 +43,7 @@
 				<label class="control-label">Objeto</label>
 				<table width="100%">
 					<th width="80%">
-						<select id="lobjetos" data-plugin-selectTwo 
-						class="form-control populate" required name="idobjeto">
+						<select id="lobjetos" class="form-control" required name="idobjeto">
 							<option value=""></option>
 							<?php foreach ( $objetos as $o ) { ?>
 								<option value="<?php echo $o["id"] ?>">
@@ -65,7 +63,7 @@
 		</div>
 		<footer id="agg-s-o" class="panel-footer">
 			<button type="submit" class="mb-xs mt-xs mr-xs btn btn-obj">
-				Agregar <i class="fa fa-arrow-right"></i>
+				Agregar propósitos <i class="fa fa-arrow-right"></i>
 			</button>
 		</footer>
 	</form>

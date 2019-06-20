@@ -71,7 +71,7 @@
 			}
 		}else{ 
 			$res["exito"] = -2;
-			$res["mje"] = "Nombre de área ya registrado";
+			$res["mje"] = "Nombre de objeto ya registrado";
 		}
 
 		echo json_encode( $res );

@@ -16,7 +16,7 @@
 			<footer class="panel-footer">
 				<div class="row">
 					<div class="col-md-12 text-right">
-						<button type="submit" class="btn btn-primary">Agregar</button>
+						<button type="submit" class="btn btn-primary">Crear</button>
 						<button id="cl_frm-sujeto" class="btn btn-default modal-dismiss">Cancelar</button>
 					</div>
 				</div>
