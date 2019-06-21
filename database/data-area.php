@@ -51,7 +51,7 @@
 		parse_str( $_POST["narea"], $area );
 		$area = escaparCampos( $dbh, $area );
 		
-		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], "", "" ) ){
+		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], "", $area["idu"] ) ){
 			$rsp = agregarAreaUsuario( $dbh, $area );
 			if( $rsp != 0 ){
 				$res["exito"] = 1;

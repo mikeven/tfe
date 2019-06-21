@@ -17,9 +17,20 @@
 	}
 	/* --------------------------------------------------------- */
 	function obtenerSujetoPorId( $dbh, $id ){
-		// Devuelve el registro de un área dado su id
+		// Devuelve el registro de un sujeto dado su id
 		$q = "select id, nombre, date_format(creado,'%d/%m/%Y') as fregistro, 
 		date_format(modificado,'%d/%m/%Y') as fultact from sujeto where id = $id";
+		
+		$rst = mysqli_query( $dbh, $q );
+		$data = mysqli_fetch_array( $rst );
+
+		return $data;
+	}
+	/* --------------------------------------------------------- */
+	function obtenerSujetoUsuarioPorNombre( $dbh, $nombre, $idu ){
+		// Devuelve el registro de un sujeto dado su nombre asociado a un usuario
+		$q = "select id, nombre, date_format(creado,'%d/%m/%Y') as fregistro 
+		from sujeto where nombre = '$nombre' and usuario_id = $idu";
 		
 		$rst = mysqli_query( $dbh, $q );
 		$data = mysqli_fetch_array( $rst );
@@ -56,7 +67,7 @@
 		parse_str( $_POST["nsujeto"], $sujeto );
 		$sujeto = escaparCampos( $dbh, $sujeto );
 		
-		if( nombreDisponible( $dbh, "sujeto", "nombre", $sujeto["nombre"], "", "" ) ){
+		if( nombreDisponible( $dbh, "sujeto", "nombre", $sujeto["nombre"], "", $sujeto["idu"] ) ){
 			$ids = agregarSujeto( $dbh, $sujeto );
 			$sujeto["id"] = $ids;
 			if( $ids != 0 ){
@@ -70,6 +81,7 @@
 		}else{ 
 			$res["exito"] = -2;
 			$res["mje"] = "Nombre de sujeto ya registrado";
+			$res["reg"] = obtenerSujetoUsuarioPorNombre( $dbh, $sujeto["nombre"], $sujeto["idu"] );
 		}
 
 		echo json_encode( $res );

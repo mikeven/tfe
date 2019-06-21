@@ -53,25 +53,23 @@
 		return $disp;
 	}
 	/* ----------------------------------------------------------------------------------- */
-	function nombreDisponible( $dbh, $table, $campo, $valor, $k1, $k2 ){
+	function nombreDisponible( $dbh, $table, $campo, $valor, $k1, $idu ){
 		//Devuelve si un nombre está disponible especificando tabla y campo a consultar
 		//k1: indica id excluyente directo, usado para excluir resultado de búsqueda en la misma tabla
 		//k2: indica id excluyente indirecto, usado para excluir resultado de búsqueda en tabla auxiliar
 		
 		$disp = true;
-		$param = "";
+		$param = ""; $param2 = "";
 
 		if( $k1 != "" ) $param = "and id <> $k1";
+		if( $idu != "" ) $param2 = "and usuario_id = $idu";
 
-		$q = "select * from $table where $campo = '$valor' $param";
+		$q = "select * from $table where $campo = '$valor' $param $param2";
 		
 		$resultado = mysqli_query( $dbh, $q );
 		$nrows = mysqli_num_rows( $resultado );
 		
 		if( $nrows > 0 ) $disp = false;
-
-		if( $k2 != "" )
-			$disp = chequeoExclusionIndirecta( $dbh, $resultado, $table, $k2 );
 
 		return $disp;
 	}

@@ -72,47 +72,4 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["edit_actividad"] ) ){ 
-		// Editar área Invocación desde: js/fn-area.js
-		include( "bd.php" );
-		include( "data-sistema.php" );
-
-		parse_str( $_POST["edit_area"], $area );
-		$area = escaparCampos( $dbh, $area );
-		
-		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], $area["id"], "" ) ){
-			$rsp = editarArea( $dbh, $area );
-			if( $rsp != 0 ){
-				$res["exito"] = 1;
-				$res["mje"] = "Datos de área modificados";
-			}else{
-				$res["exito"] = 0;
-				$res["mje"] = "Error al modificar área";
-			}
-		}
-		else{ 
-			$rsp = -2;
-			$res["mje"] = "Nombre de área ya registrado";
-		}
-
-		echo json_encode( $res );
-	}
-	/* --------------------------------------------------------- */
-	if( isset( $_POST["elim_actividad"] ) ){
-		// Invocación desde: js/fn-area.js
-		include( "bd.php" );	
-		//include( "data-sistema.php" );
-		
-		//registrosAsociadosLinea( $dbh, $_POST["id_elimlinea"] )
-		if( false ){
-			$res["exito"] = -1;
-			$res["mje"] = "Debe eliminar registros asociados al área primero.";
-		}else{
-			eliminarArea( $dbh, $_POST["elim_area"] );
-			$res["exito"] = 1;
-			$res["mje"] = "Área eliminada con éxito";
-		}
-		echo json_encode( $res );
-	}
-	/* --------------------------------------------------------- */
 ?>

@@ -58,7 +58,7 @@
 		parse_str( $_POST["nobjeto"], $objeto );
 		$objeto = escaparCampos( $dbh, $objeto );
 		
-		if( nombreDisponible( $dbh, "objeto", "nombre", $objeto["nombre"], "", "" ) ){
+		if( nombreDisponible( $dbh, "objeto", "nombre", $objeto["nombre"], "", $objeto["idu"] ) ){
 			$id = agregarObjeto( $dbh, $objeto );
 			$objeto["id"] = $id;
 			if( $id != 0 ){

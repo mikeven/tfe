@@ -71,15 +71,20 @@
     });
 
     $("#lsujetos").on( 'change', function(){
-        aggObj();
+        mostrarSelObj();
     });
     /* --------------------------------------------------------- */
 
 }).apply( this, [ jQuery ]);
 
 /* --------------------------------------------------------- */
-function aggObj(){
+function mostrarSelObj(){
     $("#agg_objeto").fadeIn(300);
+}
+/* --------------------------------------------------------- */
+function agregarSujetoALista( res ){
+    agregarElementoLista( "#lsujetos", res.reg );
+    mostrarSelObj();
 }
 /* --------------------------------------------------------- */
 function bloquearListasAreaSujeto(){
@@ -104,7 +109,7 @@ function agregarSujeto( frm ){
 	$.ajax({
         type:"POST",
         url:"database/data-sujeto.php",
-        data:{ nsujeto: frm_asuj },
+        data:{ nsujeto: frm_asuj, frm_o: frm },
         beforeSend: function() {
         	$("#response-reg").html( espera );
         },
@@ -112,16 +117,24 @@ function agregarSujeto( frm ){
         	console.log( response );
         	res = jQuery.parseJSON( response );
             if( res.exito == 1 ){
-
                 notificar( "Sujeto", res.mje, "success" );
                 if( frm == "#frm-sopa-sujeto" ){
-                    agregarElementoLista( "#lsujetos", res.reg );
-                    aggObj();
+                    agregarSujetoALista( res );
                 }
                 if( frm == "#frm-nuevo-sujeto" ){ location.reload(); }
+            }
 
-            }else
+            if( res.exito == -2 ){
+                if( frm == "#frm-sopa-sujeto" ){
+                    notificar( "Sujeto", res.mje, "warning" );
+                    agregarSujetoALista( res );
+                }
+                if( frm == "#frm-nuevo-sujeto" ){ notificar( "Sujeto", res.mje + frm, "error" ); }
+            }
+
+            if( res.exito == -1 ){
                 notificar( "Sujeto", res.mje, "error" );
+            }
 
             $("#cl_frm-sujeto").click();
         }

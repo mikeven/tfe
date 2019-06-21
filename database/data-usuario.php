@@ -62,7 +62,7 @@
 
 		$usuario = escaparCampos( $dbh, $usuario );
 		
-		if( nombreDisponible($dbh, "usuario", "email", $usuario["nombre"], $usuario["idu"], "")){
+		if( nombreDisponible($dbh, "usuario", "email", $usuario["nombre"], $usuario["idu"], "" )){
 			$rsp = actualizarDatosPersonales( $dbh, $usuario );
 			if( $rsp != -1 ){
 				$res["exito"] = 1;
