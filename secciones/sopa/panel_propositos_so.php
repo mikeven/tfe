@@ -18,12 +18,12 @@
 						<div class="toggle-content accord_act_cont">
 							<?php 
 							foreach ( $actividades as $a ) { ?>
-							<p>
+							<div>
 								<?php echo iconoActividad( $a["tipo"] )?>
 								<a href="#!">
 									<?php echo " ".descActividad( $a ) ?>
 								</a>
-							</p>	
+							</div>	
 							<?php } ?>
 						</div>
 					</section>
