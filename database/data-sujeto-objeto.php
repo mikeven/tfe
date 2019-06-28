@@ -15,6 +15,17 @@
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
+	function obtenerSujetoObjetoPorids( $dbh, $ids, $ido ){
+		// Devuelve el registro de sujeto - objeto según sus ids correspondientes
+		$q = "select s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, 
+		o.nombre as nobjeto from sujeto_objeto so, sujeto s, objeto o 
+		where s.id = so.sujeto_id and o.id = so.objeto_id and s.id = $ids and o.id = $ido";
+		
+		$data = mysqli_fetch_array( mysqli_query( $dbh, $q ) );
+
+		return $data;
+	}
+	/* --------------------------------------------------------- */
 	function obtenerSujetoObjetoPorSesion( $dbh, $idss ){
 		// Devuelve todos los registros de sujeto-objeto realizados en una sesión
 		$q = "select so.id as id_so, s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, 

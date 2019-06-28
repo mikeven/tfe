@@ -64,32 +64,28 @@
 
 					<div class="row">
 						
-						<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="col-md-8 col-sm-8 col-xs-12">
 							<section class="panel">
 								<header class="panel-heading">
-									<h2 class="panel-title">Índice S.O.P.A.</h2>
+									<h2 class="panel-title">Índice Sujetos - Objetos</h2>
 								</header>
 								<div id="tabla_areas" class="panel-body">
 									<table id="datatable-default"
 									class="table table-bordered table-striped mb-none" >
 										<thead>
 											<tr>
-												<th width="50%">Sujeto - Objeto</th>
-												<th width="50%">Fecha de registro</th>
+												<th width="100%">Sujeto - Objeto</th>
 											</tr>
 										</thead>
 										<tbody>
 											<?php foreach ( $indice as $i ) { ?>
 											<tr class="gradeX">
-									<td>
-										<a href="actividad.php?id=<?php echo $i["idact"] ?>"> 
-											<?php echo $i["nsujeto"]."-".$i["nobjeto"] ?>
-										</a>
-									</td>
 												<td>
-													<?php 
-													echo $i["freg_so"] 
-													?>
+													<a 
+													href="actividad.php?ids=<?php echo $i["idsujeto"] ?>
+													&ido=<?php echo $i["idobjeto"] ?>"> 
+														<?php echo $i["nsujeto"]." // ".$i["nobjeto"] ?>
+													</a>
 												</td>
 											</tr>
 											<?php } ?>
@@ -98,8 +94,7 @@
 									
 								</div>
 							</section>
-							<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
-							<input id="id-area-e" type="hidden">
+							
 						</div>
 					</div>
 
