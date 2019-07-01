@@ -13,7 +13,7 @@
 		o.id as idobjeto, o.nombre as nobjeto 
 		from sujeto_objeto so, sujeto s, objeto o, usuario u, sesion ss 
 		where s.id = so.sujeto_id and o.id = so.objeto_id and so.sesion_id = ss.id 
-		and ss.usuario_id = u.id and u.id = $idu order by nsujeto ASC";
+		and ss.usuario_id = u.id and u.id = $idu order by nsujeto ASC, nobjeto ASC";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}

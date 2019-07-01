@@ -1,6 +1,6 @@
 <?php
     /*
-     * TFE Life Planner - Ficha actividad
+     * TFE Life Planner - Ficha actividad sujeto-objeto
      * 
      */
     session_start();
@@ -13,22 +13,20 @@
     include( "database/data-proposito.php" );
 
     include( "fn/fn-actividad.php" );
+    include( "fn/fn-sujeto-objeto.php" );
     checkSession( "" );
-
-    /*
-		$actividad = obtenerActividadSOPAPorId( $dbh, $id_act );
-        $pactividades = obtenerListaActividades( $dbh, $actividad["idprop"] );
-        $propositos = obtenerPropositosPorSesion( $dbh, $actividad["idsesion"] );
-    */
     
     $idu = $_SESSION["user"]["id"];
     if( isset( $_GET["ids"], $_GET["ido"] ) ){
         $ids = $_GET["ids"];	$ido = $_GET["ido"];
         $reg_so = obtenerSujetoObjetoPorids( $dbh, $ids, $ido );
         $propositos = obtenerPropositosSujetoObjeto( $dbh, $ids, $ido );
+
+        $indice = obtenerIndiceSOPAPorUsuario( $dbh, $idu );
+        $so_ant_sig = obtenerSOAntSig( $indice, $ids, $ido );
     }
     $titulo_pagina = $reg_so["nsujeto"]." - ".$reg_so["nobjeto"];
-    
+     
 ?>
 <!doctype html>
 <html class="fixed">
@@ -66,7 +64,7 @@
 			    line-height: 40px !important;
 			}
 			.info-act, .act_sesion{ margin-left: 35px; }
-
+			#panel_act_prop, .data_act_info{ display: none; }
 			.accord_act_cont{ margin-left: 25px; }
 		</style>
 	</head>
@@ -86,18 +84,10 @@
 					<?php include( "secciones/titulo_pagina.php" ); ?>
 
 					<div class="row">
-						
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							
-							<section class="panel panel-featured-top panel-featured-primary">						
-								<div class="panel-body">
-									<?php 
-										include( "secciones/sopa/panel_propositos_so.php" ); 
-									?>
-								</div>
-
-							</section>
-
+							<?php 
+								include( "secciones/sopa/panel_propositos_so.php" ); 
+							?>
 						</div>
 
 						<div class="col-md-6 col-sm-6 col-xs-12">
@@ -106,6 +96,13 @@
 							?>
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<?php include( "secciones/sopa/nav_sujetos_objetos.php" ); ?>
+						</div>
+					</div>
+
 				</section>
 			</div>
 		</section>
@@ -138,7 +135,7 @@
 
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>
-		<script src="js/fn-area.js"></script>
+		<script src="js/fn-actividad.js"></script>
 		<script src="js/validate-extend.js"></script>
 		
 	</body>

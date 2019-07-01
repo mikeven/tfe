@@ -11,6 +11,19 @@
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
+	function obtenerListaPropositosSO( $dbh, $idso ){
+		// Devuelve los propósitos de un registro sujeto-objeto 
+		// y actividades asociadas (id)
+		$propositos = array();
+		$registros = obtenerListaPropositos( $dbh, $idso );
+		foreach ( $registros as $r ) {
+			$r["lactividades"] = obtenerListaActividades( $dbh, $r["id"] );
+			$propositos[] = $r;
+		}
+
+		return $propositos;
+	}
+	/* --------------------------------------------------------- */
 	function obtenerPropositosPorSesion( $dbh, $idss ){
 		// Devuelve los registros de propósitos realizados en una misma sesión
 		$q = "select p.id as id, p.descripcion as descripcion, s.id as idsujeto, 
@@ -53,19 +66,22 @@
 	}
 	/* --------------------------------------------------------- */
 	function editarProposito( $dbh, $proposito ){
-		//Elimina un registro de área
-		$q = "update proposito set descripcion = '$proposito[descripcion]' where id = $area[id]";
+		//Edita un registro de propósito
+		$q = "update proposito set descripcion = '$proposito[descripcion]' 
+		where id = $proposito[id_prop]";
+
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
 	function eliminarProposito( $dbh, $id ){
 		//Elimina un registro de área
 		$q = "delete from proposito where id = $id";
+
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
 	if( isset( $_POST["nproposito"] ) ){ 
-		// Invocación desde: js/fn-area.js
+		// Registrar nuevo propósito - Invocación desde: js/fn-proposito.js
 		include( "bd.php" );
 		include( "data-sistema.php" );
 
@@ -84,45 +100,39 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["earea"] ) ){ 
-		// Editar área Invocación desde: js/fn-area.js
+	if( isset( $_POST["edit_prop"] ) ){ 
+		// Editar área - Invocación desde: js/fn-area.js
 		include( "bd.php" );
 		include( "data-sistema.php" );
 
-		parse_str( $_POST["earea"], $area );
-		$area = escaparCampos( $dbh, $area );
-		
-		if( nombreDisponible( $dbh, "area", "nombre", $area["nombre"], $area["id"], "" ) ){
-			$rsp = editarArea( $dbh, $area );
-			if( $rsp != 0 ){
-				$res["exito"] = 1;
-				$res["mje"] = "Datos de área modificados";
-			}else{
-				$res["exito"] = 0;
-				$res["mje"] = "Error al modificar área";
-			}
-		}
-		else{ 
-			$rsp = -2;
-			$res["mje"] = "Nombre de área ya registrado";
+		parse_str( $_POST["edit_prop"], $proposito );
+		$proposito = escaparCampos( $dbh, $proposito );
+		$rsp = editarProposito( $dbh, $proposito );
+
+		if( $rsp != 0 ){
+			$res["exito"] = 1;
+			$res["mje"] = "Datos de propósito modificados";
+		}else{
+			$res["exito"] = 0;
+			$res["mje"] = "Error al editar propósito";
 		}
 
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["elim_area"] ) ){
-		// Invocación desde: js/fn-area.js
+	if( isset( $_POST["elim_proposito"] ) ){
+		// Eliminar propósito - Invocación desde: js/fn-proposito.js
 		include( "bd.php" );	
-		//include( "data-sistema.php" );
+		include( "data-sistema.php" );
+		$idp = $_POST["elim_proposito"];
 		
-		//registrosAsociadosLinea( $dbh, $_POST["id_elimlinea"] )
-		if( false ){
+		if( registroAsociadoTabla( $dbh, "actividad", "proposito_id", $idp ) ){
 			$res["exito"] = -1;
-			$res["mje"] = "Debe eliminar registros asociados al área primero.";
+			$res["mje"] = "Debe eliminar actividades primero";
 		}else{
-			eliminarArea( $dbh, $_POST["elim_area"] );
+			eliminarProposito( $dbh, $idp );
 			$res["exito"] = 1;
-			$res["mje"] = "Área eliminada con éxito";
+			$res["mje"] = "Propósito eliminado con éxito";
 		}
 		echo json_encode( $res );
 	}

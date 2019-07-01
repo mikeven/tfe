@@ -112,7 +112,7 @@
 			$res["exito"] = -1;
 			$res["mje"] = "Debe eliminar registros asociados al objeto primero.";
 		}else{
-			eliminarArea( $dbh, $_POST["elim_area"] );
+			eliminarObjeto( $dbh, $_POST["elim_area"] );
 			$res["exito"] = 1;
 			$res["mje"] = "Objeto eliminado con éxito";
 		}

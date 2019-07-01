@@ -22,7 +22,7 @@
 		// Devuelve el registro de un área dado su id
 		$q = "select act.id, act.tipo, act.tarea, act.lugar, act.direccion, 
 		act.motivo, act.contacto, date_format(act.creado,'%d/%m/%Y') as fregistro, 
-		p.descripcion as proposito from actividad act, proposito p 
+		p.id as idprop, p.descripcion as proposito from actividad act, proposito p 
 		where act.proposito_id = p.id and act.id = $id";
 
 		$rst = mysqli_query( $dbh, $q );
@@ -32,7 +32,7 @@
 	}
 	/* --------------------------------------------------------- */
 	function agregarActividad( $dbh, $a ){
-		// Procesa el registro de nueva área
+		// Procesa el registro de nueva actividad
 		$q = "insert into actividad ( tipo, tarea, lugar, direccion, motivo, contacto, 
 		creado, proposito_id ) values ('$a[tipo]', '$a[tarea]', '$a[lugar]', 
 		'$a[direccion]', '$a[motivo]', '$a[contacto]', NOW(), $a[id_prop_act] )";
@@ -42,15 +42,34 @@
 	}
 	/* --------------------------------------------------------- */
 	function editarActividad( $dbh, $a ){
-		//Elimina un registro de área
-		$q = "update actividad set tipo = '$a[tipo]' where id = $a[id]";
+		// Edita un registro de actividad
+		$q = "update actividad set tipo = '$a[tipo]', tarea = '$a[eatarea]', 
+		lugar = '$a[ealugar]', direccion = '$a[eadireccion]', motivo = '$a[eamotivo]', 
+		contacto = '$a[eacontacto]', modificado = NOW() where id = $a[id_eact]";
+		
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
 	function eliminarActividad( $dbh, $id ){
-		//Elimina un registro de área
+		// Elimina un registro de actividad
 		$q = "delete from actividad where id = $id";
 		return mysqli_query( $dbh, $q );
+	}
+	/* --------------------------------------------------------- */
+	function limpiarCamposTipoActividad( $actividad ){
+		// Elimina el contenido de los campos de actividad según tipo
+		if( $actividad["tipo"] == "g" ){
+			$actividad["eamotivo"] = $actividad["eacontacto"] = "";
+		}
+		if( $actividad["tipo"] == "e" ){
+			$actividad["eamotivo"] = $actividad["eacontacto"] = "";
+			$actividad["ealugar"] = $actividad["eadireccion"] = "";
+		}
+		if( $actividad["tipo"] == "l" ){
+			$actividad["ealugar"] = $actividad["eatarea"] = $actividad["eadireccion"] = "";
+		}
+
+		return $actividad;
 	}
 	/* --------------------------------------------------------- */
 	if( isset( $_POST["nactividad"] ) ){ 
@@ -65,8 +84,62 @@
 			$res["exito"] = 1;
 			$res["mje"] = "Actividad registrada con éxito";
 		}else{
-			$res["exito"] = 1;
+			$res["exito"] = -1;
 			$res["mje"] = "Error al registrar actividad";
+		}
+
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
+	if( isset( $_POST["edit_act"] ) ){ 
+		// Invocación desde: js/fn-actividad.js
+		include( "bd.php" );
+
+		parse_str( $_POST["edit_act"], $actividad );
+		$actividad = escaparCampos( $dbh, $actividad );
+		$actividad = limpiarCamposTipoActividad( $actividad );
+
+		$rsp = editarActividad( $dbh, $actividad );
+		
+		if( $rsp == 1 ){
+			$res["exito"] = 1;
+			$res["mje"] = "Actividad editada con éxito";
+		}else{
+			$res["exito"] = -1;
+			$res["mje"] = "Error al editar actividad";
+		}
+
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
+	if( isset( $_POST["mostrar_act"] ) ){ 
+		// Invocación desde: js/fn-actividad.js
+		include( "bd.php" );
+
+		$ida = $_POST["mostrar_act"];
+		$actividad = obtenerActividadPorId( $dbh, $ida );
+		
+		if( $actividad != NULL ){
+			$res["exito"] = 1;
+			$res["reg"] = $actividad;
+		}else{
+			$res["exito"] = -1;
+			$res["mje"] = "Error al obtener actividad";
+		}
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */	
+	if( isset( $_POST["elim_act"] ) ){ 
+		// Invocación desde: js/fn-actividad.js
+		include( "bd.php" );
+		
+		$rsp = eliminarActividad( $dbh, $_POST["elim_act"] );
+		if( $rsp != 0 ){
+			$res["exito"] = 1;
+			$res["mje"] = "Actividad eliminada con éxito";
+		}else{
+			$res["exito"] = -1;
+			$res["mje"] = "Error al eliminar actividad";
 		}
 
 		echo json_encode( $res );

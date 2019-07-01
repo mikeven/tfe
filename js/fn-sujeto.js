@@ -93,11 +93,11 @@ function bloquearListasAreaSujeto(){
     $("#agg_objeto, #agg-s-o").show();
 }
 /* --------------------------------------------------------- */
-function iniciarBotonBorrarArea(){
-    //Asigna los textos de la ventana de confirmación para borrar un área
-    iniciarVentanaModal( "btn_borrar_area", "btn_canc", 
-                         "Eliminar área", 
-                         "¿Confirma que desea eliminar área", 
+function iniciarBotonBorrarSujeto(){
+    //Asigna los textos de la ventana de confirmación para borrar un sujeto
+    iniciarVentanaModal( "btn_borrar_sujeto", "btn_canc", 
+                         "Eliminar sujeto", 
+                         "¿Confirma que desea eliminar sujeto", 
                          "Confirmar acción" );
 }
 /* --------------------------------------------------------- */

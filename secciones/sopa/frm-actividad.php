@@ -10,19 +10,22 @@
 				<input id="id_prop_act" type="hidden" name="id_prop_act">
 				<div class="row">
 					<div class="col-sm-3">
-						<div class="radio-custom radio-primary" data-tipo="a_gestion">
+						<div class="radio-custom radio-primary rnva_act" 
+						data-tipo="a_gestion">
 							<input type="radio" id="gestion" name="tipo" required value="g">
 							<label for="gestion">Gestión</label>
 						</div>
 					</div>
 					<div class="col-sm-3">
-						<div class="radio-custom radio-primary" data-tipo="a_escritorio">
+						<div class="radio-custom radio-primary rnva_act" 
+						data-tipo="a_escritorio">
 							<input type="radio" id="escritorio" name="tipo" required value="e">
 							<label for="escritorio">Escritorio</label>
 						</div>
 					</div>
 					<div class="col-sm-3">
-						<div class="radio-custom radio-primary" data-tipo="a_llamada">
+						<div class="radio-custom radio-primary rnva_act" 
+						data-tipo="a_llamada">
 							<input type="radio" id="llamada" name="tipo" required value="l">
 							<label for="llamada">Llamada</label>
 						</div>

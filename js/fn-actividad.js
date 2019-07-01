@@ -33,8 +33,7 @@
         }
     });
     /* --------------------------------------------------------- */
-    // Formulario editar propósito
-    $("#frm_edit_proposito").validate({
+    $("#frm-editactividad").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -53,12 +52,24 @@
             }
         },
         submitHandler: function(form) {
-            editarProposito();
+            editarActividad();
         }
     });
-
+    /* --------------------------------------------------------- */
     /* Inits */
     /* --------------------------------------------------------- */
+    $("#arbol_opa").on( "click", ".elim_actividad", function(){
+        // Evento invocador de ventana modal para confirmar la eliminación de área
+        $("#id-actividad-e").val( $(this).attr( "data-ida" ) );
+        var p = $(this).attr("data-desc");
+        iniciarBotonBorrarActividad( p );
+    });
+
+    $(document).on( 'click', '#btn_borrar_actividad', function(){
+        $("#btn_canc").click();
+        eliminarActividad( $("#id-actividad-e").val() );
+    });
+
     $(".btn_nactiv").on( "click", function(){
         // Evento invocador para asignar id de sujeto-objeto en formulario de nuevo propósito
         var form = $("#frm-nactividad");
@@ -70,22 +81,142 @@
         $( "#lab_na_prop" ).html( nombre_prop );
     });
     /* --------------------------------------------------------- */
-    $(".radio-custom").on( "click", function(){
-        // Evento invocador para mostrar los campos de actividad según tipo
+    $(".rnva_act").on( "click", function(){
+        // Evento para mostrar los campos de actividad según tipo (crear actividad)
         $( ".campos_act" ).fadeOut();
         var clase_trg = $(this).attr( "data-tipo" );
         $( "." + clase_trg ).fadeIn( 300 );
     });
     /* --------------------------------------------------------- */
-
+    $(".redit_act").on( "click", function(){
+        // Muestra los campos de actividad según tipo (edición actividad)
+        $( ".campos_edit_act" ).hide();
+        var clase_trg = $(this).attr( "data-tipo" );
+        $( "." + clase_trg ).fadeIn( 300 );
+    });
+    /* --------------------------------------------------------- */
+    $(".sel_actprop").on( "click", function(){
+        // Evento invocador para obtener los datos de una actividad seleccionada
+        // panel_propositos_so.php 
+        
+        var ida = $(this).attr("data-ida");
+        $("#tx_prop_act").html( $(this).attr("data-prop") );
+        mostrarActividad( ida, "panel" );
+    });
+    /* --------------------------------------------------------- */
+    $(".i_edit_act").on( "click", function(){
+        // Evento invocador para obtener los datos de una actividad 
+        // seleccionada y abrir formulario para editarla (panel_opa.php)
+        $( ".campos_edit_act" ).hide();
+        $( ".campos_edit_act :text" ).val("");
+        var ida = $(this).attr("data-ida");
+        mostrarActividad( ida, "edit" );
+    });
+    /* --------------------------------------------------------- */
 }).apply( this, [ jQuery ]);
 
 /* --------------------------------------------------------- */
-function iniciarBotonBorrarActividad(){
+function infoActividad( actividad ){
+    // Devuelve los datos de actividad según tipo
+    $(".data_act_info").hide();
+    if( actividad.tipo == 'g' ){
+        $("#act_lugar").html( actividad.lugar );
+        $("#act_dir").html( actividad.direccion );
+        $("#act_tarea_g").html( actividad.tarea );
+    }
+    if( actividad.tipo == 'e' ){
+        $("#act_tarea_e").html( actividad.tarea );
+    }
+    if( actividad.tipo == 'l' ){
+        $("#act_motivo").html( actividad.motivo );
+        $("#act_contacto").html( actividad.contacto );
+    }   
+}
+/* --------------------------------------------------------- */
+function resetClasePanelAct(){
+    // Elimina el color del panel de actividades
+    $("#panel_act_prop").removeClass("panel-featured-danger");
+    $("#panel_act_prop").removeClass("panel-featured-warning");
+    $("#panel_act_prop").removeClass("panel-featured-success");
+    $("#icono_actividad").removeClass();
+    $("#bg_icono_act").removeClass( "bg-danger bg-warning bg-success");
+}
+/* --------------------------------------------------------- */
+function claseColorIconoAct( tipo ){
+    // Devuelve la clase correspondiente a una actividad según su tipo     
+}
+/* --------------------------------------------------------- */
+function claseColorAct( tipo ){
+    // Devuelve el clase color correspondiente a una actividad según su tipo
+    var color = {   "g" : "danger",
+                    "e" : "warning",
+                    "l" : "success" }; 
+    return color[tipo];
+}
+/* --------------------------------------------------------- */
+function iconoActividad( tipo ){
+    // Devuelve la clase ícono correspondiente a una actividad según su tipo
+    var iconos = {  "g" : "fa fa-automobile",
+                    "e" : "fa fa-desktop",
+                    "l" : "fa fa-phone" }; 
+    return iconos[tipo];
+}
+/* --------------------------------------------------------- */
+function etiquetaActividad( tipo ){
+    // Devuelve la etiqueta del tipo de actvidad según su tipo
+    var texto = {   "g" : "Gestión",
+                    "e" : "Escritorio",
+                    "l" : "Llamada" }; 
+    return texto[tipo];
+    }
+/* --------------------------------------------------------- */
+function mostrarDatosPanelActividad( actividad ){
+    // Muestra los datos de una actividad seleccionada
+    resetClasePanelAct();
+    $("#tx_act").html( etiquetaActividad( actividad.tipo ) );
+    $("#panel_act_prop").addClass( "panel-featured-" + claseColorAct( actividad.tipo ) );
+    $("#icono_actividad").addClass( iconoActividad( actividad.tipo ) );
+    $("#bg_icono_act").addClass( "bg-" + claseColorAct( actividad.tipo ) );
+    $("#panel_act_prop").show();
+    infoActividad( actividad );
+    $("#info-" + actividad.tipo ).show();
+}
+/* --------------------------------------------------------- */
+function infoEditActividad( actividad ){
+    // 
+    
+    if( actividad.tipo == 'g' ){
+        $(".ae_gestion").show();
+        $("#gestion").prop('checked', true);
+        $("#editlugar").val( actividad.lugar );
+        $("#editdir").val( actividad.direccion );
+        $("#edittarea").val( actividad.tarea );
+    }
+    if( actividad.tipo == 'e' ){
+        $(".ae_escritorio").show();
+        $("#escritorio").prop('checked', true);
+        $("#edittarea").val( actividad.tarea );
+    }
+    if( actividad.tipo == 'l' ){
+        $(".ae_llamada").show();
+        $("#llamada").prop('checked', true);
+        $("#editmotivo").val( actividad.motivo );
+        $("#editcontacto").val( actividad.contacto );
+    }
+}
+/* --------------------------------------------------------- */
+function mostrarDatosEditActividad( actividad ){
+    // Muestra los datos de una actividad para su edición
+    $("#lab_ea_prop").html( actividad.proposito );
+    $("#id_edit_act").val( actividad.id );
+    infoEditActividad( actividad );
+}
+/* --------------------------------------------------------- */
+function iniciarBotonBorrarActividad( param ){
     //Asigna los textos de la ventana de confirmación para borrar un propósito
-    iniciarVentanaModal( "btn_borrar_area", "btn_canc", 
-                         "Eliminar área", 
-                         "¿Confirma que desea eliminar área", 
+    iniciarVentanaModal( "btn_borrar_actividad", "btn_canc", 
+                         "Eliminar " + param, 
+                         "¿Confirma que desea eliminar actividad?", 
                          "Confirmar acción" );
 }
 /* --------------------------------------------------------- */
@@ -115,13 +246,13 @@ function agregarActividad(){
 /* --------------------------------------------------------- */
 function editarActividad(){
     //Invoca al servidor para editar datos de actividad
-    var frm_ea = $('#frm_edit_area').serialize();
+    var frm_edit = $('#frm-editactividad').serialize();
     var espera = "<img src='img/loading.gif' width='60'>";
     
     $.ajax({
         type:"POST",
-        url:"database/data-area.php",
-        data:{ earea: frm_ea },
+        url:"database/data-actividad.php",
+        data:{ edit_act: frm_edit },
         beforeSend: function() {
             $("#response-reg").html( espera );
         },
@@ -129,11 +260,13 @@ function editarActividad(){
             console.log( response );
             res = jQuery.parseJSON( response );
             if( res.exito == 1 ){
-                notificar( "Área", res.mje, "success" );
-                setTimeout( function() { window.location = "areas.php"; }, 3000 );
+                notificar( "S.O.P.A.", res.mje, "success" );
+                setTimeout( function() { location.reload( true ); }, 3000 );
             }
             else
-                notificar( "Área", res.mje, "error" );
+                notificar( "S.O.P.A.", res.mje, "error" );
+
+            $("#cl_frm-edit_act").click();
         }
     });
 }
@@ -142,17 +275,39 @@ function eliminarActividad( id ){
     //Invoca al servidor para eliminar actividad
     $.ajax({
         type:"POST",
-        url:"database/data-area.php",
-        data:{ elim_area: id },
+        url:"database/data-actividad.php",
+        data:{ elim_act: id },
         success: function( response ){
             console.log( response );
             res = jQuery.parseJSON(response);
             if( res.exito == 1 ){ 
-                notificar( "Propósito", res.mje, "success" );
-                setTimeout( function() { window.location = "areas.php"; }, 3000 );
+                notificar( "S.O.P.A.", res.mje, "success" );
+                setTimeout( function() { location.reload( true ); }, 3000 );
             }
             if( res.exito == -1 ){ 
-                notificar( "Eliminar propósito", res.mje, "error" );
+                notificar( "S.O.P.A.", res.mje, "error" );
+            }
+        }
+    });
+}
+/* --------------------------------------------------------- */
+function mostrarActividad( id, dst ){
+    //Invoca al servidor para obtener actividad por id
+    $.ajax({
+        type:"POST",
+        url:"database/data-actividad.php",
+        data:{ mostrar_act: id },
+        success: function( response ){
+            
+            res = jQuery.parseJSON(response);
+            if( res.exito == 1 ){ 
+                if( dst == "panel" )
+                    mostrarDatosPanelActividad( res.reg ); 
+                if( dst == "edit" )
+                    mostrarDatosEditActividad( res.reg ); 
+            }
+            if( res.exito == -1 ){ 
+                
             }
         }
     });

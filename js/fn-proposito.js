@@ -34,7 +34,7 @@
     });
     /* --------------------------------------------------------- */
     // Formulario editar propósito
-    $("#frm_edit_proposito").validate({
+    $("#frm-editproposito").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
@@ -59,6 +59,18 @@
 
     /* Inits */
     /* --------------------------------------------------------- */
+    $("#arbol_opa").on( "click", ".elim_prop", function(){
+        // Evento de ventana modal para confirmar la eliminación de propósito
+        $("#id-proposito-e").val( $(this).attr( "data-idp" ) );
+        var p = $(this).attr( "data-desc" );
+        iniciarBotonBorrarProposito( p );
+    });
+    /* --------------------------------------------------------- */
+    $(document).on( 'click', '#btn_borrar_proposito', function(){
+        $("#btn_canc").click();
+        eliminarProposito( $("#id-proposito-e").val() );
+    });
+    /* --------------------------------------------------------- */
     $(".btn_nprop").on( "click", function(){
         // Evento invocador para asignar id de sujeto-objeto en formulario de nuevo propósito
         var iso = $(this).attr( "data-iso" );
@@ -66,23 +78,30 @@
         $( "#id_prop_so" ).val( iso );
         $( "#lab_np_obj" ).html( nombre_suj_obj );
     });
-
+    /* --------------------------------------------------------- */
     $('#treeBasic').on('select_node.jstree', function (e, data) {
-            if (data.node.children.length > 0) {
-                $('#treeBasic').jstree(true).deselect_node(data.node);                    
-                $('#treeBasic').jstree(true).toggle_node(data.node);                    
-            }
-        })
+        if (data.node.children.length > 0) {
+            $('#treeBasic').jstree(true).deselect_node(data.node);                    
+            $('#treeBasic').jstree(true).toggle_node(data.node);                    
+        }
+    })
+    /* --------------------------------------------------------- */
+    $(".i_edit_prop").on( "click", function(){
+        // Evento invocador para mostrar los datos de propósito a editar 
+        // (panel_opa.php)
+        $("#id_edit_prop").val( $(this).attr( "data-idp" ) );
+        $("#desc_edit_prop").val( $(this).attr( "data-desc" ) );
+    });
     /* --------------------------------------------------------- */
 
 }).apply( this, [ jQuery ]);
 
 /* --------------------------------------------------------- */
-function iniciarBotonBorrarProposito(){
+function iniciarBotonBorrarProposito( param ){
     //Asigna los textos de la ventana de confirmación para borrar un propósito
-    iniciarVentanaModal( "btn_borrar_area", "btn_canc", 
-                         "Eliminar área", 
-                         "¿Confirma que desea eliminar área", 
+    iniciarVentanaModal( "btn_borrar_proposito", "btn_canc", 
+                         "Eliminar " + param, 
+                         "¿Confirma que desea eliminar propósito?", 
                          "Confirmar acción" );
 }
 /* --------------------------------------------------------- */
@@ -111,25 +130,26 @@ function agregarProposito(){
 /* --------------------------------------------------------- */
 function editarProposito(){
     //Invoca al servidor para editar datos de propósito
-    var frm_ea = $('#frm_edit_area').serialize();
+    var frm_ep = $('#frm-editproposito').serialize();
     var espera = "<img src='img/loading.gif' width='60'>";
     
     $.ajax({
         type:"POST",
-        url:"database/data-area.php",
-        data:{ earea: frm_ea },
+        url:"database/data-proposito.php",
+        data:{ edit_prop: frm_ep },
         beforeSend: function() {
             $("#response-reg").html( espera );
         },
         success: function( response ){
-            console.log( response );
             res = jQuery.parseJSON( response );
             if( res.exito == 1 ){
-                notificar( "Área", res.mje, "success" );
-                setTimeout( function() { window.location = "areas.php"; }, 3000 );
+                notificar( "S.O.P.A.", res.mje, "success" );
+                setTimeout( function() { location.reload( true ); }, 3000 );
             }
             else
-                notificar( "Área", res.mje, "error" );
+                notificar( "S.O.P.A.", res.mje, "error" );
+
+            $("#cl_frm-edit_prop").click();
         }
     });
 }
@@ -138,17 +158,17 @@ function eliminarProposito( id ){
     //Invoca al servidor para eliminar propósito
     $.ajax({
         type:"POST",
-        url:"database/data-area.php",
-        data:{ elim_area: id },
+        url:"database/data-proposito.php",
+        data:{ elim_proposito: id },
         success: function( response ){
             console.log( response );
             res = jQuery.parseJSON(response);
             if( res.exito == 1 ){ 
-                notificar( "Propósito", res.mje, "success" );
-                setTimeout( function() { window.location = "areas.php"; }, 3000 );
+                notificar( "S.O.P.A.", res.mje, "success" );
+                setTimeout( function() { location.reload( true ); }, 3000 );
             }
             if( res.exito == -1 ){ 
-                notificar( "Eliminar propósito", res.mje, "error" );
+                notificar( "S.O.P.A.", res.mje, "error" );
             }
         }
     });

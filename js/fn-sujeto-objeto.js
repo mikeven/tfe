@@ -64,14 +64,6 @@ function cargarOpcionesLista( regs, idlista ){
     $( lista ).appendTo( idlista );
 }
 /* --------------------------------------------------------- */
-function iniciarBotonBorrarProposito(){
-    //Asigna los textos de la ventana de confirmación para borrar un propósito
-    iniciarVentanaModal( "btn_borrar_area", "btn_canc", 
-                         "Eliminar área", 
-                         "¿Confirma que desea eliminar área", 
-                         "Confirmar acción" );
-}
-/* --------------------------------------------------------- */
 function agregarSujetoObjeto(){
     //Invoca al servidor para agregar nuevo registro sujeto - objeto
     var frm_nso = $('#frm_sujeto_objeto').serialize();

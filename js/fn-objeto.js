@@ -59,15 +59,15 @@
 
     /* Inits */
     /* --------------------------------------------------------- */
-    $("#tabla_areas").on( "click", ".elim_area", function(){
+    $("#tabla_objetos").on( "click", ".elim_area", function(){
         // Evento invocador de ventana modal para confirmar la eliminación de área
         $("#id-area-e").val( $(this).attr( "data-ida" ) );
         iniciarBotonBorrarArea();
     });
 
-    $(document).on( 'click', '#btn_borrar_area', function(){
+    $(document).on( 'click', '#btn_borrar_objeto', function(){
         $("#btn_canc").click();
-        eliminarArea( $("#id-area-e").val() );
+        eliminarObjeto( $("#id-area-e").val() );
     });
 
     $("#lobjetos").on( 'change', function(){
@@ -82,11 +82,11 @@ function aggS_O(){
     $("#agg-s-o").fadeIn(300);
 }
 /* --------------------------------------------------------- */
-function iniciarBotonBorrarArea(){
-    //Asigna los textos de la ventana de confirmación para borrar un área
-    iniciarVentanaModal( "btn_borrar_area", "btn_canc", 
-                         "Eliminar área", 
-                         "¿Confirma que desea eliminar área", 
+function iniciarBotonBorrarObjeto(){
+    //Asigna los textos de la ventana de confirmación para borrar un objeto
+    iniciarVentanaModal( "btn_borrar_objeto", "btn_canc", 
+                         "Eliminar objeto", 
+                         "¿Confirma que desea eliminar objeto", 
                          "Confirmar acción" );
 }
 /* --------------------------------------------------------- */
@@ -146,12 +146,12 @@ function editarObjeto( frm ){
     });
 }
 /* --------------------------------------------------------- */
-function eliminarArea( id ){
-    //Invoca al servidor para eliminar área
+function eliminarObjeto( id ){
+    //Invoca al servidor para eliminar objeto
     $.ajax({
         type:"POST",
-        url:"database/data-area.php",
-        data:{ elim_area: id },
+        url:"database/data-objeto.php",
+        data:{ elim_objeto: id },
         success: function( response ){
             console.log( response );
             res = jQuery.parseJSON(response);

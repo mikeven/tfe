@@ -113,7 +113,7 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
-	if( isset( $_POST["elim_area"] ) ){
+	if( isset( $_POST["elim_sujeto"] ) ){
 		// Invocación desde: js/fn-area.js
 		include( "bd.php" );	
 		//include( "data-sistema.php" );
@@ -123,7 +123,7 @@
 			$res["exito"] = -1;
 			$res["mje"] = "Debe eliminar registros asociados al área primero.";
 		}else{
-			eliminarArea( $dbh, $_POST["elim_area"] );
+			eliminarSujeto( $dbh, $_POST["elim_area"] );
 			$res["exito"] = 1;
 			$res["mje"] = "Área eliminada con éxito";
 		}

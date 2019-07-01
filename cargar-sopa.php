@@ -60,6 +60,9 @@
 			.item_pro{ background-color: #2762B7 }
 			.item_act{ background-color: #1F4A89 }
 			.dd-handle{ color: #fff; }
+			.editableicon{ float: right; } 
+			.i_edit_act, .i_edit_prop{ color: #FFF; }
+			.elim_actividad, .elim_prop{ color: #d2322d; }
 		</style>
 	</head>
 	
@@ -90,10 +93,17 @@
 							<section id="arbol_opa" class="panel">
 								<header class="panel-heading">
 									<h2 class="panel-title">Propósitos - Actividades</h2>
+									<p class="panel-subtitle">
+										<i class="fa fa-puzzle-piece" aria-hidden="true"></i> Objetos | 
+										<i class="fa fa-crosshairs" aria-hidden="true"></i> Propósitos |
+										<i class="fa fa-thumb-tack" aria-hidden="true"></i> Actividades
+									</p>
 								</header>
 								<div class="panel-body">
 									<?php include( "secciones/sopa/panel_opa.php" ); ?>
-								</div>									
+								</div>
+								<input type="hidden" id="id-actividad-e" value="">			
+								<input type="hidden" id="id-proposito-e" value="">
 							</section>
 						</div>
 						<?php } ?>
@@ -101,6 +111,7 @@
 				</section>
 			</div>
 		</section>
+		<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
 
 		<!-- Vendor -->
 		<script src="assets/vendor/jquery/jquery.js"></script>

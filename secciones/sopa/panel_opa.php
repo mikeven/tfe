@@ -4,7 +4,7 @@
 			foreach ( $s_o as $so ) { 
 				$o["id"] = $so["idobjeto"];
 				$o["nombre"] = $so["nobjeto"];
-				$propositos = obtenerListaPropositos( $dbh, $so["id_so"] );
+				$propositos = obtenerListaPropositosSO( $dbh, $so["id_so"] );
 		?>
 		<li class="dd-item" data-id="<?php echo $o['id']?>">
 			<div class="dd-handle item_obj">
@@ -16,7 +16,7 @@
 				
 				<?php 
 					foreach ( $propositos as $p ) {
-						$actividades = obtenerListaActividades( $dbh, $p["id"] );
+						$actividades = $p["lactividades"];
 				?>
 				
 					<li class="dd-item" data-id="<?php echo $p['id']?>">
@@ -24,6 +24,21 @@
 							<span class="icon_obj">
 								<i class="fa fa-crosshairs" aria-hidden="true"></i>
 							</span> | <?php echo $p["descripcion"]?>
+							<div class="editableicon">
+								<a href="#frm-edit-proposito" class="modal-sizes modal-with-zoom-anim i_edit_prop" 
+								data-idp="<?php echo $p['id'] ?>" 
+								data-desc="<?php echo $p['descripcion']?>">
+									<i class="fa fa-edit" aria-hidden="true"></i>
+								</a> 
+								<?php if( count( $actividades ) == 0 ) { ?> 
+								|<a href="#confirmar-accion" 
+								class="modal-sizes modal-with-zoom-anim elim_prop" 
+								data-idp="<?php echo $p["id"] ?>"
+								data-desc="<?php echo $p['descripcion'];?>">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</a>
+								<?php } ?>
+							</div>
 						</div>
 						<ol class="dd-list">
 							<?php foreach ( $actividades as $a ) { ?>
@@ -33,7 +48,19 @@
 										<i class="fa fa-thumb-tack" aria-hidden="true"></i>
 										</span> | 
 										<?php echo "(".strtoupper( $a["tipo"] ).") ". descActividad( $a )?>
+										<div class="editableicon">
+											<a href="#frm-edit-actividad" class="modal-sizes modal-with-zoom-anim i_edit_act" 
+											data-ida="<?php echo $a['id'] ?>">
+											<i class="fa fa-edit" aria-hidden="true"></i>
+											</a> | 
+											<a href="#confirmar-accion" 
+											class="modal-sizes modal-with-zoom-anim elim_actividad" data-ida="<?php echo $a["id"] ?>"
+											data-desc="<?php echo "(".strtoupper( $a["tipo"] ).") ". descActividad( $a )?>">
+											<i class="fa fa-times" aria-hidden="true"></i>
+											</a>
+										</div>
 									</div>
+									
 								</li>
 							<?php } ?>
 							<li class="dd-item" data-id="nueva_actividad">
@@ -75,3 +102,6 @@
 </div>
 <?php include( "secciones/sopa/frm-proposito.php" ); ?>
 <?php include( "secciones/sopa/frm-actividad.php" ); ?>
+
+<?php include( "secciones/sopa/frm-edit-proposito.php" ); ?>
+<?php include( "secciones/sopa/frm-edit-actividad.php" ); ?>

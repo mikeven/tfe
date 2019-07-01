@@ -155,7 +155,7 @@
 			$res["exito"] = -1;
 			$res["mje"] = "Debe eliminar registros asociados al área primero.";
 		}else{
-			eliminarArea( $dbh, $_POST["elim_area"] );
+			eliminarSO( $dbh, $_POST["elim_area"] );
 			$res["exito"] = 1;
 			$res["mje"] = "Área eliminada con éxito";
 		}
