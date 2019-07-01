@@ -1,10 +1,12 @@
 <section id="panel_act_prop" class="panel panel-warning">
 	<header class="panel-heading">
 		<h2 class="panel-title">
-			<i id="icono_actividad" class="fa"></i> | 
+			<i id="icono_actividad" class="fa"></i> |
 			<strong >Actividad:</strong>
 			<span id="tx_act"> </span>
+			<div id="act_prioridad"><i class="fa fa-star"></i></div>
 		</h2>
+		
 	</header>
 	<div class="panel-body">
 		<div class="widget-summary">
@@ -46,7 +48,16 @@
 					</div>
 				</div>
 				<div class="summary-footer">
-					<button type="button" class="mb-xs mt-xs mr-xs btn btn-primary"><i class="fa fa-star"></i> Prioridad</button>
+					<a href="#!" id="dar_p" class="btn_priord" data-ida="">
+						<button type="button" class="mb-xs mt-xs mr-xs btn btn-primary">
+							<i class="fa fa-star"></i> Prioridad
+						</button>
+					</a>
+					<a href="#!" id="quitar_p" class="btn_priord" data-ida="">
+						<button type="button" class="mb-xs mt-xs mr-xs btn btn-primary">
+							<i class="fa fa-star"></i> Quitar Prioridad
+						</button>
+					</a>
 				</div>
 			</div>
 		</div>

@@ -20,7 +20,7 @@
 	/* --------------------------------------------------------- */
 	function obtenerActividadPorId( $dbh, $id ){
 		// Devuelve el registro de un área dado su id
-		$q = "select act.id, act.tipo, act.tarea, act.lugar, act.direccion, 
+		$q = "select act.id, act.tipo, act.estado, act.tarea, act.lugar, act.direccion, 
 		act.motivo, act.contacto, date_format(act.creado,'%d/%m/%Y') as fregistro, 
 		p.id as idprop, p.descripcion as proposito from actividad act, proposito p 
 		where act.proposito_id = p.id and act.id = $id";
@@ -33,8 +33,9 @@
 	/* --------------------------------------------------------- */
 	function agregarActividad( $dbh, $a ){
 		// Procesa el registro de nueva actividad
-		$q = "insert into actividad ( tipo, tarea, lugar, direccion, motivo, contacto, 
-		creado, proposito_id ) values ('$a[tipo]', '$a[tarea]', '$a[lugar]', 
+		$estado = "creada";
+		$q = "insert into actividad ( tipo, estado, tarea, lugar, direccion, motivo, contacto, 
+		creado, proposito_id ) values ('$a[tipo]', '$estado', '$a[tarea]', '$a[lugar]', 
 		'$a[direccion]', '$a[motivo]', '$a[contacto]', NOW(), $a[id_prop_act] )";
 
 		$data = mysqli_query( $dbh, $q );
@@ -46,6 +47,14 @@
 		$q = "update actividad set tipo = '$a[tipo]', tarea = '$a[eatarea]', 
 		lugar = '$a[ealugar]', direccion = '$a[eadireccion]', motivo = '$a[eamotivo]', 
 		contacto = '$a[eacontacto]', modificado = NOW() where id = $a[id_eact]";
+		
+		return mysqli_query( $dbh, $q );
+	}
+	/* --------------------------------------------------------- */
+	function asignarPrioridad( $dbh, $actividad ){
+		// Edita un registro de actividad para actualizar su valor de prioridad
+		$q = "update actividad set estado = '$actividad[estado]', 
+		fecha_prioridad = $actividad[fecha_p] where id = $actividad[id]";
 		
 		return mysqli_query( $dbh, $q );
 	}
@@ -69,6 +78,21 @@
 			$actividad["ealugar"] = $actividad["eatarea"] = $actividad["eadireccion"] = "";
 		}
 
+		return $actividad;
+	}
+	/* --------------------------------------------------------- */
+	function obtenerDataPrioridad( $ida, $accion ){
+		// Devuelve los datos para la asignación de prioridad en una actividad
+		
+		$actividad["id"] = $ida; 
+		if( $accion == "dar_p" ){
+			$actividad["estado"] = "prioridad";
+			$actividad["fecha_p"] = "NOW()";
+		}
+		if( $accion == "quitar_p" ){
+			$actividad["estado"] = "creada";
+			$actividad["fecha_p"] = "NULL";
+		}
 		return $actividad;
 	}
 	/* --------------------------------------------------------- */
@@ -140,6 +164,26 @@
 		}else{
 			$res["exito"] = -1;
 			$res["mje"] = "Error al eliminar actividad";
+		}
+
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
+	if( isset( $_POST["prioridad"] ) ){ 
+		// Invocación desde: js/fn-actividad.js
+		include( "bd.php" );
+
+		$ida = $_POST["prioridad"];
+		$accion = $_POST["valor_a"];
+		$actividad = obtenerDataPrioridad( $ida, $accion );
+		
+		$rsp = asignarPrioridad( $dbh, $actividad );
+		if( $rsp == 1 ){
+			$res["exito"] = 1;
+			$res["mje"] = "Actividad actualizada";
+		}else{
+			$res["exito"] = -1;
+			$res["mje"] = "Error al actualizar actividad";
 		}
 
 		echo json_encode( $res );

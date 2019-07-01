@@ -113,6 +113,15 @@
         mostrarActividad( ida, "edit" );
     });
     /* --------------------------------------------------------- */
+    $(".btn_priord").on( "click", function(){
+        // Evento invocador para dar / quitar prioridad a una actividad 
+        // (panel_actividades_proposito.php)
+        var ida = $(this).attr("data-ida");
+        var acc = $(this).attr("id");
+
+        asignarPrioridadActividad( ida, acc );
+    });
+    /* --------------------------------------------------------- */
 }).apply( this, [ jQuery ]);
 
 /* --------------------------------------------------------- */
@@ -140,15 +149,29 @@ function resetClasePanelAct(){
     
 }
 /* --------------------------------------------------------- */
+function botonPrioridad( actividad ){
+    // Muestra el botón de prioridad según estado
+    $(".btn_priord").attr( "data-ida", actividad.id ); 
+    if( actividad.estado == "creada" ) $("#dar_p").show();
+    if( actividad.estado == "prioridad" ) $("#quitar_p").show(); 
+}
+/* --------------------------------------------------------- */
+function actualizarBotonPrioridad( accion ){
+    // Muestra el botón de prioridad según estado, posterior a una actualización
+    $(".btn_priord").hide(); 
+    if( accion == "dar_p" ){ $("#quitar_p").show(); $("#act_prioridad").fadeIn(); }
+    if( accion == "quitar_p" ){ $("#dar_p").show(); $("#act_prioridad").fadeOut(); }
+}
+/* --------------------------------------------------------- */
 function claseColorIconoAct( tipo ){
     // Devuelve la clase correspondiente a una actividad según su tipo     
 }
 /* --------------------------------------------------------- */
 function claseColorAct( tipo ){
     // Devuelve el clase color correspondiente a una actividad según su tipo
-    var color = {   "g" : "danger",
-                    "e" : "warning",
-                    "l" : "success" }; 
+    var color = {   "g" : "success",
+                    "e" : "danger",
+                    "l" : "warning" }; 
     return color[tipo];
 }
 /* --------------------------------------------------------- */
@@ -171,6 +194,7 @@ function etiquetaActividad( tipo ){
 function mostrarDatosPanelActividad( actividad ){
     // Muestra los datos de una actividad seleccionada panel sujeto-objeto
     resetClasePanelAct();
+    botonPrioridad( actividad );
     $("#tx_act").html( etiquetaActividad( actividad.tipo ) );
     $("#icono_actividad").addClass( iconoActividad( actividad.tipo ) );
     $("#panel_act_prop").addClass( "panel-" + claseColorAct( actividad.tipo ) );
@@ -305,6 +329,26 @@ function mostrarActividad( id, dst ){
             }
             if( res.exito == -1 ){ 
                 
+            }
+        }
+    });
+}
+/* --------------------------------------------------------- */
+function asignarPrioridadActividad( id, accion ){
+    //Invoca al servidor para obtener actividad por id
+    $.ajax({
+        type:"POST",
+        url:"database/data-actividad.php",
+        data:{ prioridad: id, valor_a: accion },
+        success: function( response ){
+            console.log(response);
+            res = jQuery.parseJSON(response);
+            if( res.exito == 1 ){ 
+                notificar( "S.O.P.A.", res.mje, "success" );
+                actualizarBotonPrioridad( accion );
+            }
+            else{
+                notificar( "S.O.P.A.", res.mje, "error" );
             }
         }
     });
