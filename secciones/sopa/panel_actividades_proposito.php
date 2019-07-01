@@ -1,20 +1,17 @@
-<section id="panel_act_prop" class="panel panel-featured-top ">
+<section id="panel_act_prop" class="panel panel-warning">
+	<header class="panel-heading">
+		<h2 class="panel-title">
+			<i id="icono_actividad" class="fa"></i> | 
+			<strong >Actividad:</strong>
+			<span id="tx_act"> </span>
+		</h2>
+	</header>
 	<div class="panel-body">
 		<div class="widget-summary">
-			<div class="widget-summary-col widget-summary-col-icon">
-				<div id="bg_icono_act" class="summary-icon icono-tarea" 
-				data-toggle="tooltip" 
-				data-placement="top" title="">
-				<i id="icono_actividad" class=''></i>
-				</div>
-			</div>
+			
 			<div class="widget-summary-col">
 				<div class="summary">
-					<h2 class="title">
-						<strong >Actividad:</strong>
-						<span id="tx_act"> </span>
-					</h2>
-					<hr>
+		
 					<div class="info">
 						<i class="fa fa-crosshairs"></i>
 						<strong >Propósito:</strong>

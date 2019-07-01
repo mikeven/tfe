@@ -135,11 +135,9 @@ function infoActividad( actividad ){
 /* --------------------------------------------------------- */
 function resetClasePanelAct(){
     // Elimina el color del panel de actividades
-    $("#panel_act_prop").removeClass("panel-featured-danger");
-    $("#panel_act_prop").removeClass("panel-featured-warning");
-    $("#panel_act_prop").removeClass("panel-featured-success");
+    $("#panel_act_prop").removeClass( "panel-danger panel-warning panel-success");
     $("#icono_actividad").removeClass();
-    $("#bg_icono_act").removeClass( "bg-danger bg-warning bg-success");
+    
 }
 /* --------------------------------------------------------- */
 function claseColorIconoAct( tipo ){
@@ -171,12 +169,11 @@ function etiquetaActividad( tipo ){
     }
 /* --------------------------------------------------------- */
 function mostrarDatosPanelActividad( actividad ){
-    // Muestra los datos de una actividad seleccionada
+    // Muestra los datos de una actividad seleccionada panel sujeto-objeto
     resetClasePanelAct();
     $("#tx_act").html( etiquetaActividad( actividad.tipo ) );
-    $("#panel_act_prop").addClass( "panel-featured-" + claseColorAct( actividad.tipo ) );
     $("#icono_actividad").addClass( iconoActividad( actividad.tipo ) );
-    $("#bg_icono_act").addClass( "bg-" + claseColorAct( actividad.tipo ) );
+    $("#panel_act_prop").addClass( "panel-" + claseColorAct( actividad.tipo ) );
     $("#panel_act_prop").show();
     infoActividad( actividad );
     $("#info-" + actividad.tipo ).show();

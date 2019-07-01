@@ -568,7 +568,7 @@ html .panel-primary .panel-heading {
 }
 
 .panel-featured-primary {
-	border-color: #0088cc;
+	border-color: #388de0;
 }
 
 .panel-featured-primary .panel-title {
@@ -592,13 +592,13 @@ html .panel-primary .panel-heading {
 }
 /* Toggle */
 .toggle label {
-	border-left-color: #0088cc;
-	color: #0088cc;
+	border-left-color: #388de0;
+	color: #388de0;
 }
 
 .toggle.active > label {
-	background: #0088cc !important;
-	border-color: #0088cc;
+	background: #388de0 !important;
+	border-color: #388de0;
 }
 /* Treeview */
 .jstree-default .jstree-hovered {

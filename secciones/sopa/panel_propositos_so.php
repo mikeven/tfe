@@ -1,14 +1,9 @@
 <section class="panel panel-featured-top panel-featured-primary">						
 	<div class="panel-body">
 		<div class="widget-summary">
-			<div class="widget-summary-col widget-summary-col-icon">
-				<div class="summary-icon bg-primary icono-tarea">
-					<i class="fa fa-crosshairs"></i>
-				</div>
-			</div>
 			<div class="widget-summary-col">
 				<div class="summary">
-					<h2 class="title"> Propósitos </h2><hr>
+					<h2 class="title"><i class="fa fa-crosshairs"></i> Propósitos </h2><hr>
 					<div class="info">
 						<div class="toggle" data-plugin-toggle data-plugin-options='{ "isAccordion": true }'>
 							<?php 
