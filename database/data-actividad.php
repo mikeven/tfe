@@ -31,6 +31,16 @@
 		return $data;
 	}
 	/* --------------------------------------------------------- */
+	function obtenerPrioridades( $dbh, $id ){
+		// Devuelve el registro de un área dado su id
+		$q = "select act.id, act.tipo, act.estado, 
+		date_format(act.fecha_prioridad,'%d/%m/%Y') as fprioridad, 
+		p.id as idprop, p.descripcion as proposito from actividad act, proposito p 
+		where act.proposito_id = p.id and act.id = $id";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
 	function agregarActividad( $dbh, $a ){
 		// Procesa el registro de nueva actividad
 		$estado = "creada";

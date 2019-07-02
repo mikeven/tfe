@@ -150,10 +150,14 @@ function resetClasePanelAct(){
 }
 /* --------------------------------------------------------- */
 function botonPrioridad( actividad ){
-    // Muestra el botón de prioridad según estado
+    // Muestra los elementos de prioridad de una actividad según estado
+    $(".btn_priord, #act_prioridad").hide();
     $(".btn_priord").attr( "data-ida", actividad.id ); 
     if( actividad.estado == "creada" ) $("#dar_p").show();
-    if( actividad.estado == "prioridad" ) $("#quitar_p").show(); 
+    if( actividad.estado == "prioridad" ) {
+        $("#quitar_p").show(); 
+        $("#act_prioridad").show();
+    }
 }
 /* --------------------------------------------------------- */
 function actualizarBotonPrioridad( accion ){

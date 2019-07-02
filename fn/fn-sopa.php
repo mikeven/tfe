@@ -25,4 +25,10 @@
             $objetos_s = obtenerObjetosPorSujeto( $dbh, $ids );
         }
     }
+
+    if( isset( $_GET["ids"], $_GET["ido"] ) ){
+        $carga_so = true;
+        $ids = $_GET["ids"];    $ido = $_GET["ido"];
+        $s_o = array( obtenerSujetoObjetoPorids( $dbh, $ids, $ido ) );
+    }
 ?>

@@ -6,6 +6,12 @@
 ?>
 
 <section class="panel panel-heading-transparent">						
+	<header class="panel-heading">
+		<h2 class="panel-title">
+			<i class="fa fa-database"></i> |
+			<strong >Otros sujetos-objetos</strong>
+		</h2>
+	</header>
 	<div class="panel-body">
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<?php if( $ant != NULL ) { ?>

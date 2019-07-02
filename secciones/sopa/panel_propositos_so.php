@@ -1,9 +1,15 @@
-<section class="panel panel-featured-top panel-featured-primary">						
+<section class="panel panel-primary">	
+	<header class="panel-heading">
+		<h2 class="panel-title">
+			<i class="fa fa-crosshairs"></i> |
+			<strong >Propósitos</strong>
+		</h2>
+	</header>					
 	<div class="panel-body">
 		<div class="widget-summary">
 			<div class="widget-summary-col">
 				<div class="summary">
-					<h2 class="title"><i class="fa fa-crosshairs"></i> Propósitos </h2><hr>
+					
 					<div class="info">
 						<div class="toggle" data-plugin-toggle data-plugin-options='{ "isAccordion": true }'>
 							<?php 
@@ -30,6 +36,9 @@
 							<?php } ?>
 						</div>
 					</div>
+					<hr>
+					<a href="<?php echo $lnk_gestion_pa ?>">
+					Gestionar propósitos y actividades</a>
 				</div>
 			</div>
 		</div>

@@ -6,7 +6,6 @@
 			<span id="tx_act"> </span>
 			<div id="act_prioridad"><i class="fa fa-star"></i></div>
 		</h2>
-		
 	</header>
 	<div class="panel-body">
 		<div class="widget-summary">

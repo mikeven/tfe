@@ -52,7 +52,7 @@
 						</a>
 					</li>
 					<li class="nav-active">
-						<a href="#!">
+						<a href="prioridades.php">
 							<i class="fa fa-star" aria-hidden="true"></i>
 							<span>Prioridades</span>
 						</a>

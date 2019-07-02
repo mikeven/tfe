@@ -6,6 +6,7 @@
 		<input type="hidden" name="idu" value="<?php echo $idu ?>">
 		<input type="hidden" name="idsesion" value="<?php echo $idsesion ?>">
 		<div class="panel-body">
+			<?php if( !isset( $carga_so ) ) { ?>
 			<div class="form-group">
 				<label class="control-label">Área</label>
 				<select id="lareas" class="form-control" required>
@@ -55,13 +56,35 @@
 						</a>
 					</th>
 				</table>
-			</div>				
+			</div>
+			<?php } else { ?>
+				<div class="form-group">
+					<label class="control-label">Sujeto</label>
+					<select id="lsujetos" class="form-control" required >
+						<option value="<?php echo $ids ?>">
+							<?php echo $s_o[0]["nsujeto"] ?>
+						</option>
+					</select>
+					<input type="hidden" name="idsujeto" value="<?php echo $ids?>">
+				</div>
+				<div class="form-group">
+					<label class="control-label">Objeto</label>
+					<select id="lobjetos" class="form-control" required disabled>
+						<option value="<?php echo $ido ?>">
+							<?php echo $s_o[0]["nobjeto"] ?>
+						</option>
+					</select>
+					<input type="hidden" name="idsujeto" value="<?php echo $ids?>">
+				</div>
+			<?php } ?>	
 		</div>
+		<?php if( !isset( $carga_so ) ) { ?>
 		<footer id="agg-s-o" class="panel-footer">
 			<button type="submit" class="mb-xs mt-xs mr-xs btn btn-obj">
 				Agregar propósitos <i class="fa fa-arrow-right"></i>
 			</button>
 		</footer>
+		<?php } ?>
 	</form>
 </section>
 <?php include( "secciones/sopa/frm-sujeto.php" ); ?>
