@@ -56,6 +56,29 @@
         }
     });
     /* --------------------------------------------------------- */
+    $("#frm-nagenda").validate({
+        highlight: function( label ) {
+            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function( label ) {
+            $(label).closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+        onkeyup: false,
+        errorPlacement: function( error, element ) {
+            var placement = element.closest('.input-group');
+            if (!placement.get(0)) {
+                placement = element;
+            }
+            if (error.text() !== '') {
+                placement.after(error);
+            }
+        },
+        submitHandler: function(form) {
+            agendarActividad();
+        }
+    });
+    /* --------------------------------------------------------- */
     /* Inits */
     /* --------------------------------------------------------- */
     $("#arbol_opa").on( "click", ".elim_actividad", function(){
@@ -120,6 +143,15 @@
         var acc = $(this).attr("id");
 
         asignarPrioridadActividad( ida, acc );
+    });
+    /* --------------------------------------------------------- */
+    $(".act_prior_cal").on( "click", function(){
+        // Evento invocador mostrar el formulario para agendar una actividad de prioridad
+        // (prioridades.php)
+        var ida = $(this).attr("data-ida");
+        var data = $(this).attr("data-desc");
+        $("#id_actividad_cal").val( ida );
+        $("#info_actividad").html( data );
     });
     /* --------------------------------------------------------- */
 }).apply( this, [ jQuery ]);
@@ -294,6 +326,28 @@ function editarActividad(){
             $("#cl_frm-edit_act").click();
         }
     });
+}
+/* --------------------------------------------------------- */
+function agendarActividad(){
+    // Invoca al servidor para agendar una actividad de prioridad
+    var frm_act = $("#frm-nagenda").serialize();
+
+    $.ajax({
+        type:"POST",
+        url:"database/data-actividad.php",
+        data:{ agendar_act: frm_act },
+        success: function( response ){
+            console.log( response );
+            res = jQuery.parseJSON(response);
+            if( res.exito == 1 ){ 
+                notificar( "Actividad", res.mje, "success" );
+                setTimeout( function() { location.reload( true ); }, 3000 );
+            }
+            if( res.exito == -1 ){ 
+                notificar( "Actividad", res.mje, "error" );
+            }
+        }
+    });   
 }
 /* --------------------------------------------------------- */
 function eliminarActividad( id ){

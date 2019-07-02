@@ -31,12 +31,16 @@
 		return $data;
 	}
 	/* --------------------------------------------------------- */
-	function obtenerPrioridades( $dbh, $id ){
+	function obtenerPrioridades( $dbh, $idu ){
 		// Devuelve el registro de un área dado su id
-		$q = "select act.id, act.tipo, act.estado, 
-		date_format(act.fecha_prioridad,'%d/%m/%Y') as fprioridad, 
-		p.id as idprop, p.descripcion as proposito from actividad act, proposito p 
-		where act.proposito_id = p.id and act.id = $id";
+		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, act.direccion, 
+		act.motivo, act.contacto,   
+		date_format(act.fecha_prioridad,'%d/%m/%Y %h:%i %p') as tprioridad, 
+		s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
+		from actividad act, proposito p, sujeto s, objeto o, sujeto_objeto so, sesion ss 
+		where act.proposito_id = p.id and act.estado = 'prioridad' and p.sujeto_objeto_id = so.id 
+		and so.sujeto_id = s.id and so.objeto_id = o.id and so.sesion_id = ss.id and ss.usuario_id = $idu 
+		order by act.fecha_prioridad ASC";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
@@ -65,6 +69,15 @@
 		// Edita un registro de actividad para actualizar su valor de prioridad
 		$q = "update actividad set estado = '$actividad[estado]', 
 		fecha_prioridad = $actividad[fecha_p] where id = $actividad[id]";
+		
+		return mysqli_query( $dbh, $q );
+	}
+	/* --------------------------------------------------------- */
+	function agendarPrioridad( $dbh, $actividad ){
+		// Edita un registro de actividad para asignar fecha en calendario
+		$q = "update actividad set estado = '$actividad[estado]', 
+		fecha_agenda = NOW(), fecha_calendario = '$actividad[fecha_cal]' 
+		where id = $actividad[id_actividad]";
 		
 		return mysqli_query( $dbh, $q );
 	}
@@ -194,6 +207,26 @@
 		}else{
 			$res["exito"] = -1;
 			$res["mje"] = "Error al actualizar actividad";
+		}
+
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
+	if( isset( $_POST["agendar_act"] ) ){ 
+		// Invocación desde: js/fn-actividad.js
+		include( "bd.php" );
+
+		parse_str( $_POST["agendar_act"], $actividad );
+		$actividad["estado"] = "agendada";
+		$actividad["fecha_cal"] = cambiaf_a_mysql( $actividad["fecha_cal"] );
+		
+		$rsp = agendarPrioridad( $dbh, $actividad );
+		if( $rsp == 1 ){
+			$res["exito"] = 1;
+			$res["mje"] = "Actividad migrada a calendario con éxito";
+		}else{
+			$res["exito"] = -1;
+			$res["mje"] = "Error al agendar actividad";
 		}
 
 		echo json_encode( $res );

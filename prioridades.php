@@ -7,12 +7,15 @@
     ini_set( 'display_errors', 1 );
     include( "database/bd.php" );
     include( "database/data-acceso.php" );
-    include( "database/data-sopa.php" );
+    include( "database/data-actividad.php" );
+
+    include( "fn/fn-actividad.php" );
+    
     checkSession( "" );
     $titulo_pagina = "Prioridades";
 
     $idu = $_SESSION["user"]["id"];
-    $indice = obtenerIndiceSOPAPorUsuario( $dbh, $idu );
+    $prioridades = obtenerPrioridades( $dbh, $idu );
 ?>
 <!doctype html>
 <html class="fixed">
@@ -46,6 +49,12 @@
 
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		<style>
+			.datepicker{ z-index:99999 !important; }
+			.isuccess .fa{ color: #47a447 !important; }
+			.iwarning .fa{ color: #ed9c28 !important; }
+			.idanger .fa{ color: #d2322d !important; }
+		</style>
 	</head>
 	
 	<body>
@@ -64,31 +73,36 @@
 
 					<div class="row">
 						
-						<div class="col-md-8 col-sm-8 col-xs-12">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							
 							<section class="panel">
 								<header class="panel-heading">
 									<h2 class="panel-title">Prioridades</h2>
+									<p class="panel-subtitle">Haga clic en una prioridad para agendarla</p>
 								</header>
 								<div id="tabla_areas" class="panel-body">
-									<table id="datatable-default"
+									<table id="datatable-prioridades"
 									class="table table-bordered table-striped mb-none" >
 										<thead>
 											<tr>
-												<th width="60%">Actividad</th>
-												<th width="40%">Fecha de prioridad</th>
+												<th width="70%">Actividad</th>
+												<th width="30%">Fecha de prioridad</th>
+												
 											</tr>
 										</thead>
 										<tbody>
-											<?php foreach ( $indice as $i ) { ?>
+											<?php foreach ( $prioridades as $a ) { ?>
 											<tr class="gradeX">
 												<td>
-													<a 
-													href="actividad.php?ids=<?php echo $i["idsujeto"] ?>
-													&ido=<?php echo $i["idobjeto"] ?>"> 
-														<?php echo $i["nsujeto"]." // ".$i["nobjeto"] ?>
+													<a href="#frm-actividad-cal" 
+													class="modal-sizes modal-with-zoom-anim act_prior_cal" 
+													data-ida="<?php echo $a["id_act"] ?>" 
+													data-desc="<?php infoPrioridadForm( $a ) ?>">
+														<?php infoPrioridad( $a ) ?>
 													</a>
 												</td>
-												<td></td>
+												<td><?php echo $a["tprioridad"] ?></td>
+												
 											</tr>
 											<?php } ?>
 										</tbody>
@@ -102,7 +116,7 @@
 
 				</section>
 			</div>
-			
+			<?php include( "secciones/sopa/frm-actividad-cal.php" ); ?>
 		</section>
 
 		<!-- Vendor -->
@@ -111,6 +125,8 @@
 		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
 		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
 		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js"></script>
+
 		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
 		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 		<script src="assets/vendor/jquery-validation/jquery.validate.js"></script>
@@ -136,11 +152,28 @@
 		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
+		
+		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+		<script src="//cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
 
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>
-		<script src="js/fn-area.js"></script>
+		<script src="js/fn-actividad.js"></script>
 		<script src="js/validate-extend.js"></script>
+		<script type="text/javascript">
+			$.fn.dataTable.moment( 'DD/MM/YY HH:mm A' );
+    
+		    $('#datatable-prioridades').dataTable({
+		      "order": [[ 1, "asc" ]]
+		    });
+
+		    $("#fagenda_act").datepicker({
+			    isRTL: false,
+			    format: 'dd/mm/yyyy',
+			    autoclose:true,
+			    language: 'es'
+			});
+		</script>
 		
 	</body>
 </html>

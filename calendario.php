@@ -58,7 +58,7 @@
 					<section class="panel">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-4">
+								<div class="col-md-4 hidden">
 									<p class="h4 text-light">Actividades</p>
 
 									<hr />
@@ -81,7 +81,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-8">
+								<div class="col-md-12">
 									<div id="calendar"></div>
 								</div>
 								
@@ -119,7 +119,29 @@
 		
 		<!-- Theme Initialization Files -->
 		<script src="assets/javascripts/theme.init.js"></script>
-		<script src="assets/javascripts/pages/examples.calendar.js"></script>
+		<script src="js/fn-calendario.js"></script>
+		<script>
+			(function() {
+				
+				/*$calendar.fullCalendar({
+					events: [
+				      {
+				        title  : 'event1',
+				        start  : '2019-07-01'
+				      },
+				      {
+				        title  : 'event2',
+				        start  : '2019-07-09'
+				      },
+				      {
+				        title  : 'event3',
+				        start  : '2019-07-05',
+				        allDay : false // will make the time show
+				      }
+				    ]
+				});*/
 
+			}).apply( this, [ jQuery ]);
+		</script>
 	</body>
 </html>
