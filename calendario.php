@@ -123,7 +123,7 @@
 		<script>
 			(function() {
 				
-				/*$calendar.fullCalendar({
+				/**$('#calendar').fullCalendar({
 					events: [
 				      {
 				        title  : 'event1',

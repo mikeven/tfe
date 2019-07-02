@@ -26,7 +26,7 @@
 		});
 	};
 
-	var addEvents = function() {
+	var addEvents = function(){
 		
 		$('#calendar').fullCalendar({
 			events: [
@@ -100,8 +100,7 @@
 
 			},
 			events: [
-
-				
+			      
 			]
 		});
 
@@ -121,12 +120,10 @@
 			.attr({ 'class': 'btn btn-sm btn-default' });
 	};
 
-	
-
 	$(function() {
 		initCalendar();
 		initCalendarDragNDrop();
-		addEvents();
+		//addEvents();
 	});
 
 }).apply(this, [ jQuery ]);
