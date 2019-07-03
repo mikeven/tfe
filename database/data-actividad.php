@@ -32,13 +32,30 @@
 	}
 	/* --------------------------------------------------------- */
 	function obtenerPrioridades( $dbh, $idu ){
-		// Devuelve el registro de un área dado su id
+		// Devuelve las actividades marcadas con prioridad
+
 		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, act.direccion, 
 		act.motivo, act.contacto,   
 		date_format(act.fecha_prioridad,'%d/%m/%Y %h:%i %p') as tprioridad, 
 		s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
 		from actividad act, proposito p, sujeto s, objeto o, sujeto_objeto so, sesion ss 
 		where act.proposito_id = p.id and act.estado = 'prioridad' and p.sujeto_objeto_id = so.id 
+		and so.sujeto_id = s.id and so.objeto_id = o.id and so.sesion_id = ss.id and ss.usuario_id = $idu 
+		order by act.fecha_prioridad ASC";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
+	function obtenerActividadesAgendadas( $dbh, $idu ){
+		// Devuelve las actividades agendadas en calendario
+
+		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, act.direccion, 
+		act.motivo, act.contacto,   
+		date_format(act.fecha_agenda,'%d/%m/%Y %h:%i %p') as fecha_agendada,
+		date_format(act.fecha_calendario,'%Y-%m-%d') as fecha_calendario, 
+		s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
+		from actividad act, proposito p, sujeto s, objeto o, sujeto_objeto so, sesion ss 
+		where act.proposito_id = p.id and act.estado = 'agendada' and p.sujeto_objeto_id = so.id 
 		and so.sujeto_id = s.id and so.objeto_id = o.id and so.sesion_id = ss.id and ss.usuario_id = $idu 
 		order by act.fecha_prioridad ASC";
 
@@ -118,6 +135,28 @@
 		}
 		return $actividad;
 	}
+	/* --------------------------------------------------------- */
+	function titActividad( $actividad ){
+      // Devuelve el texto descriptivo de una actividad según tipo
+      $texto = array(
+        'g' => $actividad["tarea"],
+        'e' => $actividad["tarea"],
+        'l' => $actividad["contacto"]." ($actividad[motivo])"
+      );
+
+      return $texto[ $actividad["tipo"] ];
+    }
+	/* --------------------------------------------------------- */
+    function colorActividad( $actividad ){
+      // Devuelve el texto descriptivo de una actividad según tipo
+      $color = array(
+        'g' => '#47a447',
+        'e' => '#d2322d',
+        'l' => '#ed9c28'
+      );
+
+      return $color[ $actividad["tipo"] ];
+    }
 	/* --------------------------------------------------------- */
 	if( isset( $_POST["nactividad"] ) ){ 
 		// Invocación desde: js/fn-actividad.js
@@ -232,4 +271,27 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
+	if( isset( $_POST["agendados"] ) ){
+		// Invocación desde: js/fn-calendario.js
+		include( "bd.php" );
+
+		session_start();
+		$e = array();
+		$idu = $_SESSION["user"]["id"];
+		$actividades = obtenerActividadesAgendadas( $dbh, $idu );
+		$eventos = array();
+		
+		foreach ( $actividades as $a ) {
+			
+			$e['id'] = $a["id_act"];
+	    	$e['title'] = titActividad( $a );
+	    	$e['start'] = $a["fecha_calendario"];
+	    	$e['allDay'] = true;
+	    	$e['color'] = colorActividad( $a );
+
+	    	array_push( $eventos, $e );
+		}
+		
+	    echo json_encode( $eventos );
+	}
 ?>

@@ -183,12 +183,16 @@ function resetClasePanelAct(){
 /* --------------------------------------------------------- */
 function botonPrioridad( actividad ){
     // Muestra los elementos de prioridad de una actividad según estado
-    $(".btn_priord, #act_prioridad").hide();
+    $(".btn_priord, #act_prioridad, #act_agendada").hide();
     $(".btn_priord").attr( "data-ida", actividad.id ); 
     if( actividad.estado == "creada" ) $("#dar_p").show();
     if( actividad.estado == "prioridad" ) {
         $("#quitar_p").show(); 
         $("#act_prioridad").show();
+    }
+    if( actividad.estado == "agendada" ) {
+       
+        $("#act_agendada").show();
     }
 }
 /* --------------------------------------------------------- */
@@ -412,3 +416,7 @@ function asignarPrioridadActividad( id, accion ){
     });
 }
 /* --------------------------------------------------------- */
+function reasignarFechaActividad( id, fecha, dif ){
+    //
+    console.log("Actividad " + id + " vario: " + dif );
+}
