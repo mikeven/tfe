@@ -163,9 +163,7 @@
 		<script type="text/javascript">
 			$.fn.dataTable.moment( 'DD/MM/YY HH:mm A' );
     
-		    $('#datatable-prioridades').dataTable({
-		      "order": [[ 1, "asc" ]]
-		    });
+		    
 
 		    $("#fagenda_act").datepicker({
 			    isRTL: false,
