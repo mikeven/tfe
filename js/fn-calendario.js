@@ -40,8 +40,7 @@
 			      },
 			      {
 			        title  : 'evento 3',
-			        start  : '2019-07-05',
-			        allDay : false // will make the time show
+			        start  : '2019-07-05'
 			      }
 			]
 		});

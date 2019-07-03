@@ -123,7 +123,7 @@
 		<script>
 			(function() {
 				
-				/**$('#calendar').fullCalendar({
+				$('#calendar').fullCalendar({
 					events: [
 				      {
 				        title  : 'event1',
@@ -139,7 +139,7 @@
 				        allDay : false // will make the time show
 				      }
 				    ]
-				});*/
+				});
 
 			}).apply( this, [ jQuery ]);
 		</script>
