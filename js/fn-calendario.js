@@ -55,6 +55,7 @@
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
+		var idu = $("#id_ssu").val();
 
 		$calendar.fullCalendar({
 			header: {
@@ -120,7 +121,7 @@
                 console.log(date);
             },
 			events: {
-				data:{ agendados: 1 },
+				data:{ agendados: 1, id_u: idu },
 	            url:"database/data-actividad.php",
 	            type: 'POST', // Send post data
 	            success: function(response) {

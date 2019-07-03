@@ -191,7 +191,6 @@ function botonPrioridad( actividad ){
         $("#act_prioridad").show();
     }
     if( actividad.estado == "agendada" ) {
-       
         $("#act_agendada").show();
     }
 }

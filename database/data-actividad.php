@@ -58,7 +58,7 @@
 		where act.proposito_id = p.id and act.estado = 'agendada' and p.sujeto_objeto_id = so.id 
 		and so.sujeto_id = s.id and so.objeto_id = o.id and so.sesion_id = ss.id and ss.usuario_id = $idu 
 		order by act.fecha_prioridad ASC";
-
+		
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
@@ -275,9 +275,9 @@
 		// Invocación desde: js/fn-calendario.js
 		include( "bd.php" );
 
-		session_start();
+		$idu = $_POST["id_u"];
 		$e = array();
-		$idu = $_SESSION["user"]["id"];
+		
 		$actividades = obtenerActividadesAgendadas( $dbh, $idu );
 		$eventos = array();
 		

@@ -86,6 +86,8 @@
 									</div>
 								</div>
 								<div class="col-md-12">
+									<input id="id_ssu" type="hidden" name="id_usuario" 
+									value="<?php echo $idu ?>">
 									<div id="calendar"></div>
 								</div>
 								
@@ -125,6 +127,21 @@
 		<script src="assets/javascripts/theme.init.js"></script>
 		<script src="js/fn-calendario.js"></script>
 		<script src="js/fn-actividad.js"></script>
+		<script type="text/javascript">
+			var idu = $("#id_ssu").val();
+			$.ajax({
+		        data:{ agendados: 1, id_u: idu },
+	            url:"database/data-actividad.php",
+	            type: 'POST', // Send post data
+	            success: function(response) {
+		            //get your events from response.events
+		            console.log(response);
+		        },
+	            error: function() {
+	                alert('There was an error while fetching events.');
+	            }
+		    });
+		</script>
 		
 	</body>
 </html>
