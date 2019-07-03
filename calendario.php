@@ -7,6 +7,10 @@
     ini_set( 'display_errors', 1 );
     include( "database/bd.php" );
     include( "database/data-acceso.php" );
+    include( "database/data-actividad.php" );
+
+    include( "fn/fn-actividad.php" );
+
     checkSession( "" );
     $titulo_pagina = "Calendario";
 
@@ -16,7 +20,7 @@
 <html class="fixed">
 	<head>
 		<!-- Título -->
-		<title>Calendario | TFE Life Planner</title>
+		<title><?php echo $titulo_pagina ?> | TFE Life Planner</title>
 		<?php include( "secciones/meta-tags.html" );?>
 
 		<!-- Vendor CSS -->
@@ -120,28 +124,7 @@
 		<!-- Theme Initialization Files -->
 		<script src="assets/javascripts/theme.init.js"></script>
 		<script src="js/fn-calendario.js"></script>
-		<script>
-			(function() {
-				
-				$('#calendar').fullCalendar({
-					events: [
-				      {
-				        title  : 'event1',
-				        start  : '2019-07-01'
-				      },
-				      {
-				        title  : 'event2',
-				        start  : '2019-07-09'
-				      },
-				      {
-				        title  : 'event3',
-				        start  : '2019-07-05',
-				        allDay : false // will make the time show
-				      }
-				    ]
-				});
-
-			}).apply( this, [ jQuery ]);
-		</script>
+		<script src="js/fn-actividad.js"></script>
+		
 	</body>
 </html>
