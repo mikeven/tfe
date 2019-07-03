@@ -26,9 +26,9 @@
 		});
 	};
 
-	var addEvents = function(){
+	var addEvents = function( c ){
 		
-		$('#calendar').fullCalendar({
+		$(c).fullCalendar({
 			events: [
 			      {
 			        title  : 'evento 1',
@@ -40,13 +40,16 @@
 			      },
 			      {
 			        title  : 'evento 3',
-			        start  : '2019-07-05'
+			        start  : '2019-07-05',
+			        allDay : false // will make the time show
 			      }
 			]
 		});
 	};
 
 	var initCalendar = function() {
+
+		
 		var $calendar = $('#calendar');
 		var date = new Date();
 		var d = date.getDate();
@@ -63,14 +66,11 @@
 
 			titleFormat: {
 				month: 'MMMM YYYY',      // September 2009
-			    week: "MMM d YYYY",      // Sep 13 2009
-			    day: 'dddd, MMM d, YYYY' // Tuesday, Sep 8, 2009
+			    /*week: "d MMMM d MMMM",
+			    day: 'dddd, MMMM d YYYY' // Tuesday, Sep 8, 2009*/
 			},
 
-			themeButtonIcons: {
-				prev: 'fa fa-caret-left',
-				next: 'fa fa-caret-right',
-			},
+			
 
 			editable: true,
 			droppable: true, // this allows things to be dropped onto the calendar !!!
@@ -98,9 +98,39 @@
 				}
 
 			},
-			events: [
-			      
-			]
+			eventDrop: function(event,start,dayDelta,minuteDelta,allDay,revertFunc) {
+
+			    var nueva_fecha = event.start._i;
+			    var id_act = event.id;
+			    console.log(event.end);
+			    //reasignarFechaActividad( id_act, nueva_fecha, dayDelta );
+
+			    /*if (allDay) {
+			      alert("Event is now all-day");
+			    }else{
+			      alert("Event has a time-of-day");
+			    }
+
+			    if (!confirm("Are you sure about this change?")) {
+			      revertFunc();
+			    }*/
+
+			},
+			drop: function(date, allDay, event) {
+                console.log(date);
+            },
+			events: {
+				data:{ agendados: 1 },
+	            url:"database/data-actividad.php",
+	            type: 'POST', // Send post data
+	            success: function(response) {
+		            //get your events from response.events
+		            console.log(response);
+		        },
+	            error: function() {
+	                alert('There was an error while fetching events.');
+	            }
+	        }
 		});
 
 		// FIX INPUTS TO BOOTSTRAP VERSIONS
@@ -117,12 +147,15 @@
 
 		$calendarButtons
 			.attr({ 'class': 'btn btn-sm btn-default' });
+
+		return $calendar;
 	};
 
 	$(function() {
+		
 		initCalendar();
 		initCalendarDragNDrop();
-		//addEvents();
+		
 	});
 
 }).apply(this, [ jQuery ]);
