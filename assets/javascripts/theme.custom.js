@@ -1,5 +1,5 @@
 /* Add here all your JS customizations */
-$('#datatable-default').dataTable({
+$('#datatable-default, #datatable-prioridades').dataTable({
 	  "paging": true,
 	  "iDisplayLength": 10,
 	  "lengthChange": true,

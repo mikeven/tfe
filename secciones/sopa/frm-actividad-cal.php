@@ -26,7 +26,7 @@
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<button type="submit" class="btn btn-primary">Guardar</button>
-						<button class="btn btn-default modal-dismiss">Cancelar</button>
+						<button id="cl_frm_act_cal" class="btn btn-default modal-dismiss">Cancelar</button>
 					</div>
 				</div>
 			</footer>

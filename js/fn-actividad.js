@@ -349,6 +349,8 @@ function agendarActividad(){
             if( res.exito == -1 ){ 
                 notificar( "Actividad", res.mje, "error" );
             }
+
+            $("#cl_frm_act_cal").click();
         }
     });   
 }

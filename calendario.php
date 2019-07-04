@@ -106,7 +106,10 @@
 		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
 		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
-		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js">
+			
+		</script>
+		<script src="assets/vendor/jquery-validation/jquery.validate.js"></script>
 		
 		<!-- Specific Page Vendor -->
 		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
@@ -120,7 +123,7 @@
 		<script src="assets/javascripts/ui-elements/examples.modals.js"></script>
 		
 		<!-- Theme Custom -->
-		<script src="assets/javascripts/theme.custom.js"></script>
+		<!--<script src="assets/javascripts/theme.custom.js"></script>-->
 		<script src="js/fn-acceso.js"></script>
 		
 		<!-- Theme Initialization Files -->
@@ -128,7 +131,7 @@
 		<script src="js/fn-calendario.js"></script>
 		<script src="js/fn-actividad.js"></script>
 		<script type="text/javascript">
-			var idu = $("#id_ssu").val();
+			/*var idu = $("#id_ssu").val();
 			$.ajax({
 		        data:{ agendados: 1, id_u: idu },
 	            url:"database/data-actividad.php",
@@ -140,7 +143,7 @@
 	            error: function() {
 	                alert('There was an error while fetching events.');
 	            }
-		    });
+		    });*/
 		</script>
 		
 	</body>

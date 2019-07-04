@@ -80,7 +80,7 @@
 									<h2 class="panel-title">Prioridades</h2>
 									<p class="panel-subtitle">Haga clic en una prioridad para agendarla</p>
 								</header>
-								<div id="tabla_areas" class="panel-body">
+								<div id="tabla_actividades_prioridad" class="panel-body">
 									<table id="datatable-prioridades"
 									class="table table-bordered table-striped mb-none" >
 										<thead>
@@ -163,7 +163,8 @@
 		<script type="text/javascript">
 			$.fn.dataTable.moment( 'DD/MM/YY HH:mm A' );
     
-		    
+		    var table = $('#datatable-prioridades').DataTable();
+		    table.order( [ 1, 'asc' ] ).draw();
 
 		    $("#fagenda_act").datepicker({
 			    isRTL: false,

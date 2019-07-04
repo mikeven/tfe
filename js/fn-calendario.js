@@ -26,27 +26,6 @@
 		});
 	};
 
-	var addEvents = function( c ){
-		
-		$(c).fullCalendar({
-			events: [
-			      {
-			        title  : 'evento 1',
-			        start  : '2019-07-01'
-			      },
-			      {
-			        title  : 'evento 2',
-			        start  : '2019-07-09'
-			      },
-			      {
-			        title  : 'evento 3',
-			        start  : '2019-07-05',
-			        allDay : false // will make the time show
-			      }
-			]
-		});
-	};
-
 	var initCalendar = function() {
 
 		
@@ -70,8 +49,6 @@
 			    /*week: "d MMMM d MMMM",
 			    day: 'dddd, MMMM d YYYY' // Tuesday, Sep 8, 2009*/
 			},
-
-			
 
 			editable: true,
 			droppable: true, // this allows things to be dropped onto the calendar !!!
@@ -99,34 +76,22 @@
 				}
 
 			},
-			eventDrop: function(event,start,dayDelta,minuteDelta,allDay,revertFunc) {
+			eventDrop: function( event ) {
 
-			    var nueva_fecha = event.start._i;
+			    var f = event.start;
+			    var nueva_fecha = moment(f, 'DD.MM.YYYY').format('YYYY-MM-DD');
 			    var id_act = event.id;
-			    console.log(event.end);
+			    
+			    console.log( id_act + " " + nueva_fecha );
 			    //reasignarFechaActividad( id_act, nueva_fecha, dayDelta );
 
-			    /*if (allDay) {
-			      alert("Event is now all-day");
-			    }else{
-			      alert("Event has a time-of-day");
-			    }
-
-			    if (!confirm("Are you sure about this change?")) {
-			      revertFunc();
-			    }*/
-
 			},
-			drop: function(date, allDay, event) {
-                console.log(date);
-            },
 			events: {
 				data:{ agendados: 1, id_u: idu },
 	            url:"database/data-actividad.php",
 	            type: 'POST', // Send post data
 	            success: function(response) {
-		            //get your events from response.events
-		            console.log(response);
+		            
 		        },
 	            error: function() {
 	                alert('There was an error while fetching events.');
