@@ -33,9 +33,11 @@
 		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 		<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.css" />
 		<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.print.css" media="print" />
+		<link rel="stylesheet" href="assets/vendor/pnotify/pnotify.custom.css" />
 
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
 		<!-- Skin CSS -->
 		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
@@ -45,6 +47,23 @@
 
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		<style type="text/css">
+			#selector_act_cal{ display: none; } 
+			.data_act_info, .btn_priord, 
+			
+			#act_prioridad, #fecha_act_agenda, #confirmacion_desagendar, 
+			#confirmar_finalizacion{ display: none; }
+
+			#act_agendada{ float: right; }
+
+			.ph-icono-act .fa, #finalizar_act .fa{ color: #FFFFFF !important; }
+			#desagendar_act .fa{ color: #000 !important;  }
+
+			#act_agendada .fa{ color: yellow !important; }
+			#confirmar_desagendar_act{ color: #d2322d;  }
+
+			.subt_accion{ color: #000 !important; float: left; }
+		</style>
 	</head>
 	<body>
 		<section class="body">
@@ -62,29 +81,7 @@
 					<section class="panel">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-4 hidden">
-									<p class="h4 text-light">Actividades</p>
-
-									<hr />
-
-									<div id='external-events'>
-										<div class="external-event label label-default" data-event-class="fc-event-default">Default Event</div>
-										<div class="external-event label label-primary" data-event-class="fc-event-primary">Primary Event</div>
-										<div class="external-event label label-success" data-event-class="fc-event-success">Success Event</div>
-										<div class="external-event label label-warning" data-event-class="fc-event-warning">Warning Event</div>
-										<div class="external-event label label-info" data-event-class="fc-event-info">Info Event</div>
-										<div class="external-event label label-danger" data-event-class="fc-event-danger">Danger Event</div>
-										<div class="external-event label label-dark" data-event-class="fc-event-dark">Dark Event</div>
-
-										<hr />
-										<div>
-											<div class="checkbox-custom checkbox-default ib">
-												<input id="RemoveAfterDrop" type="checkbox"/>
-												<label for="RemoveAfterDrop">remove after drop</label>
-											</div>
-										</div>
-									</div>
-								</div>
+								
 								<div class="col-md-12">
 									<input id="id_ssu" type="hidden" name="id_usuario" 
 									value="<?php echo $idu ?>">
@@ -92,6 +89,9 @@
 								</div>
 								
 							</div>
+							<a id="selector_act_cal" href="#actividad-calendario" 
+							class="modal-sizes modal-with-zoom-anim" data-ida=""></a>
+							<?php include( "secciones/data-actividad-cal.php" ); ?>
 						</div>
 					</section>
 				</section>
@@ -117,6 +117,7 @@
 		<script src="assets/vendor/fullcalendar/lib/moment.min.js"></script>
 		<script src="assets/vendor/fullcalendar/fullcalendar.js"></script>
 		<script src="assets/vendor/fullcalendar/lang/es.js"></script>
+		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="assets/javascripts/theme.js"></script>
@@ -128,6 +129,7 @@
 		
 		<!-- Theme Initialization Files -->
 		<script src="assets/javascripts/theme.init.js"></script>
+		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-calendario.js"></script>
 		<script src="js/fn-actividad.js"></script>
 		<script type="text/javascript">

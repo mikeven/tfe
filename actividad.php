@@ -65,7 +65,10 @@
 			    line-height: 40px !important;
 			}
 			.info-act, .act_sesion{ margin-left: 35px; }
-			#panel_act_prop, .data_act_info, .btn_priord, #act_prioridad{ display: none; }
+			
+			#panel_act_prop, .data_act_info, .btn_priord, 
+			#act_prioridad, #fecha_act_agenda{ display: none; }
+
 			.accord_act_cont{ margin-left: 25px; }
 			#act_prioridad, #act_agendada{ float: right; color: yellow; }
 

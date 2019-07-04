@@ -58,6 +58,7 @@
 							<i class="fa fa-star"></i> Quitar Prioridad
 						</button>
 					</a>
+					<span id="fecha_act_agenda"></span>
 				</div>
 			</div>
 		</div>

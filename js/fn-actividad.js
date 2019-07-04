@@ -178,7 +178,7 @@ function resetClasePanelAct(){
     // Elimina el color del panel de actividades
     $("#panel_act_prop").removeClass( "panel-danger panel-warning panel-success");
     $("#icono_actividad").removeClass();
-    
+    $("#fecha_act_agenda").hide();
 }
 /* --------------------------------------------------------- */
 function botonPrioridad( actividad ){
@@ -192,6 +192,8 @@ function botonPrioridad( actividad ){
     }
     if( actividad.estado == "agendada" ) {
         $("#act_agendada").show();
+        $("#fecha_act_agenda").html( "<b>Fecha asignada: </b>" + actividad.fcalendario );
+        $("#fecha_act_agenda").show();
     }
 }
 /* --------------------------------------------------------- */
@@ -232,6 +234,7 @@ function etiquetaActividad( tipo ){
 /* --------------------------------------------------------- */
 function mostrarDatosPanelActividad( actividad ){
     // Muestra los datos de una actividad seleccionada panel sujeto-objeto
+    
     resetClasePanelAct();
     botonPrioridad( actividad );
     $("#tx_act").html( etiquetaActividad( actividad.tipo ) );
@@ -243,7 +246,7 @@ function mostrarDatosPanelActividad( actividad ){
 }
 /* --------------------------------------------------------- */
 function infoEditActividad( actividad ){
-    // 
+    // Muestra los datos de una actividad para su edición según tipo
     
     if( actividad.tipo == 'g' ){
         $(".ae_gestion").show();
@@ -270,6 +273,18 @@ function mostrarDatosEditActividad( actividad ){
     $("#lab_ea_prop").html( actividad.proposito );
     $("#id_edit_act").val( actividad.id );
     infoEditActividad( actividad );
+}
+/* --------------------------------------------------------- */
+function resetPanelDesagendar(){
+    // Reinicia los elementos visuales para confirmar la remoción de una actividad del calendario
+    $("#confirmacion_desagendar").hide();
+    $("#desagendar_act").show();
+}
+/* --------------------------------------------------------- */
+function mostrarDatosVentanaCalendario( actividad ){
+    // Muestra los datos de una actividad en la ventana emergente de calendario
+    resetPanelDesagendar();
+    mostrarDatosPanelActividad( actividad );
 }
 /* --------------------------------------------------------- */
 function iniciarBotonBorrarActividad( param ){
@@ -388,7 +403,9 @@ function mostrarActividad( id, dst ){
                 if( dst == "panel" )
                     mostrarDatosPanelActividad( res.reg ); 
                 if( dst == "edit" )
-                    mostrarDatosEditActividad( res.reg ); 
+                    mostrarDatosEditActividad( res.reg );
+                if( dst == "ventana_cal" )
+                    mostrarDatosVentanaCalendario( res.reg ); 
             }
             if( res.exito == -1 ){ 
                 
@@ -398,7 +415,7 @@ function mostrarActividad( id, dst ){
 }
 /* --------------------------------------------------------- */
 function asignarPrioridadActividad( id, accion ){
-    //Invoca al servidor para obtener actividad por id
+    //Invoca al servidor para asignar/quitar prioridad a una actividad
     $.ajax({
         type:"POST",
         url:"database/data-actividad.php",
@@ -417,7 +434,44 @@ function asignarPrioridadActividad( id, accion ){
     });
 }
 /* --------------------------------------------------------- */
-function reasignarFechaActividad( id, fecha, dif ){
-    //
-    console.log("Actividad " + id + " vario: " + dif );
+function reasignarFechaActividad( id, nfecha ){
+    //Invoca al servidor para actualizar fecha de una actividad agendada
+    $.ajax({
+        type:"POST",
+        url:"database/data-actividad.php",
+        data:{ id_act: id, nueva_fecha: nfecha },
+        success: function( response ){
+            console.log(response);
+            res = jQuery.parseJSON(response);
+            if( res.exito == 1 ){ 
+                notificar( "Calendario", res.mje, "success" );
+            }
+            else{
+                notificar( "Calendario", res.mje, "error" );
+            }
+        }
+    });
 }
+/* --------------------------------------------------------- */
+function desagendarActividad( id ){
+    //Invoca al servidor para desagendar una actividad del calendario
+    $.ajax({
+        type:"POST",
+        url:"database/data-actividad.php",
+        data:{ desagendar: id },
+        success: function( response ){
+            console.log(response);
+            res = jQuery.parseJSON(response);
+            if( res.exito == 1 ){ 
+                notificar( "Calendario", res.mje, "success" );
+                setTimeout( function() { location.reload( true ); }, 3000 );
+            }
+            else{
+                notificar( "Calendario", res.mje, "error" );
+            }
+
+            $("#cl_data_desag_act").click();
+        }
+    });
+}
+/* --------------------------------------------------------- */

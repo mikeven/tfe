@@ -22,6 +22,11 @@
 		// Devuelve el registro de un área dado su id
 		$q = "select act.id, act.tipo, act.estado, act.tarea, act.lugar, act.direccion, 
 		act.motivo, act.contacto, date_format(act.creado,'%d/%m/%Y') as fregistro, 
+		date_format(act.fecha_prioridad,'%d/%m/%Y') as fprioridad, 
+		date_format(act.fecha_agenda,'%d/%m/%Y') as fagendada, 
+		date_format(act.fecha_calendario,'%d/%m/%Y') as fcalendario, 
+		date_format(act.fecha_terminacion,'%d/%m/%Y') as fterminacion, 
+		date_format(act.fecha_cancela,'%d/%m/%Y') as fcancelacion, 
 		p.id as idprop, p.descripcion as proposito from actividad act, proposito p 
 		where act.proposito_id = p.id and act.id = $id";
 
@@ -93,8 +98,16 @@
 	function agendarPrioridad( $dbh, $actividad ){
 		// Edita un registro de actividad para asignar fecha en calendario
 		$q = "update actividad set estado = '$actividad[estado]', 
-		fecha_agenda = NOW(), fecha_calendario = '$actividad[fecha_cal]' 
+		fecha_agenda = '$actividad[fecha_agenda]', fecha_calendario = '$actividad[fecha_cal]' 
 		where id = $actividad[id_actividad]";
+		//echo $q;
+		return mysqli_query( $dbh, $q );
+	}
+	/* --------------------------------------------------------- */
+	function actualizarFechaActividad( $dbh, $ida, $fecha ){
+		// Edita un registro de actividad para actualizar fecha de calendario
+		$q = "update actividad set fecha_agenda = NOW(), fecha_calendario = '$fecha' 
+		where id = $ida";
 		
 		return mysqli_query( $dbh, $q );
 	}
@@ -132,6 +145,21 @@
 		if( $accion == "quitar_p" ){
 			$actividad["estado"] = "creada";
 			$actividad["fecha_p"] = "NULL";
+		}
+		return $actividad;
+	}
+	/* --------------------------------------------------------- */
+	function obtenerDataAgenda( $ida, $actividad, $accion ){
+		// Devuelve los datos para la asignación de prioridad en una actividad
+		
+		if( $accion == "agendar" ){
+			$actividad["estado"] = "agendada";
+			$actividad["fecha_agenda"] = "NOW()";
+		}
+		if( $accion == "desagendar" ){
+			$actividad["estado"] = "prioridad";
+			$actividad["fecha_agenda"] = "NULL";
+			$actividad["fecha_cal"] = "NULL";
 		}
 		return $actividad;
 	}
@@ -256,7 +284,7 @@
 		include( "bd.php" );
 
 		parse_str( $_POST["agendar_act"], $actividad );
-		$actividad["estado"] = "agendada";
+		$actividad = obtenerDataAgenda( $actividad["id_actividad"], $actividad, "agendar" );
 		$actividad["fecha_cal"] = cambiaf_a_mysql( $actividad["fecha_cal"] );
 		
 		$rsp = agendarPrioridad( $dbh, $actividad );
@@ -271,6 +299,7 @@
 		echo json_encode( $res );
 	}
 	/* --------------------------------------------------------- */
+	// Obtiene las actividades agendadas en calendario
 	if( isset( $_POST["agendados"] ) ){
 		// Invocación desde: js/fn-calendario.js
 		include( "bd.php" );
@@ -294,4 +323,46 @@
 		
 	    echo json_encode( $eventos );
 	}
+	/* --------------------------------------------------------- */
+	// Actualiza la fecha de una actividad
+	if( isset( $_POST["nueva_fecha"] ) ){
+		// Invocación desde: js/fn-calendario.js
+		include( "bd.php" );
+
+		$ida = $_POST["id_act"];
+		$fecha = $_POST["nueva_fecha"];
+		
+		$rsp = actualizarFechaActividad( $dbh, $ida, $fecha );
+		if( $rsp == 1 ){
+			$res["exito"] = 1;
+			$res["mje"] = "Fecha de actividad actualizada";
+		}else{
+			$res["exito"] = -1;
+			$res["mje"] = "Error al actualizar fecha de actividad";
+		}
+
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
+	// Actualiza la fecha de una actividad
+	if( isset( $_POST["desagendar"] ) ){
+		// Invocación desde: js/fn-calendario.js
+		include( "bd.php" );
+
+		$ida = $_POST["desagendar"];
+		$actividad = obtenerDataAgenda( $ida, "", "desagendar" );
+		$actividad["id_actividad"] = $ida;
+
+		$rsp = agendarPrioridad( $dbh, $actividad );
+		if( $rsp == 1 ){
+			$res["exito"] = 1;
+			$res["mje"] = "La actividad fue quitada del calendario";
+		}else{
+			$res["exito"] = -1;
+			$res["mje"] = "Error al quitar actividad";
+		}
+		
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
 ?>

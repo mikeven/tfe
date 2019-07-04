@@ -1,0 +1,98 @@
+<div id="actividad-calendario" class="modal-block modal-block-primary mfp-hide">
+	<section id="panel_act_prop" class="panel panel-warning">
+		<header class="panel-heading ph-icono-act">
+			<h2 class="panel-title">
+				<i id="icono_actividad" class="fa fa-act"></i> |
+				<strong >Actividad:</strong>
+				<span id="tx_act"> </span>
+				<div id="act_agendada"><i class="fa fa-calendar"></i></div>
+			</h2>
+		</header>
+		<div class="panel-body">
+			<div class="widget-summary">
+				<div class="widget-summary-col">
+					<div class="summary">
+			
+						<div class="info">
+							<i class="fa fa-crosshairs"></i>
+							<strong >Propósito:</strong>
+							<span id="tx_prop_act"> </span>
+						</div>
+						
+						<div class="info">
+							<div id="info-g" class="data_act_info">
+								<div> 
+									<b>Lugar: </b> <span id="act_lugar"></span> 
+								</div>
+								<div> 
+									<b>Dirección: </b> <span id="act_dir"></span> 
+								</div>
+								<div> 
+									<b>Tarea: </b> <span id="act_tarea_g"></span> 
+								</div>
+							</div>
+							<div id="info-e" class="data_act_info">
+								<div> 
+									<b>Tarea: </b> <span id="act_tarea_e"></span> 
+								</div>
+							</div>
+							<div id="info-l" class="data_act_info">
+								<div> 
+									<b>Contacto: </b> <span id="act_contacto"></span> 
+								</div>
+								<div> 
+									<b>Motivo: </b> <span id="act_motivo"></span> 
+								</div>
+							</div>
+							<div>
+							<span id="fecha_act_agenda"></span></div>
+						</div>
+					</div>
+					<div class="summary-footer">
+						<div>
+							<p class="subt_accion panel-subtitle">Quitar actividad del calendario</p>
+							<a id="desagendar_act" href="#!">
+								<button type="button" class="btn btn-default">
+									<i class="fa fa-calendar-times-o"></i> Desagendar
+								</button>
+							</a>
+						</div>
+						
+						<div id="confirmacion_desagendar">
+							<a id="confirmar_desagendar_act" href="#!">
+								<button type="button" class="btn btn-danger">Confirmar</button>
+							</a> o 
+							<a id="cancelar_desagendar_act" href="#!">
+								Cancelar 
+							</a>
+						</div>
+						<hr>
+						<div>
+							<p class="subt_accion panel-subtitle">Marcar actividad finalizada</p>
+							<a id="finalizar_act" href="#!">
+								<button type="button" class="btn btn-success">
+									<i class="fa fa-check"></i> Finalizar
+								</button>
+							</a>
+						</div>
+						<div id="confirmar_finalizacion">
+							<a id="confirmar_finalizar_act" href="#!">
+								<button type="button" class="btn btn-danger">Confirmar</button>
+							</a> o 
+							<a id="cancelar_finalizar_act" href="#!">
+								Cancelar 
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+		<footer class="panel-footer">
+			<div class="row">
+				<div class="col-md-12 text-right">
+					<button id="cl_data_desag_act" class="btn btn-default modal-dismiss">Cerrar</button>
+				</div>
+			</div>
+		</footer>
+	</section>
+</div>

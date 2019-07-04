@@ -1,9 +1,14 @@
-
-
+// Funciones sobre calendario
+/*
+ * fn-calendario.js
+ *
+ */
+/* --------------------------------------------------------- */	
+/* --------------------------------------------------------- */
 (function( $ ) {
 
 	'use strict';
-
+	/* --------------------------------------------------------- */
 	var initCalendarDragNDrop = function() {
 		$('#external-events div.external-event').each(function() {
 
@@ -25,7 +30,7 @@
 
 		});
 	};
-
+	/* --------------------------------------------------------- */
 	var initCalendar = function() {
 
 		
@@ -77,14 +82,11 @@
 
 			},
 			eventDrop: function( event ) {
-
 			    var f = event.start;
 			    var nueva_fecha = moment(f, 'DD.MM.YYYY').format('YYYY-MM-DD');
 			    var id_act = event.id;
 			    
-			    console.log( id_act + " " + nueva_fecha );
-			    //reasignarFechaActividad( id_act, nueva_fecha, dayDelta );
-
+			    reasignarFechaActividad( id_act, nueva_fecha );
 			},
 			events: {
 				data:{ agendados: 1, id_u: idu },
@@ -96,7 +98,11 @@
 	            error: function() {
 	                alert('There was an error while fetching events.');
 	            }
-	        }
+	        },
+	        eventClick: function( event, jsEvent, view ) {
+			    $("#selector_act_cal").attr( "data-ida", event.id );
+			    $("#selector_act_cal").click();
+			}
 		});
 
 		// FIX INPUTS TO BOOTSTRAP VERSIONS
@@ -116,12 +122,59 @@
 
 		return $calendar;
 	};
-
+	/* --------------------------------------------------------- */
 	$(function() {
 		
 		initCalendar();
 		initCalendarDragNDrop();
-		
-	});
+		$("#trash").droppable({
+			zIndex: 999,
+			revert: true,      // will cause the event to go back to its
+			revertDuration: 0  //  original position after the drag
+		});
 
+	});
+	/* --------------------------------------------------------- */
+	$("#selector_act_cal").on( "click", function(){
+        // Evento invocador para mostrar datos de actividad en calendario
+        var ida = $(this).attr( "data-ida" );
+        mostrarActividad( ida, "ventana_cal" );
+    });
+
+    $("#desagendar_act").on( "click", function(){
+        // Mostrar confirmación para desagendar actividad
+        $(this).hide();
+        $("#confirmacion_desagendar").fadeIn();
+    });
+
+    $("#cancelar_desagendar_act").on( "click", function(){
+        // Cancelar acción para desagendar actividad
+        $("#confirmacion_desagendar").hide();
+        $("#desagendar_act").fadeIn();
+    });
+
+    $("#confirmar_desagendar_act").on( "click", function(){
+        // Evento invocador para desagendar una actividad
+        var ida = $("#selector_act_cal").attr( "data-ida" );
+        desagendarActividad( ida );
+    });
+    /*======================*/
+    $("#finalizar_act").on( "click", function(){
+        // Mostrar confirmación de finalización de actividad
+        $(this).hide();
+        $("#confirmar_finalizacion").fadeIn();
+    });
+
+    $("#cancelar_finalizar_act").on( "click", function(){
+        // Cancelar finalización de actividad
+        $("#confirmar_finalizacion").hide();
+        $("#finalizar_act").fadeIn();
+    });
+
+    $("#confirmar_finalizar_act").on( "click", function(){
+        // Evento invocador para desagendar una actividad
+        var ida = $("#selector_act_cal").attr( "data-ida" );
+        //
+    });
+	/* --------------------------------------------------------- */
 }).apply(this, [ jQuery ]);
