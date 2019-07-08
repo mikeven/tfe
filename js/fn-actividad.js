@@ -160,6 +160,7 @@
 function infoActividad( actividad ){
     // Devuelve los datos de actividad según tipo
     $(".data_act_info").hide();
+    $("#tx_prop_act").html( actividad.proposito );
     if( actividad.tipo == 'g' ){
         $("#act_lugar").html( actividad.lugar );
         $("#act_dir").html( actividad.direccion );

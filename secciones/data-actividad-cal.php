@@ -3,8 +3,8 @@
 		<header class="panel-heading ph-icono-act">
 			<h2 class="panel-title">
 				<i id="icono_actividad" class="fa fa-act"></i> |
-				<strong >Actividad:</strong>
-				<span id="tx_act"> </span>
+				<strong ><span id="tx_act"> </span></strong>
+				
 				<div id="act_agendada"><i class="fa fa-calendar"></i></div>
 			</h2>
 		</header>
