@@ -28,6 +28,7 @@
 		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
 		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
 		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css"/>
 
 		<!-- Specific Page Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
@@ -48,7 +49,7 @@
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style type="text/css">
-			#selector_act_cal{ display: none; } 
+			#selector_act_cal, #frm_edithora{ display: none; } 
 			.data_act_info, .btn_priord, 
 			
 			#act_prioridad, #fecha_act_agenda, #confirmacion_desagendar, 
@@ -56,13 +57,17 @@
 
 			#act_agendada{ float: right; }
 
-			.ph-icono-act .fa, #finalizar_act .fa{ color: #FFFFFF !important; }
+			.ph-icono-act .fa, #finalizar_act .fa,  
+			#frm_edithora .fa{ color: #FFFFFF !important; }
+			
 			#desagendar_act .fa{ color: #000 !important;  }
 
 			#act_agendada .fa{ color: yellow !important; }
 			#confirmar_desagendar_act{ color: #d2322d;  }
 
 			.subt_accion{ color: #000 !important; float: left; }
+			#frm_edithora{ margin-bottom: 50px; }
+			/*.input-group-btn{ width: 20%; }*/
 		</style>
 	</head>
 	<body>
@@ -105,11 +110,11 @@
 		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
 		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
 		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
 		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
-		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js">
-			
-		</script>
+		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 		<script src="assets/vendor/jquery-validation/jquery.validate.js"></script>
+		<script src="assets/vendor/fuelux/js/spinner.js"></script>
 		
 		<!-- Specific Page Vendor -->
 		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>

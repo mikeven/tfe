@@ -79,6 +79,29 @@
         }
     });
     /* --------------------------------------------------------- */
+    $("#frm_edit_hora_act").validate({
+        highlight: function( label ) {
+            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function( label ) {
+            $(label).closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+        onkeyup: false,
+        errorPlacement: function( error, element ) {
+            var placement = element.closest('.input-group');
+            if (!placement.get(0)) {
+                placement = element;
+            }
+            if (error.text() !== '') {
+                placement.after(error);
+            }
+        },
+        submitHandler: function(form) {
+            editarHoraActividad();
+        }
+    });
+    /* --------------------------------------------------------- */
     /* Inits */
     /* --------------------------------------------------------- */
     $("#arbol_opa").on( "click", ".elim_actividad", function(){
@@ -154,6 +177,17 @@
         $("#info_actividad").html( data );
     });
     /* --------------------------------------------------------- */
+    $("#cnf_edithora").on( "click", function(){
+        // Evento invocador para editar hora de una actividad en calendario
+        var id = $("#ida_nvahora").val();
+        var f = $("#fecha_act_cal").val();
+        var h = $("#nueva_hora").val();
+        var nueva_fecha = f + " " + h;
+        $("#cl_data_desag_act").click();
+        
+        reasignarFechaActividad( id, nueva_fecha, "hora" );    
+    });
+    /* --------------------------------------------------------- */
 }).apply( this, [ jQuery ]);
 
 /* --------------------------------------------------------- */
@@ -186,15 +220,18 @@ function botonPrioridad( actividad ){
     // Muestra los elementos de prioridad de una actividad según estado
     $(".btn_priord, #act_prioridad, #act_agendada").hide();
     $(".btn_priord").attr( "data-ida", actividad.id ); 
+    
     if( actividad.estado == "creada" ) $("#dar_p").show();
+    
     if( actividad.estado == "prioridad" ) {
         $("#quitar_p").show(); 
         $("#act_prioridad").show();
     }
+
     if( actividad.estado == "agendada" ) {
         $("#act_agendada").show();
         $("#fecha_act_agenda").html( "<b>Fecha asignada: </b>" + actividad.fcalendario );
-        $("#fecha_act_agenda").show();
+        $("#fecha_act_agenda").show();     
     }
 }
 /* --------------------------------------------------------- */
@@ -435,7 +472,7 @@ function asignarPrioridadActividad( id, accion ){
     });
 }
 /* --------------------------------------------------------- */
-function reasignarFechaActividad( id, nfecha ){
+function reasignarFechaActividad( id, nfecha, p ){
     //Invoca al servidor para actualizar fecha de una actividad agendada
     $.ajax({
         type:"POST",
@@ -446,6 +483,9 @@ function reasignarFechaActividad( id, nfecha ){
             res = jQuery.parseJSON(response);
             if( res.exito == 1 ){ 
                 notificar( "Calendario", res.mje, "success" );
+                if( p == 'hora'){
+                    setTimeout( function() { location.reload( true ); }, 3000 );
+                }
             }
             else{
                 notificar( "Calendario", res.mje, "error" );

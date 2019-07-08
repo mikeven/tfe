@@ -24,7 +24,7 @@
 		act.motivo, act.contacto, date_format(act.creado,'%d/%m/%Y') as fregistro, 
 		date_format(act.fecha_prioridad,'%d/%m/%Y') as fprioridad, 
 		date_format(act.fecha_agenda,'%d/%m/%Y') as fagendada, 
-		date_format(act.fecha_calendario,'%d/%m/%Y') as fcalendario, 
+		date_format(act.fecha_calendario,'%d/%m/%Y %h:%i %p') as fcalendario, 
 		date_format(act.fecha_terminacion,'%d/%m/%Y') as fterminacion, 
 		date_format(act.fecha_cancela,'%d/%m/%Y') as fcancelacion, 
 		p.id as idprop, p.descripcion as proposito from actividad act, proposito p 
@@ -36,17 +36,17 @@
 		return $data;
 	}
 	/* --------------------------------------------------------- */
-	function obtenerPrioridades( $dbh, $idu ){
-		// Devuelve las actividades marcadas con prioridad
+	function obtenerPrioridadesTipo( $dbh, $idu, $tipo ){
+		// Devuelve las actividades marcadas con prioridad por tipo
 
-		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, act.direccion, 
-		act.motivo, act.contacto,   
+		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, 
+		act.direccion, act.motivo, act.contacto,   
 		date_format(act.fecha_prioridad,'%d/%m/%Y %h:%i %p') as tprioridad, 
 		s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
 		from actividad act, proposito p, sujeto s, objeto o, sujeto_objeto so, sesion ss 
 		where act.proposito_id = p.id and act.estado = 'prioridad' and p.sujeto_objeto_id = so.id 
-		and so.sujeto_id = s.id and so.objeto_id = o.id and so.sesion_id = ss.id and ss.usuario_id = $idu 
-		order by act.fecha_prioridad ASC";
+		and so.sujeto_id = s.id and so.objeto_id = o.id and so.sesion_id = ss.id 
+		and ss.usuario_id = $idu and act.tipo = '$tipo' order by act.fecha_prioridad ASC";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
@@ -54,15 +54,15 @@
 	function obtenerActividadesAgendadas( $dbh, $idu ){
 		// Devuelve las actividades agendadas en calendario
 
-		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, act.direccion, 
-		act.motivo, act.contacto,   
+		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, 
+		act.direccion, act.motivo, act.contacto,   
 		date_format(act.fecha_agenda,'%d/%m/%Y %h:%i %p') as fecha_agendada,
-		date_format(act.fecha_calendario,'%Y-%m-%d') as fecha_calendario, 
+		date_format(act.fecha_calendario,'%Y-%m-%d %H:%i') as fecha_calendario, 
 		s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
 		from actividad act, proposito p, sujeto s, objeto o, sujeto_objeto so, sesion ss 
 		where act.proposito_id = p.id and act.estado = 'agendada' and p.sujeto_objeto_id = so.id 
-		and so.sujeto_id = s.id and so.objeto_id = o.id and so.sesion_id = ss.id and ss.usuario_id = $idu 
-		order by act.fecha_prioridad ASC";
+		and so.sujeto_id = s.id and so.objeto_id = o.id and so.sesion_id = ss.id 
+		and ss.usuario_id = $idu order by act.fecha_prioridad ASC";
 		
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
@@ -118,6 +118,16 @@
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
+	function obtenerPrioridades( $dbh, $idu ){
+		// Devuelve las actividades marcadas con prioridad
+
+		$prioridades['g'] = obtenerPrioridadesTipo( $dbh, $idu, 'g' );
+		$prioridades['e'] = obtenerPrioridadesTipo( $dbh, $idu, 'e' );
+		$prioridades['l'] = obtenerPrioridadesTipo( $dbh, $idu, 'l' );
+
+		return $prioridades;
+	}
+	/* --------------------------------------------------------- */
 	function limpiarCamposTipoActividad( $actividad ){
 		// Elimina el contenido de los campos de actividad según tipo
 		if( $actividad["tipo"] == "g" ){
@@ -166,13 +176,14 @@
 	/* --------------------------------------------------------- */
 	function titActividad( $actividad ){
       // Devuelve el texto descriptivo de una actividad según tipo
-      $texto = array(
+      /*$texto = array(
         'g' => $actividad["tarea"],
         'e' => $actividad["tarea"],
         'l' => $actividad["contacto"]." ($actividad[motivo])"
       );
 
-      return $texto[ $actividad["tipo"] ];
+      return $texto[ $actividad["tipo"] ];*/
+      return $actividad["nsujeto"]."/".$actividad["nobjeto"];
     }
 	/* --------------------------------------------------------- */
     function colorActividad( $actividad ){
@@ -286,6 +297,7 @@
 		parse_str( $_POST["agendar_act"], $actividad );
 		$actividad = obtenerDataAgenda( $actividad["id_actividad"], $actividad, "agendar" );
 		$actividad["fecha_cal"] = cambiaf_a_mysql( $actividad["fecha_cal"] );
+		$actividad["fecha_cal"] .= " ".$actividad["hora_cal"]; 
 		
 		$rsp = agendarPrioridad( $dbh, $actividad );
 		if( $rsp == 1 ){
@@ -315,7 +327,7 @@
 			$e['id'] = $a["id_act"];
 	    	$e['title'] = titActividad( $a );
 	    	$e['start'] = $a["fecha_calendario"];
-	    	$e['allDay'] = true;
+	    	$e['allDay'] = false;
 	    	$e['color'] = colorActividad( $a );
 
 	    	array_push( $eventos, $e );

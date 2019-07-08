@@ -14,12 +14,18 @@
 					</div>
 				</div>
 				<hr>
+				<span class="">Fecha de tarea</span>
 				<div class="input-group">
 					<span class="input-group-addon">
 						<i class="fa fa-calendar"></i>
 					</span>
 					<input id="fagenda_act" type="text" required 
 					data-plugin-datepicker class="form-control" name="fecha_cal">
+				</div>
+				<span class="">Hora de tarea</span>
+				<div class="input-group">
+					<span class="input-group-addon"> <i class="fa fa-clock-o"></i> </span>
+					<input type="text" name="hora_cal" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false }'>
 				</div>
 			</div>
 			<footer class="panel-footer">

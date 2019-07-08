@@ -45,7 +45,31 @@
 								</div>
 							</div>
 							<div>
-							<span id="fecha_act_agenda"></span></div>
+								<span id="fecha_act_agenda"></span> 
+							</div>
+							<div>
+								<a id="editar_hora" href="#!">
+									<i class="fa fa-clock-o"></i> Editar hora
+								</a>
+							</div>
+							<div id="frm_edithora">
+								<form id="frm_edit_hora_act">
+									<span class="">Hora de tarea</span>
+									<div class="input-group mb-md">
+										<input id="nueva_hora" type="text" 
+										data-plugin-timepicker class="form-control" 
+										data-plugin-options='{ "showMeridian": false }'>
+										<span class="input-group-btn">
+											<button id="cnf_edithora" class="btn btn-success" 
+											type="button">
+												<i class="fa fa-check"></i>
+											</button>
+										</span>
+										<input type="hidden" id="ida_nvahora" value="">
+										<input type="hidden" id="fecha_act_cal" value="">
+									</div>
+								</form>	
+							</div>
 						</div>
 					</div>
 					<div class="summary-footer">

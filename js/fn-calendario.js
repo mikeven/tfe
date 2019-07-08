@@ -47,7 +47,7 @@
 				right: 'prev,today,next,basicDay,basicWeek,month'
 			},
 
-			timeFormat: 'h:mm',
+			timeFormat: 'h:mm t',
 
 			titleFormat: {
 				month: 'MMMM YYYY',      // September 2009
@@ -82,11 +82,12 @@
 
 			},
 			eventDrop: function( event ) {
+				// Reasignación de fecha de actividad por arrastre
 			    var f = event.start;
-			    var nueva_fecha = moment(f, 'DD.MM.YYYY').format('YYYY-MM-DD');
+			    var nueva_fecha = moment(f, 'DD.MM.YYYY').format('YYYY-MM-DD H:mm');
 			    var id_act = event.id;
 			    
-			    reasignarFechaActividad( id_act, nueva_fecha );
+			    reasignarFechaActividad( id_act, nueva_fecha, "fecha" );
 			},
 			events: {
 				data:{ agendados: 1, id_u: idu },
@@ -96,11 +97,19 @@
 		            
 		        },
 	            error: function() {
-	                alert('There was an error while fetching events.');
+	                alert('Hubo un error al obtener las tareas');
 	            }
 	        },
 	        eventClick: function( event, jsEvent, view ) {
+	        	// Asignación de datos de actividad por clic en evento de calendario
+	        	var f = event.start;
+			    var hora = moment( f ).format('H:mm');
+			    var fecha = moment(f, 'DD.MM.YYYY').format('YYYY-MM-DD');
+
 			    $("#selector_act_cal").attr( "data-ida", event.id );
+			    $("#ida_nvahora").val( event.id );
+			    $("#nueva_hora").val( hora );
+			    $("#fecha_act_cal").val( fecha );
 			    $("#selector_act_cal").click();
 			}
 		});
@@ -175,6 +184,11 @@
         // Evento invocador para desagendar una actividad
         var ida = $("#selector_act_cal").attr( "data-ida" );
         //
+    });
+
+    $("#editar_hora").on( "click", function(){
+        // Mostrar confirmación de finalización de actividad
+        $("#frm_edithora").slideToggle();
     });
 	/* --------------------------------------------------------- */
 }).apply(this, [ jQuery ]);
