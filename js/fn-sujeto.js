@@ -59,11 +59,7 @@
 
     /* Inits */
     /* --------------------------------------------------------- */
-    $("#tabla_areas").on( "click", ".elim_sujeto", function(){
-        // Evento invocador de ventana modal para confirmar la eliminación de área
-        $("#id-area-e").val( $(this).attr( "data-ida" ) );
-        iniciarBotonBorrarArea();
-    });
+    
 
     $(document).on( 'click', '#btn_borrar_area', function(){
         $("#btn_canc").click();
@@ -76,6 +72,15 @@
     /* --------------------------------------------------------- */
 
 }).apply( this, [ jQuery ]);
+
+$( document ).ready(function() {
+    $("#tabla_sujetos").on( "click", ".elim_sujeto", function(){
+        // Evento invocador de ventana modal para confirmar la eliminación de sujeto
+        
+        $("#id-sujeto-e").val( $(this).attr( "data-ids" ) );
+        iniciarBotonBorrarSujeto();
+    });
+});
 
 /* --------------------------------------------------------- */
 function mostrarSelObj(){

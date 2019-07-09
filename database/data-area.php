@@ -98,10 +98,9 @@
 	if( isset( $_POST["elim_area"] ) ){
 		// Invocación desde: js/fn-area.js
 		include( "bd.php" );	
-		//include( "data-sistema.php" );
+		include( "data-sistema.php" );
 		
-		//registrosAsociadosLinea( $dbh, $_POST["id_elimlinea"] )
-		if( false ){
+		if( registroAsociadoTabla( $dbh, "sujeto_objeto", "area_id", $_POST["elim_area"] ) ){
 			$res["exito"] = -1;
 			$res["mje"] = "Debe eliminar registros asociados al área primero.";
 		}else{

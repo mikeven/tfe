@@ -111,6 +111,7 @@
 			    $("#nueva_hora").val( hora );
 			    $("#fecha_act_cal").val( fecha );
 			    $("#selector_act_cal").click();
+			    $("#frm_edithora").hide();
 			}
 		});
 

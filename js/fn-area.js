@@ -61,9 +61,13 @@
     /* --------------------------------------------------------- */
     $("#tabla_areas").on( "click", ".elim_area", function(){
         // Evento invocador de ventana modal para confirmar la eliminación de área
+        
         $("#id-area-e").val( $(this).attr( "data-ida" ) );
         iniciarBotonBorrarArea();
+        alert("click");
     });
+
+    
 
     $(document).on( 'click', '#btn_borrar_area', function(){
         $("#btn_canc").click();

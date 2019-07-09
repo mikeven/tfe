@@ -63,7 +63,7 @@
 					<?php include( "secciones/titulo_pagina.php" ); ?>
 
 					<div class="row">
-						<div class="col-md-4 col-sm-6 col-xs-12">
+						<div class="col-md-4 col-sm-6 col-xs-12 hidden">
 							<section class="panel">
 								<form id="frm-nuevo-sujeto" class="form-horizontal">
 									<input type="hidden" name="idu" value="<?php echo $idu ?>">
@@ -90,7 +90,7 @@
 								<header class="panel-heading">
 									<h2 class="panel-title">Sujetos registrados</h2>
 								</header>
-								<div id="tabla_areas" class="panel-body">
+								<div id="tabla_sujetos" class="panel-body">
 									<table id="datatable-default"
 									class="table table-bordered table-striped mb-none" >
 										<thead>
@@ -110,8 +110,8 @@
 												</td>
 												<td>
 													<a href="#confirmar-accion" 
-													class="modal-sizes modal-with-zoom-anim elim_area" 
-													data-ida="<?php echo $s["id"] ?>">
+													class="modal-sizes modal-with-zoom-anim elim_sujeto" 
+													data-ids="<?php echo $s["id"] ?>">
 														<i class="fa fa-trash-o"></i> Eliminar
 													</a>
 												</td>
@@ -123,7 +123,7 @@
 								</div>
 							</section>
 							<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
-							<input id="id-area-e" type="hidden">
+							<input id="id-sujeto-e" type="hidden">
 						</div>
 					</div>
 

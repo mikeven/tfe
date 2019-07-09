@@ -126,10 +126,10 @@
 											<?php } ?>
 										</tbody>
 									</table>
-									
+									<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
 								</div>
 							</section>
-							<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
+							
 							<input id="id-area-e" type="hidden">
 						</div>
 					</div>

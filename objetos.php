@@ -63,7 +63,7 @@
 					<?php include( "secciones/titulo_pagina.php" ); ?>
 
 					<div class="row">
-						<div class="col-md-4 col-sm-6 col-xs-12">
+						<div class="col-md-4 col-sm-6 col-xs-12 hidden">
 							<section class="panel">
 								<form id="frm-nuevo-objeto" class="form-horizontal">
 									<input type="hidden" name="idu" value="<?php echo $idu?>">
@@ -90,7 +90,7 @@
 								<header class="panel-heading">
 									<h2 class="panel-title">Objetos registrados</h2>
 								</header>
-								<div id="tabla_areas" class="panel-body">
+								<div id="tabla_objetos" class="panel-body">
 									<table id="datatable-default"
 									class="table table-bordered table-striped mb-none" >
 										<thead>
@@ -110,8 +110,8 @@
 												</td>
 												<td>
 													<a href="#confirmar-accion" 
-													class="modal-sizes modal-with-zoom-anim elim_area" 
-													data-ida="<?php echo $o["id"] ?>">
+													class="modal-sizes modal-with-zoom-anim elim_objeto" 
+													data-ido="<?php echo $o["id"] ?>">
 														<i class="fa fa-trash-o"></i> Eliminar
 													</a>
 												</td>
@@ -119,11 +119,10 @@
 											<?php } ?>
 										</tbody>
 									</table>
-									
 								</div>
 							</section>
 							<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
-							<input id="id-area-e" type="hidden">
+							<input id="id-objeto-e" type="hidden">
 						</div>
 					</div>
 

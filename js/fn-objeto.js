@@ -59,10 +59,10 @@
 
     /* Inits */
     /* --------------------------------------------------------- */
-    $("#tabla_objetos").on( "click", ".elim_area", function(){
-        // Evento invocador de ventana modal para confirmar la eliminación de área
-        $("#id-area-e").val( $(this).attr( "data-ida" ) );
-        iniciarBotonBorrarArea();
+    $("#tabla_objetos").on( "click", ".elim_objeto", function(){
+        // Evento invocador de ventana modal para confirmar la eliminación de objeto
+        $("#id-objeto-e").val( $(this).attr( "data-ido" ) );
+        iniciarBotonBorrarObjeto();
     });
 
     $(document).on( 'click', '#btn_borrar_objeto', function(){

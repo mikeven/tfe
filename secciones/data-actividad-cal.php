@@ -4,7 +4,6 @@
 			<h2 class="panel-title">
 				<i id="icono_actividad" class="fa fa-act"></i> |
 				<strong ><span id="tx_act"> </span></strong>
-				
 				<div id="act_agendada"><i class="fa fa-calendar"></i></div>
 			</h2>
 		</header>
@@ -61,7 +60,7 @@
 										data-plugin-options='{ "showMeridian": false }'>
 										<span class="input-group-btn">
 											<button id="cnf_edithora" class="btn btn-success" 
-											type="button">
+											type="button" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
 												<i class="fa fa-check"></i>
 											</button>
 										</span>
