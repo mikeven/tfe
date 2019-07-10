@@ -67,7 +67,8 @@
 
 			.subt_accion{ color: #000 !important; float: left; }
 			#frm_edithora{ margin-bottom: 50px; }
-			/*.input-group-btn{ width: 20%; }*/
+			#confirmar_finalizacion{ padding: 20px 0 80px 0; background: #f1f1f1; }
+			.tit_fin_act{ text-align: center; }
 		</style>
 	</head>
 	<body>
@@ -137,6 +138,7 @@
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-calendario.js"></script>
 		<script src="js/fn-actividad.js"></script>
+		<script src="js/validate-extend.js"></script>
 		<script type="text/javascript">
 			/*var idu = $("#id_ssu").val();
 			$.ajax({

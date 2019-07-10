@@ -90,7 +90,7 @@
 							</a>
 						</div>
 						<hr>
-						<div>
+						<div id="finalizar_act">
 							<p class="subt_accion panel-subtitle">Marcar actividad finalizada</p>
 							<a id="finalizar_act" href="#!">
 								<button type="button" class="btn btn-success">
@@ -99,12 +99,25 @@
 							</a>
 						</div>
 						<div id="confirmar_finalizacion">
-							<a id="confirmar_finalizar_act" href="#!">
-								<button type="button" class="btn btn-danger">Confirmar</button>
-							</a> o 
-							<a id="cancelar_finalizar_act" href="#!">
-								Cancelar 
-							</a>
+							<form id="frm_finalizaract">
+								<div class="form-group">
+									<h4 class="col-md-12 control-label tit_fin_act">Migrar actividad a historial</h4>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="textareaDefault">Resultado</label>
+									<div class="col-md-9">
+										<textarea name="resultado" class="form-control" rows="3" id="textareaDefault" required></textarea>
+									</div>
+									<input id="id_actfinalizar" type="hidden" name="id_actfin">
+								</div>
+								<div >
+									<div class="col-sm-9 col-sm-offset-3">
+										<a id="confirmar_finalizar_act" href="#!">
+											<button type="submit" class="btn btn-primary">Finalizar</button>
+										</a>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

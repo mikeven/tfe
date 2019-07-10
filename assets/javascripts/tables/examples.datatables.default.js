@@ -6,7 +6,7 @@
 
 	var datatableInit = function() {
 
-		$('#datatable-default').dataTable();
+		$('#datatable-defaultss').dataTable();
 
 	};
 

@@ -1,4 +1,25 @@
 /* Add here all your JS customizations */
+/* =============================================================== */
+function init_magnificPopup(){
+	// Reiniciar ventanas emergentes para elementos paginados
+	$('.modal-with-zoom-anim').magnificPopup({
+		type: 'inline',
+
+		fixedContentPos: false,
+		fixedBgPos: true,
+
+		overflowY: 'auto',
+
+		closeBtnInside: true,
+		preloader: false,
+		
+		midClick: true,
+		removalDelay: 300,
+		mainClass: 'my-mfp-zoom-in',
+		modal: true
+	});
+}
+/* =============================================================== */
 $('#datatable-default, #datatable-prioridades').dataTable({
 	  "paging": true,
 	  "iDisplayLength": 10,
@@ -20,5 +41,9 @@ $('#datatable-default, #datatable-prioridades').dataTable({
 			"next":       "Próximo",
 			"previous":   "Anterior"
 		}
-	}
+	},
+	drawCallback: function(){
+		// Reiniciar ventanas emergentes para elementos paginados
+    	init_magnificPopup(); 
+    }
 });

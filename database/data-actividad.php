@@ -104,6 +104,14 @@
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
+	function finalizarActividad( $dbh, $actividad ){
+		// Edita un registro de actividad para migrarlo a historial
+		$q = "update actividad set estado = '$actividad[estado]', 
+		fecha_terminacion = NOW() where id = $actividad[id_actfin]";
+		//echo $q;
+		return mysqli_query( $dbh, $q );
+	}
+	/* --------------------------------------------------------- */
 	function actualizarFechaActividad( $dbh, $ida, $fecha ){
 		// Edita un registro de actividad para actualizar fecha de calendario
 		$q = "update actividad set fecha_agenda = NOW(), fecha_calendario = '$fecha' 
@@ -372,6 +380,25 @@
 		}else{
 			$res["exito"] = -1;
 			$res["mje"] = "Error al quitar actividad";
+		}
+		
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
+	// Actualiza la fecha de una actividad
+	if( isset( $_POST["finalizar_act"] ) ){
+		// Invocación desde: js/fn-calendario.js
+		include( "bd.php" );
+
+		parse_str( $_POST["finalizar_act"], $actividad );
+		$actividad["estado"] = "finalizada";
+		$rsp = finalizarActividad( $dbh, $actividad );
+		if( $rsp == 1 ){
+			$res["exito"] = 1;
+			$res["mje"] = "La actividad fue migrada al historial";
+		}else{
+			$res["exito"] = -1;
+			$res["mje"] = "Error al migrar actividad";
 		}
 		
 		echo json_encode( $res );

@@ -59,11 +59,15 @@
 
     /* Inits */
     /* --------------------------------------------------------- */
-    
+    $("#tabla_sujetos").on( "click", ".elim_sujeto", function(){
+        // Evento invocador de ventana modal para confirmar la eliminación de sujeto
+        $("#id-sujeto-e").val( $(this).attr( "data-ids" ) );
+        iniciarBotonBorrarSujeto();
+    });
 
-    $(document).on( 'click', '#btn_borrar_area', function(){
+    $(document).on( 'click', '#btn_borrar_sujeto', function(){
         $("#btn_canc").click();
-        eliminarSujeto( $("#id-area-e").val() );
+        eliminarSujeto( $("#id-sujeto-e").val() );
     });
 
     $("#lsujetos").on( 'change', function(){
@@ -72,15 +76,6 @@
     /* --------------------------------------------------------- */
 
 }).apply( this, [ jQuery ]);
-
-$( document ).ready(function() {
-    $("#tabla_sujetos").on( "click", ".elim_sujeto", function(){
-        // Evento invocador de ventana modal para confirmar la eliminación de sujeto
-        
-        $("#id-sujeto-e").val( $(this).attr( "data-ids" ) );
-        iniciarBotonBorrarSujeto();
-    });
-});
 
 /* --------------------------------------------------------- */
 function mostrarSelObj(){
@@ -172,20 +167,20 @@ function editarSujeto( frm ){
 }
 /* --------------------------------------------------------- */
 function eliminarSujeto( id ){
-    //Invoca al servidor para eliminar área
+    //Invoca al servidor para eliminar sujeto
     $.ajax({
         type:"POST",
-        url:"database/data-area.php",
-        data:{ elim_area: id },
+        url:"database/data-sujeto.php",
+        data:{ elim_sujeto: id },
         success: function( response ){
             console.log( response );
             res = jQuery.parseJSON(response);
             if( res.exito == 1 ){ 
-                notificar( "Área", res.mje, "success" );
-                setTimeout( function() { window.location = "areas.php"; }, 3000 );
+                notificar( "Sujetos", res.mje, "success" );
+                setTimeout( function() { window.location = "sujetos.php"; }, 3000 );
             }
             if( res.exito == -1 ){ 
-                notificar( "Eliminar área", res.mje, "error" );
+                notificar( "Eliminar sujeto", res.mje, "error" );
             }
         }
     });

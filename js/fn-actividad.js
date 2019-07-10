@@ -102,6 +102,29 @@
         }
     });
     /* --------------------------------------------------------- */
+    $("#frm_finalizaract").validate({
+        highlight: function( label ) {
+            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function( label ) {
+            $(label).closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+        onkeyup: false,
+        errorPlacement: function( error, element ) {
+            var placement = element.closest('.input-group');
+            if (!placement.get(0)) {
+                placement = element;
+            }
+            if (error.text() !== '') {
+                placement.after(error);
+            }
+        },
+        submitHandler: function(form) {
+            finalizarActividad();
+        }
+    });
+    /* --------------------------------------------------------- */
     /* Inits */
     /* --------------------------------------------------------- */
     $("#arbol_opa").on( "click", ".elim_actividad", function(){
@@ -214,6 +237,13 @@ function resetClasePanelAct(){
     $("#panel_act_prop").removeClass( "panel-danger panel-warning panel-success");
     $("#icono_actividad").removeClass();
     $("#fecha_act_agenda").hide();
+}
+/* --------------------------------------------------------- */
+function resetPanelsDataActividadCalendario(){
+    // Reinicia los elementos ocultos y visibles de una actividad de calendario
+    $("#frm_edithora").hide();
+    $("#confirmar_finalizacion").hide();
+    $("#finalizar_act").show();
 }
 /* --------------------------------------------------------- */
 function botonPrioridad( actividad ){
@@ -500,6 +530,30 @@ function desagendarActividad( id ){
         type:"POST",
         url:"database/data-actividad.php",
         data:{ desagendar: id },
+        success: function( response ){
+            console.log(response);
+            res = jQuery.parseJSON(response);
+            if( res.exito == 1 ){ 
+                notificar( "Calendario", res.mje, "success" );
+                setTimeout( function() { location.reload( true ); }, 3000 );
+            }
+            else{
+                notificar( "Calendario", res.mje, "error" );
+            }
+
+            $("#cl_data_desag_act").click();
+        }
+    });
+}
+/* --------------------------------------------------------- */
+function finalizarActividad(){
+    //Invoca al servidor para finalizar (migrar a historial) una actividad del calendario
+    var frm_act = $("#frm_finalizaract").serialize();
+
+    $.ajax({
+        type:"POST",
+        url:"database/data-actividad.php",
+        data:{ finalizar_act: frm_act },
         success: function( response ){
             console.log(response);
             res = jQuery.parseJSON(response);

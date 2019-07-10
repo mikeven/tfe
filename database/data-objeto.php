@@ -44,9 +44,30 @@
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
+	function tienePropositosObjeto( $dbh, $ido ){
+		// Devuelve verdadero si objeto tiene propósitos asociados
+		$asociado = false;
+		$q = "select * from proposito where sujeto_objeto_id in (
+		select id from sujeto_objeto where objeto_id = $ido )";
+
+		$nrows = mysqli_num_rows( mysqli_query ( $dbh, $q ) );
+		
+		if( $nrows > 0 ) $asociado = true;
+
+		return $asociado;
+	}
+	/* --------------------------------------------------------- */
 	function eliminarObjeto( $dbh, $id ){
 		//Elimina un registro de objeto
 		$q = "delete from objeto where id = $id";
+
+		return mysqli_query( $dbh, $q );
+	}
+	/* --------------------------------------------------------- */
+	function eliminarSO_Objeto( $dbh, $ido ){
+		// Elimina los registros de sujeto_objeto asociados al objeto dado su id
+		$q = "delete from sujeto_objeto where objeto_id = $ido";
+
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
@@ -106,13 +127,14 @@
 	if( isset( $_POST["elim_objeto"] ) ){
 		// Invocación desde: js/fn-area.js
 		include( "bd.php" );	
-		//include( "data-sistema.php" );
 		
-		if( false ){
+		$ido = $_POST["elim_objeto"];
+		if( tienePropositosObjeto( $dbh, $ido ) ){
 			$res["exito"] = -1;
-			$res["mje"] = "Debe eliminar registros asociados al objeto primero.";
+			$res["mje"] = "No puede eliminar objeto, posee propósitos asociados";
 		}else{
-			eliminarObjeto( $dbh, $_POST["elim_area"] );
+			eliminarObjeto( $dbh, $ido );
+			eliminarSO_Objeto( $dbh, $ido );
 			$res["exito"] = 1;
 			$res["mje"] = "Objeto eliminado con éxito";
 		}

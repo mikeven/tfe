@@ -107,11 +107,11 @@
 			    var fecha = moment(f, 'DD.MM.YYYY').format('YYYY-MM-DD');
 
 			    $("#selector_act_cal").attr( "data-ida", event.id );
-			    $("#ida_nvahora").val( event.id );
+			    $("#ida_nvahora, #id_actfinalizar").val( event.id );
 			    $("#nueva_hora").val( hora );
 			    $("#fecha_act_cal").val( fecha );
 			    $("#selector_act_cal").click();
-			    $("#frm_edithora").hide();
+			    resetPanelsDataActividadCalendario();
 			}
 		});
 

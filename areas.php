@@ -46,6 +46,7 @@
 
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		
 	</head>
 	
 	<body>
@@ -111,7 +112,7 @@
 												</td>
 												<td>
 													<a href="#confirmar-accion" 
-													class="modal-sizes modal-with-zoom-anim elim_area" 
+													class="modal-with-zoom-anim elim_area" 
 													data-ida="<?php echo $a["id"] ?>">
 														<i class="fa fa-trash-o"></i> Eliminar
 													</a>
@@ -126,10 +127,10 @@
 											<?php } ?>
 										</tbody>
 									</table>
-									<?php include( "secciones/notificaciones/confirmar-accion.html" );?>
+									<?php 
+									include( "secciones/notificaciones/confirmar-accion.html" );?>
 								</div>
 							</section>
-							
 							<input id="id-area-e" type="hidden">
 						</div>
 					</div>
@@ -161,20 +162,15 @@
 		
 		<!-- Theme Custom -->
 		<script src="assets/javascripts/theme.custom.js"></script>
-		
-		<!-- Theme Initialization Files -->
-		<script src="assets/javascripts/theme.init.js"></script>
-		<script src="js/init.modals.js"></script>
-
-		<!-- Examples -->
-		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
-		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
-		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
 
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>
 		<script src="js/fn-area.js"></script>
 		<script src="js/validate-extend.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
+		<script src="js/init.modals.js"></script>
 		
 	</body>
 </html>

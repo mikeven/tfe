@@ -67,7 +67,7 @@
 
     $(document).on( 'click', '#btn_borrar_objeto', function(){
         $("#btn_canc").click();
-        eliminarObjeto( $("#id-area-e").val() );
+        eliminarObjeto( $("#id-objeto-e").val() );
     });
 
     $("#lobjetos").on( 'change', function(){
@@ -156,11 +156,11 @@ function eliminarObjeto( id ){
             console.log( response );
             res = jQuery.parseJSON(response);
             if( res.exito == 1 ){ 
-                notificar( "Área", res.mje, "success" );
-                setTimeout( function() { window.location = "areas.php"; }, 3000 );
+                notificar( "Objetos", res.mje, "success" );
+                setTimeout( function() { window.location = "objetos.php"; }, 3000 );
             }
             if( res.exito == -1 ){ 
-                notificar( "Eliminar área", res.mje, "error" );
+                notificar( "Eliminar objeto", res.mje, "error" );
             }
         }
     });

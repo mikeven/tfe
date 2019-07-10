@@ -53,9 +53,28 @@
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
+	function tienePropositosSujeto( $dbh, $ids ){
+		// Devuelve verdadero si sujeto tiene propósitos asociados
+		$asociado = false;
+		$q = "select * from proposito where sujeto_objeto_id in (
+		select id from sujeto_objeto where sujeto_id = $ids )";
+		$nrows = mysqli_num_rows( mysqli_query ( $dbh, $q ) );
+		
+		if( $nrows > 0 ) $asociado = true;
+
+		return $asociado;
+	}
+	/* --------------------------------------------------------- */
 	function eliminarSujeto( $dbh, $id ){
 		//Elimina un registro de sujeto
 		$q = "delete from sujeto where id = $id";
+		return mysqli_query( $dbh, $q );
+	}
+	/* --------------------------------------------------------- */
+	function eliminarSO_Sujeto( $dbh, $ido ){
+		// Elimina los registros de sujeto_objeto asociados al sujeto dado su id
+		$q = "delete from sujeto_objeto where sujeto_id = $ido";
+
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
@@ -116,16 +135,17 @@
 	if( isset( $_POST["elim_sujeto"] ) ){
 		// Invocación desde: js/fn-area.js
 		include( "bd.php" );	
-		//include( "data-sistema.php" );
+		include( "data-sistema.php" );
 		
-		//registrosAsociadosLinea( $dbh, $_POST["id_elimlinea"] )
-		if( false ){
+		$ids = $_POST["elim_sujeto"];
+		if( tienePropositosSujeto( $dbh, $ids ) ){
 			$res["exito"] = -1;
-			$res["mje"] = "Debe eliminar registros asociados al área primero.";
-		}else{
-			eliminarSujeto( $dbh, $_POST["elim_area"] );
+			$res["mje"] = "No puede eliminar sujeto, posee propósitos asociados";
+		} else {
+			eliminarSujeto( $dbh, $ids );
+			eliminarSO_Sujeto( $dbh, $ids );
 			$res["exito"] = 1;
-			$res["mje"] = "Área eliminada con éxito";
+			$res["mje"] = "Sujeto eliminado con éxito";
 		}
 		echo json_encode( $res );
 	}
