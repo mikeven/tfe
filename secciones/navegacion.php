@@ -64,7 +64,7 @@
 						</a>
 					</li>
 					<li class="nav-active">
-						<a href="#!">
+						<a href="historial.php">
 							<i class="fa fa-cubes" aria-hidden="true"></i>
 							<span>Historial</span>
 						</a>

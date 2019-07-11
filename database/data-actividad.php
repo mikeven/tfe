@@ -67,6 +67,21 @@
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}
 	/* --------------------------------------------------------- */
+	function obtenerHistorial( $dbh, $idu ){
+		// Devuelve las actividades marcadas con prioridad por tipo
+
+		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, 
+		act.direccion, act.motivo, act.contacto, act.resultado, 
+		date_format(act.fecha_calendario,'%d/%m/%Y %h:%i %p') as fcalendario, 
+		s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
+		from actividad act, proposito p, sujeto s, objeto o, sujeto_objeto so, sesion ss 
+		where act.proposito_id = p.id and act.estado = 'finalizada' and 
+		p.sujeto_objeto_id = so.id and so.sujeto_id = s.id and so.objeto_id = o.id 
+		and so.sesion_id = ss.id and ss.usuario_id = $idu order by act.fecha_prioridad ASC";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
 	function agregarActividad( $dbh, $a ){
 		// Procesa el registro de nueva actividad
 		$estado = "creada";
@@ -107,7 +122,8 @@
 	function finalizarActividad( $dbh, $actividad ){
 		// Edita un registro de actividad para migrarlo a historial
 		$q = "update actividad set estado = '$actividad[estado]', 
-		fecha_terminacion = NOW() where id = $actividad[id_actfin]";
+		fecha_terminacion = NOW(), resultado = '$actividad[resultado]' 
+		where id = $actividad[id_actfin]";
 		//echo $q;
 		return mysqli_query( $dbh, $q );
 	}
