@@ -22,13 +22,15 @@
 		// Devuelve el registro de un área dado su id
 		$q = "select act.id, act.tipo, act.estado, act.tarea, act.lugar, act.direccion, 
 		act.motivo, act.contacto, date_format(act.creado,'%d/%m/%Y') as fregistro, 
+		s.nombre as nsujeto, o.nombre as nobjeto,  
 		date_format(act.fecha_prioridad,'%d/%m/%Y') as fprioridad, 
-		date_format(act.fecha_agenda,'%d/%m/%Y') as fagendada, 
+		date_format(act.fecha_agenda,'%d/%m/%Y') as fagendada, act.resultado,  
 		date_format(act.fecha_calendario,'%d/%m/%Y %h:%i %p') as fcalendario, 
 		date_format(act.fecha_terminacion,'%d/%m/%Y') as fterminacion, 
 		date_format(act.fecha_cancela,'%d/%m/%Y') as fcancelacion, 
-		p.id as idprop, p.descripcion as proposito from actividad act, proposito p 
-		where act.proposito_id = p.id and act.id = $id";
+		p.id as idprop, p.descripcion as proposito from actividad act, proposito p, 
+		sujeto s, objeto o, sujeto_objeto so where act.proposito_id = p.id and act.id = $id 
+		and p.sujeto_objeto_id = so.id and so.sujeto_id = s.id and so.objeto_id = o.id";
 
 		$rst = mysqli_query( $dbh, $q );
 		$data = mysqli_fetch_array( $rst );
@@ -42,7 +44,7 @@
 		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, 
 		act.direccion, act.motivo, act.contacto,   
 		date_format(act.fecha_prioridad,'%d/%m/%Y %h:%i %p') as tprioridad, 
-		s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
+		s.id as idsujeto, s.nombre as nsujeto, o.id as idobjeto, o.nombre as nobjeto 
 		from actividad act, proposito p, sujeto s, objeto o, sujeto_objeto so, sesion ss 
 		where act.proposito_id = p.id and act.estado = 'prioridad' and p.sujeto_objeto_id = so.id 
 		and so.sujeto_id = s.id and so.objeto_id = o.id and so.sesion_id = ss.id 
@@ -72,12 +74,13 @@
 
 		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, 
 		act.direccion, act.motivo, act.contacto, act.resultado, 
-		date_format(act.fecha_calendario,'%d/%m/%Y %h:%i %p') as fcalendario, 
+		date_format(act.fecha_calendario,'%d/%m/%Y %h:%i %p') as fcalendario,
+		date_format(act.fecha_terminacion,'%d/%m/%Y %h:%i %p') as fterminacion, 
 		s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
 		from actividad act, proposito p, sujeto s, objeto o, sujeto_objeto so, sesion ss 
 		where act.proposito_id = p.id and act.estado = 'finalizada' and 
 		p.sujeto_objeto_id = so.id and so.sujeto_id = s.id and so.objeto_id = o.id 
-		and so.sesion_id = ss.id and ss.usuario_id = $idu order by act.fecha_prioridad ASC";
+		and so.sesion_id = ss.id and ss.usuario_id = $idu order by act.fecha_terminacion DESC";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}

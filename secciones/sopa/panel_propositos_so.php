@@ -15,6 +15,7 @@
 							<?php 
 								foreach ( $propositos as $p ) { 
 									$actividades = obtenerListaActividades( $dbh, $p["id"] );
+									if( count( $actividades ) > 0 ){
 							?>
 							<section class="toggle">
 								<label><?php echo $p["descripcion"] ?></label>
@@ -33,7 +34,10 @@
 									<?php } ?>
 								</div>
 							</section>
-							<?php } ?>
+							<?php
+								 	} 
+								} 
+							?>
 						</div>
 					</div>
 					<hr>

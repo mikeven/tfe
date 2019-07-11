@@ -20,7 +20,7 @@ function init_magnificPopup(){
 	});
 }
 /* =============================================================== */
-$('#datatable-default, #datatable-prioridades').dataTable({
+$('#datatable-default').dataTable({
 	  "paging": true,
 	  "iDisplayLength": 10,
 	  "lengthChange": true,
@@ -46,4 +46,28 @@ $('#datatable-default, #datatable-prioridades').dataTable({
 		// Reiniciar ventanas emergentes para elementos paginados
     	init_magnificPopup(); 
     }
+});
+
+$('#datatable-prioridades, #datatable-historial').dataTable({
+	  "paging": true,
+	  "iDisplayLength": 10,
+	  "lengthChange": true,
+	  "searching": true,
+	  "ordering": false,
+	  "info": true,
+	  "autoWidth": false,
+	  "language": {
+		"lengthMenu": "Mostrar _MENU_ regs por página",
+		"zeroRecords": "No se encontraron resultados",
+		"info": "Mostrando pág _PAGE_ de _PAGES_",
+		"infoEmpty": "No hay registros",
+		"infoFiltered": "(filtrados de _MAX_ regs)",
+		"search": "Buscar:",
+		"paginate": {
+			"first":      "Primero",
+			"last":       "Último",
+			"next":       "Próximo",
+			"previous":   "Anterior"
+		}
+	}
 });

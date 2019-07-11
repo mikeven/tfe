@@ -51,10 +51,7 @@
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style>
-			.datepicker{ z-index:99999 !important; }
-			.isuccess .fa{ color: #47a447 !important; }
-			.iwarning .fa{ color: #ed9c28 !important; }
-			.idanger .fa{ color: #d2322d !important; }
+			#icono_actividad{ color: #FFF; }
 		</style>
 	</head>
 	
@@ -80,8 +77,8 @@
 									<h2 class="panel-title">Actividades finalizadas</h2>
 								</header>
 								<div id="tabla_actividades_prioridad" class="panel-body">
-									<table id="datatable-default"
-									class="table table-bordered table-striped mb-none" >
+									<table id="datatable-historial"
+									class="table table-bordered table-striped mb-none thist">
 										<thead>
 											<tr>
 												<th width="50%">Actividad</th>
@@ -92,8 +89,8 @@
 											<?php foreach ( $actividades as $a ) { ?>
 											<tr class="gradeX">
 												<td>
-													<a href="#frm-actividad-cal" 
-													class="modal-sizes modal-with-zoom-anim act_prior_cal" 
+													<a href="#actividad-historial" 
+													class="modal-sizes modal-with-zoom-anim info_hist" 
 													data-ida="<?php echo $a["id_act"] ?>" 
 													data-desc="<?php infoPrioridadForm( $a ) ?>">
 														<?php infoPrioridad( $a ) ?>
@@ -113,7 +110,7 @@
 
 				</section>
 			</div>
-			<?php include( "secciones/sopa/frm-actividad-cal.php" ); ?>
+			<?php include( "secciones/data-actividad-hist.php" ); ?>
 		</section>
 
 		<!-- Vendor -->
@@ -148,30 +145,14 @@
 		<script src="assets/javascripts/theme.init.js"></script>
 		<script src="js/init.modals.js"></script>
 
-		<!-- Examples -->
-		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
-		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
-		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
 		
-		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-		
-
 		<script src="js/fn-ui.js"></script>
 		<script src="js/fn-acceso.js"></script>
 		<script src="js/fn-actividad.js"></script>
 		<script src="js/validate-extend.js"></script>
 		<script type="text/javascript">
-			/*$.fn.dataTable.moment( 'DD/MM/YY HH:mm A' );
-    
-		    var table = $('#datatable-prioridades').DataTable();
-		    table.order( [ 1, 'asc' ] ).draw();*/
-
-		    $("#fagenda_act").datepicker({
-			    isRTL: false,
-			    format: 'dd/mm/yyyy',
-			    autoclose:true,
-			    language: 'es'
-			});
+			var table = $('#datatable-historial').DataTable();
+		    
 		</script>
 		
 	</body>

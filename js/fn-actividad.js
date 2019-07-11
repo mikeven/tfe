@@ -182,6 +182,13 @@
         mostrarActividad( ida, "edit" );
     });
     /* --------------------------------------------------------- */
+    $(".info_hist").on( "click", function(){
+        // Evento invocador para obtener los datos de una actividad de historial
+        // (historial.php)
+        var ida = $(this).attr("data-ida");
+        mostrarActividad( ida, "historial" );
+    });
+    /* --------------------------------------------------------- */
     $(".btn_priord").on( "click", function(){
         // Evento invocador para dar / quitar prioridad a una actividad 
         // (panel_actividades_proposito.php)
@@ -355,6 +362,14 @@ function mostrarDatosVentanaCalendario( actividad ){
     mostrarDatosPanelActividad( actividad );
 }
 /* --------------------------------------------------------- */
+function mostrarDatosVentanaHistorial( actividad ){
+    // Muestra los datos de una actividad en la ventana emergente de historial
+    mostrarDatosPanelActividad( actividad );
+    $("#tx_sujeto_act").html( actividad.nsujeto );
+    $("#tx_objeto_act").html( actividad.nobjeto );
+    $("#tx_resultado_act").html( actividad.resultado );
+}
+/* --------------------------------------------------------- */
 function iniciarBotonBorrarActividad( param ){
     //Asigna los textos de la ventana de confirmación para borrar un propósito
     iniciarVentanaModal( "btn_borrar_actividad", "btn_canc", 
@@ -473,7 +488,9 @@ function mostrarActividad( id, dst ){
                 if( dst == "edit" )
                     mostrarDatosEditActividad( res.reg );
                 if( dst == "ventana_cal" )
-                    mostrarDatosVentanaCalendario( res.reg ); 
+                    mostrarDatosVentanaCalendario( res.reg );
+                if( dst == "historial" )
+                    mostrarDatosVentanaHistorial( res.reg ); 
             }
             if( res.exito == -1 ){ 
                 
