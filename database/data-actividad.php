@@ -202,14 +202,8 @@
 	}
 	/* --------------------------------------------------------- */
 	function titActividad( $actividad ){
-      // Devuelve el texto descriptivo de una actividad según tipo
-      /*$texto = array(
-        'g' => $actividad["tarea"],
-        'e' => $actividad["tarea"],
-        'l' => $actividad["contacto"]." ($actividad[motivo])"
-      );
-
-      return $texto[ $actividad["tipo"] ];*/
+      // Devuelve el texto descriptivo de una actividad para mostrar en calendario
+      
       return $actividad["nsujeto"]."/".$actividad["nobjeto"];
     }
 	/* --------------------------------------------------------- */
