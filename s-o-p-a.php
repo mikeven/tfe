@@ -7,12 +7,15 @@
     ini_set( 'display_errors', 1 );
     include( "database/bd.php" );
     include( "database/data-acceso.php" );
+    include( "database/data-proposito.php" );
     include( "database/data-sopa.php" );
+    include( "database/data-actividad.php" );
     checkSession( "" );
     $titulo_pagina = "Índice S.O.P.A.";
 
     $idu = $_SESSION["user"]["id"];
     $indice = obtenerIndiceSOPAPorUsuario( $dbh, $idu );
+    $breadcrumb = $titulo_pagina;
 ?>
 <!doctype html>
 <html class="fixed">
@@ -78,17 +81,20 @@
 											</tr>
 										</thead>
 										<tbody>
-											<?php foreach ( $indice as $i ) { ?>
+											<?php
+												foreach ( $indice as $i ) {
+													if( actPendientes( $dbh, $i ) ) {
+											?>
 											<tr class="gradeX">
 												<td>
-													<a 
-													href="actividad.php?ids=<?php echo $i["idsujeto"] ?>
+													<a href="actividad.php?ids=<?php echo $i["idsujeto"] ?>
 													&ido=<?php echo $i["idobjeto"] ?>"> 
 														<?php echo $i["nsujeto"]." // ".$i["nobjeto"] ?>
 													</a>
 												</td>
 											</tr>
-											<?php } ?>
+											<?php 	}
+												} ?>
 										</tbody>
 									</table>
 									

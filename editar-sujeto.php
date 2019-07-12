@@ -16,7 +16,7 @@
         $ids = $_GET["id"];
         $sujeto = obtenerSujetoPorId( $dbh, $ids );
     }
-    
+    $breadcrumb = $titulo_pagina;
 ?>
 <!doctype html>
 <html class="fixed">

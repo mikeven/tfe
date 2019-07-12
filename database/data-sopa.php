@@ -39,4 +39,32 @@
 		return $data;
 	}
 	/* --------------------------------------------------------- */
+	function chequearActividadesPendientes( $actividades ){
+		// Devuelve verdadero si hay actividades en estado: creadas, prioridad
+		$pendiente = false;
+		foreach ( $actividades as $a ) {
+			if( $a["estado"] == "creada" || $a["estado"] == "prioridad" ){
+				$pendiente = true;
+				break;
+			}
+		}
+		return $pendiente;
+	}
+	/* --------------------------------------------------------- */
+	function actPendientes( $dbh, $i ){
+		// Devuelve verdadero si el registro sujeto-objeto posee propósitos con actividades
+		// en estado: creadas, prioridad
+		$pendiente = false;
+		$propositos = obtenerPropositosSujetoObjeto( $dbh, $i["idsujeto"], $i["idobjeto"] );
+		
+		foreach ( $propositos as $p ) {
+			$actividades = obtenerListaActividades( $dbh, $p["id"] );
+			if( chequearActividadesPendientes( $actividades ) == true ){
+				$pendiente = true;
+				break;
+			}
+		}
+		return $pendiente;
+	}
+	/* --------------------------------------------------------- */
 ?>

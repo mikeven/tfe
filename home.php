@@ -11,6 +11,7 @@
     $titulo_pagina = "Página de inicio";
 
     $idu = $_SESSION["user"]["id"];
+    $breadcrumb = $titulo_pagina;
 ?>
 <!doctype html>
 <html class="fixed">

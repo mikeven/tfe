@@ -27,7 +27,7 @@
         $lnk_gestion_pa = "cargar-sopa.php?ids=$ids&ido=$ido";
     }
     $titulo_pagina = $reg_so["nsujeto"]." - ".$reg_so["nobjeto"];
-     
+    $breadcrumb = $titulo_pagina;
 ?>
 <!doctype html>
 <html class="fixed">

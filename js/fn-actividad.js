@@ -626,18 +626,16 @@ function editarResultadoActividad(){
         url:"database/data-actividad.php",
         data:{ edit_rslt: frm_rslt },
         success: function( response ){
-            
             res = jQuery.parseJSON(response);
             if( res.exito == 1 ){ 
                 notificar( "Historial", res.mje, "success" );
                 $(".tx_resultado_act").html( $("#tx_nvoresult").val() );
-                //setTimeout( function() { location.reload( true ); }, 3000 );
+                setTimeout( function() { location.reload( true ); }, 2000 );
             }
             else{
                 notificar( "Historial", res.mje, "error" );
             }
-
-            //$("#cl_data_hist_act").click();
+            $("#cl_data_hist_act").click();
         }
     });
 }

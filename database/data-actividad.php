@@ -70,7 +70,7 @@
 	}
 	/* --------------------------------------------------------- */
 	function obtenerHistorial( $dbh, $idu ){
-		// Devuelve las actividades marcadas con prioridad por tipo
+		// Devuelve las actividades finalizadas
 
 		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, 
 		act.direccion, act.motivo, act.contacto, act.resultado, 
@@ -81,6 +81,35 @@
 		where act.proposito_id = p.id and act.estado = 'finalizada' and 
 		p.sujeto_objeto_id = so.id and so.sujeto_id = s.id and so.objeto_id = o.id 
 		and so.sesion_id = ss.id and ss.usuario_id = $idu order by act.fecha_terminacion DESC";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
+	function obtenerHistorialSujetoObjeto( $dbh, $ids, $ido ){
+		// Devuelve las actividades finalizadas de un par sujeto-objeto
+
+		$q = "select act.id as id_act, act.tipo, act.estado, act.tarea, act.lugar, 
+		act.direccion, act.motivo, act.contacto, act.resultado, 
+		date_format(act.fecha_calendario,'%d/%m/%Y %h:%i %p') as fcalendario,
+		date_format(act.fecha_terminacion,'%d/%m/%Y %h:%i %p') as fterminacion, 
+		s.id as idsujeto, s.nombre nsujeto, o.id as idobjeto, o.nombre as nobjeto 
+		from actividad act, proposito p, sujeto s, objeto o, sujeto_objeto so 
+		where act.proposito_id = p.id and act.estado = 'finalizada' and 
+		p.sujeto_objeto_id = so.id and so.sujeto_id = s.id and so.objeto_id = o.id 
+		and s.id = $ids and o.id = $ido order by act.fecha_calendario DESC";
+
+		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
+	}
+	/* --------------------------------------------------------- */
+	function obtenerSOHistorial( $dbh, $idu ){
+		// Devuelve los registros sujetos-objetos que poseen actividades finalizadas
+
+		$q = "select DISTINCT s.id, o.id, s.id as idsujeto, s.nombre as nsujeto, 
+		o.id as idobjeto, o.nombre as nobjeto 
+		from sujeto_objeto so, sujeto s, objeto o, usuario u, actividad a, proposito p, sesion ss 
+		where s.id = so.sujeto_id and o.id = so.objeto_id and p.sujeto_objeto_id = so.id 
+		and a.proposito_id = p.id and a.estado = 'finalizada' and so.sesion_id = ss.id 
+		and ss.usuario_id = u.id and u.id = $idu ORDER BY a.fecha_calendario DESC";
 
 		return obtenerListaRegistros( mysqli_query( $dbh, $q ) );
 	}

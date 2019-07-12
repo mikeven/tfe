@@ -8,7 +8,7 @@
 					<i class="fa fa-home"></i>
 				</a>
 			</li>
-			<li><span><?php echo $titulo_pagina; ?></span></li>
+			<li><span><?php echo $breadcrumb; ?></span></li>
 		</ol>
 
 		<a class="sidebar-right-toggle" data-open=""></a>

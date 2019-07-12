@@ -16,7 +16,7 @@
         $ido = $_GET["id"];
         $objeto = obtenerObjetoPorId( $dbh, $ido );
     }
-    
+    $breadcrumb = $titulo_pagina;
 ?>
 <!doctype html>
 <html class="fixed">

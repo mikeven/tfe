@@ -16,6 +16,7 @@
 
     $idu = $_SESSION["user"]["id"];
     $prioridades = obtenerPrioridades( $dbh, $idu );
+    $breadcrumb = $titulo_pagina;
 ?>
 <!doctype html>
 <html class="fixed">

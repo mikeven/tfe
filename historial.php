@@ -15,7 +15,8 @@
     $titulo_pagina = "Historial";
 
     $idu = $_SESSION["user"]["id"];
-    $actividades = obtenerHistorial( $dbh, $idu );
+    $historial = obtenerSOHistorial( $dbh, $idu );
+    $breadcrumb = $titulo_pagina;
 ?>
 <!doctype html>
 <html class="fixed">
@@ -72,32 +73,32 @@
 
 					<div class="row">
 						
-						<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="col-md-8 col-sm-8 col-xs-12">
 							<section class="panel">
 								<header class="panel-heading">
-									<h2 class="panel-title">Actividades finalizadas</h2>
+									<h2 class="panel-title">Registros con actividades finalizadas</h2>
 								</header>
 								<div id="tabla_actividades_prioridad" class="panel-body">
 									<table id="datatable-historial"
 									class="table table-bordered table-striped mb-none thist">
 										<thead>
 											<tr>
-												<th width="50%">Actividad</th>
-												<th width="50%">Resultado</th>
+												<th>Sujeto // Objeto</th>
 											</tr>
 										</thead>
 										<tbody>
-											<?php foreach ( $actividades as $a ) { ?>
+											<?php 
+												foreach ( $historial as $h ) { 
+													$lnk = "historial-so.php?ids=$h[idsujeto]&ido=$h[idobjeto]";
+											?>
 											<tr class="gradeX">
 												<td>
-													<a href="#actividad-historial" 
-													class="modal-sizes modal-with-zoom-anim info_hist" 
-													data-ida="<?php echo $a["id_act"] ?>" 
-													data-desc="<?php infoPrioridadForm( $a ) ?>">
-														<?php infoPrioridad( $a ) ?>
+													<a href="<?php echo $lnk ?>">
+														<?php 
+														echo $h["nsujeto"]." // ".$h["nobjeto"] 
+														?>
 													</a>
 												</td>
-												<td><?php echo $a["resultado"] ?></td>		
 											</tr>
 											<?php } ?>
 										</tbody>
@@ -111,7 +112,6 @@
 
 				</section>
 			</div>
-			<?php include( "secciones/data-actividad-hist.php" ); ?>
 		</section>
 
 		<!-- Vendor -->

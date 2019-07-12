@@ -20,6 +20,7 @@
     
     checkSession( "" );
     $titulo_pagina = "Cargar fórmula S.O.P.A";
+    $breadcrumb = $titulo_pagina;
 ?>
 <!doctype html>
 <html class="fixed">

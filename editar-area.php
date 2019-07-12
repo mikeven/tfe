@@ -16,7 +16,7 @@
         $ida = $_GET["id"];
         $area = obtenerAreaPorId( $dbh, $ida );
     }
-    
+    $breadcrumb = $titulo_pagina;
 ?>
 <!doctype html>
 <html class="fixed">
