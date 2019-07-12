@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-07-2019 a las 01:21:13
+-- Tiempo de generación: 12-07-2019 a las 22:58:39
 -- Versión del servidor: 5.7.11
 -- Versión de PHP: 5.6.19
 
@@ -38,6 +38,7 @@ CREATE TABLE `actividad` (
   `modificado` datetime DEFAULT NULL,
   `proposito_id` int(11) NOT NULL,
   `estado` varchar(45) NOT NULL,
+  `resultado` varchar(600) DEFAULT NULL,
   `fecha_calendario` datetime NOT NULL,
   `fecha_prioridad` datetime NOT NULL,
   `fecha_agenda` datetime NOT NULL,
@@ -49,14 +50,27 @@ CREATE TABLE `actividad` (
 -- Volcado de datos para la tabla `actividad`
 --
 
-INSERT INTO `actividad` (`id`, `tipo`, `tarea`, `lugar`, `direccion`, `motivo`, `contacto`, `creado`, `modificado`, `proposito_id`, `estado`, `fecha_calendario`, `fecha_prioridad`, `fecha_agenda`, `fecha_terminacion`, `fecha_cancela`) VALUES
-(1, 'g', 'Tarea 1', 'Lugar 1', 'Dir 1', '', '', '2019-06-06 01:36:09', NULL, 3, 'creada', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'e', 'Realizar entrada', '', '', '', '', '2019-06-06 01:44:07', NULL, 5, 'creada', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 'l', '', '', '', 'Falla en puerta', 'Dr Carlos', '2019-06-06 01:44:36', NULL, 5, 'creada', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 'g', 'Acto de presencia', 'Sede principal', 'Av Los Chaguaramos', '', '', '2019-06-06 01:46:47', NULL, 5, 'creada', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 'l', '', '', '', 'Hacer madera', 'Carpintero', '2019-06-06 09:36:18', NULL, 6, 'prioridad', '0000-00-00 00:00:00', '2019-07-01 19:20:13', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 'g', 'Arreglar la puerta', 'Caracas', 'Venezuela, La Castellana', '', '', '2019-06-06 09:37:15', NULL, 6, 'creada', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(7, 'g', 'Contactar servicio', 'Fumigaciones RTL', 'Av la Salle, 1era trasnv', '', '', '2019-07-01 18:06:20', NULL, 9, 'creada', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `actividad` (`id`, `tipo`, `tarea`, `lugar`, `direccion`, `motivo`, `contacto`, `creado`, `modificado`, `proposito_id`, `estado`, `resultado`, `fecha_calendario`, `fecha_prioridad`, `fecha_agenda`, `fecha_terminacion`, `fecha_cancela`) VALUES
+(1, 'g', 'Tarea 1', 'Lugar 1', 'Dir 1', '', '', '2019-06-06 01:36:09', NULL, 3, 'creada', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'e', 'Realizar entrada', '', '', '', '', '2019-06-06 01:44:07', NULL, 5, 'finalizada', 'Se generaron 500 planillas', '2019-07-10 06:15:00', '2019-07-04 15:20:37', '2019-07-08 18:28:17', '2019-07-10 16:57:00', '0000-00-00 00:00:00'),
+(3, 'l', '', '', '', 'Falla en puerta', 'Dr Carlos', '2019-06-06 01:44:36', NULL, 5, 'finalizada', 'Reparación realizada con éxito', '2019-07-11 02:30:00', '2019-07-04 15:20:39', '2019-07-08 18:29:01', '2019-07-11 11:41:02', '0000-00-00 00:00:00'),
+(4, 'g', 'Acto de presencia', 'Sede principal', 'Av Los Chaguaramos', '', '', '2019-06-06 01:46:47', NULL, 5, 'agendada', NULL, '2019-07-30 08:30:00', '2019-07-04 15:20:41', '2019-07-11 16:59:40', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 'l', '', '', '', 'Hacer madera', 'Carpintero', '2019-06-06 09:36:18', NULL, 6, 'finalizada', 'Acordada segunda fase', '2019-07-02 17:15:00', '2019-07-01 19:20:13', '2019-07-08 18:29:50', '2019-07-10 16:56:18', '0000-00-00 00:00:00'),
+(6, 'g', 'Arreglar la puerta', 'Caracas', 'Venezuela, La Castellana', '', '', '2019-06-06 09:37:15', NULL, 6, 'finalizada', 'Se pautaron 82 visitas más', '2019-07-23 18:00:00', '2019-07-02 10:23:53', '2019-07-08 18:31:07', '2019-07-11 11:40:22', '0000-00-00 00:00:00'),
+(7, 'g', 'Contactar servicio', 'Fumigaciones RTL', 'Av la Salle, 1era trasnv', '', '', '2019-07-01 18:06:20', NULL, 9, 'finalizada', 'Cambio de presupuesto', '2019-07-12 13:45:00', '2019-07-02 09:38:26', '2019-07-11 16:59:31', '2019-07-12 14:26:37', '0000-00-00 00:00:00'),
+(8, 'e', 'Armar planillas encuestas', '', '', '', '', '2019-07-02 08:41:33', NULL, 10, 'finalizada', 'Se generaron 500 planillas', '2019-07-21 15:15:00', '2019-07-04 15:19:21', '0000-00-00 00:00:00', '2019-07-11 11:39:50', '0000-00-00 00:00:00'),
+(9, 'g', 'Compra de repuestos', 'Repuestos 33', 'Calle Chaguaramos, La Castellana', '', '', '2019-07-08 11:59:20', NULL, 12, 'agendada', NULL, '2019-07-25 16:30:00', '2019-07-08 12:00:27', '2019-07-11 16:59:33', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 'e', 'Realizar transferencias bancarias', '', '', '', '', '2019-07-08 11:59:42', NULL, 12, 'finalizada', 'Abarcados todos los puntos 5', '2019-07-19 16:15:00', '2019-07-08 12:00:29', '2019-07-08 18:24:01', '2019-07-11 11:31:22', '0000-00-00 00:00:00'),
+(11, 'l', '', '', '', 'Solicitar reparaciones', 'Mario Brito', '2019-07-08 12:00:03', NULL, 12, 'agendada', NULL, '2019-07-27 09:45:00', '2019-07-08 12:00:33', '2019-07-11 16:59:44', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 'g', 'Registrar fichaje de juzgado', 'Coordinación JDV', 'El Marqués', '', '', '2019-07-12 15:12:48', '2019-07-12 15:26:50', 13, 'agendada', NULL, '2019-07-15 15:30:00', '2019-07-12 15:28:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 'e', 'Enviar email a jueces', '', '', '', '', '2019-07-12 15:14:00', NULL, 13, 'creada', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 'l', '', '', '', 'Notificar asistencia de jueces', 'Nancy López', '2019-07-12 15:15:41', NULL, 13, 'creada', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(15, 'l', '', '', '', 'Contactar agencia de patrocinantes', 'Julián Brito', '2019-07-12 15:16:15', NULL, 14, 'creada', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 'e', 'Solicitar presupuesto', '', '', '', '', '2019-07-12 15:16:41', NULL, 14, 'creada', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(17, 'g', 'Discutir y firmar contrato', 'MG IDEAS', 'La Castellana', '', '', '2019-07-12 15:17:18', NULL, 14, 'agendada', NULL, '2019-07-16 16:30:00', '2019-07-12 15:28:16', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(18, 'e', 'Enviar invitación a ponentes internacionales', '', '', '', '', '2019-07-12 15:17:55', NULL, 15, 'creada', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(19, 'e', 'Recopilar solicitudes de ponentes nacionales', '', '', '', '', '2019-07-12 15:18:19', NULL, 15, 'creada', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(20, 'g', 'Elaborar cronograma evento', 'Teatro QVN', 'Los Ruices', '', '', '2019-07-12 15:19:06', NULL, 15, 'agendada', NULL, '2019-07-17 16:00:00', '2019-07-12 15:28:21', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -115,14 +129,11 @@ INSERT INTO `objeto` (`id`, `nombre`, `creado`, `modificado`, `usuario_id`) VALU
 (3, 'Objeto 3', '2019-06-05 22:30:42', NULL, 1),
 (4, 'Hotel', '2019-06-06 01:42:52', NULL, 1),
 (5, 'Puerta', '2019-06-06 09:31:05', NULL, 1),
-(6, 'Ventana', '2019-06-06 09:31:30', NULL, 1),
-(7, 'Silla', '2019-06-12 16:59:43', NULL, 1),
 (8, 'Focos', '2019-06-12 17:00:59', NULL, 1),
 (9, 'Carburador', '2019-06-20 16:56:28', NULL, 1),
 (10, 'Hielera', '2019-06-20 17:03:34', NULL, 1),
-(11, 'Monedero', '2019-06-20 18:46:26', NULL, 1),
 (12, 'Aproa', '2019-06-20 19:02:06', NULL, 1),
-(13, 'Fundaciones', '2019-06-20 19:04:26', NULL, 1);
+(13, 'Jornada VI', '2019-07-12 14:58:10', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -409,14 +420,19 @@ CREATE TABLE `proposito` (
 
 INSERT INTO `proposito` (`id`, `descripcion`, `creado`, `modificado`, `sujeto_objeto_id`) VALUES
 (1, 'Prop 1', '2019-06-05 23:36:43', NULL, 4),
-(2, 'Prop 2', '2019-06-05 23:44:41', NULL, 4),
 (3, 'Prop 3', '2019-06-05 23:44:51', NULL, 3),
 (4, 'Prop 9', '2019-06-06 00:03:52', NULL, 5),
 (5, 'Ir a habitación', '2019-06-06 01:43:34', NULL, 6),
 (6, 'Arreglar bisagra', '2019-06-06 09:32:29', NULL, 7),
 (7, 'Arreglar manilla', '2019-06-06 09:34:17', NULL, 7),
 (8, 'Arreglar cerradura', '2019-06-06 09:35:16', NULL, 7),
-(9, 'Remover polillas', '2019-07-01 18:05:41', NULL, 11);
+(9, 'Remover polillas', '2019-07-01 18:05:41', NULL, 11),
+(10, 'Definir contrato 2019', '2019-07-02 08:39:18', NULL, 19),
+(11, 'Concretar plan semestral', '2019-07-02 08:40:25', NULL, 19),
+(12, 'Reconstruir sistema de refrigeración', '2019-07-08 11:58:53', NULL, 12),
+(13, 'Conformar comité evaluador', '2019-07-12 14:58:30', NULL, 20),
+(14, 'Conformar grupo de patrocinantes', '2019-07-12 14:59:44', NULL, 20),
+(15, 'Definir ponencias y ponentes', '2019-07-12 15:11:46', NULL, 20);
 
 -- --------------------------------------------------------
 
@@ -447,7 +463,8 @@ INSERT INTO `sesion` (`id`, `creado`, `usuario_id`) VALUES
 (10, '2019-06-20 18:54:34', 1),
 (11, '2019-06-20 19:02:12', 1),
 (12, '2019-06-20 19:03:03', 1),
-(13, '2019-06-20 19:04:28', 1);
+(13, '2019-06-20 19:04:28', 1),
+(14, '2019-07-12 14:58:13', 1);
 
 -- --------------------------------------------------------
 
@@ -472,9 +489,11 @@ INSERT INTO `sujeto` (`id`, `nombre`, `creado`, `modificado`, `usuario_id`) VALU
 (2, 'Habitación', '2019-06-06 09:30:50', NULL, 1),
 (3, 'Suite', '2019-06-12 16:42:08', '2019-06-12 17:29:22', 1),
 (4, 'Sótano', '2019-06-12 16:43:45', NULL, 1),
-(5, 'Fiat UNO', '2019-06-20 16:56:10', NULL, 1),
 (6, 'Veterinario', '2019-06-20 19:01:46', NULL, 1),
-(7, 'Adiestrador', '2019-06-20 19:02:42', NULL, 1);
+(7, 'Adiestrador', '2019-06-20 19:02:42', NULL, 1),
+(8, 'Residencia', '2019-07-09 15:42:15', NULL, 1),
+(11, 'Local', '2019-07-09 15:42:37', NULL, 1),
+(12, 'Extracurricular', '2019-07-12 14:57:58', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -496,26 +515,15 @@ CREATE TABLE `sujeto_objeto` (
 --
 
 INSERT INTO `sujeto_objeto` (`id`, `sujeto_id`, `objeto_id`, `area_id`, `sesion_id`, `creado`) VALUES
-(1, 1, 1, 7, 1, '2019-06-05 18:51:10'),
-(2, 1, 1, 7, 1, '2019-06-05 18:55:09'),
 (3, 1, 2, 12, 2, '2019-06-05 21:47:26'),
 (4, 1, 3, 12, 2, '2019-06-05 22:30:47'),
 (5, 1, 1, 12, 2, '2019-06-06 00:03:35'),
 (6, 1, 4, 12, 2, '2019-06-06 01:42:59'),
 (7, 2, 5, 3, 3, '2019-06-06 09:31:13'),
-(8, 2, 6, 3, 3, '2019-06-06 09:31:33'),
-(9, 2, 6, 6, 4, '2019-06-12 16:25:21'),
-(10, 5, 9, 6, 5, '2019-06-20 16:56:32'),
 (11, 2, 5, 8, 6, '2019-06-20 17:00:26'),
 (12, 2, 10, 8, 6, '2019-06-20 17:03:38'),
-(13, 1, 1, 6, 7, '2019-06-20 17:29:43'),
-(14, 2, 3, 8, 6, '2019-06-20 17:51:34'),
-(15, 2, 10, 6, 8, '2019-06-20 18:45:17'),
-(16, 2, 11, 6, 9, '2019-06-20 18:46:32'),
-(17, 2, 10, 3, 10, '2019-06-20 18:54:34'),
-(18, 6, 12, 5, 11, '2019-06-20 19:02:12'),
 (19, 7, 12, 5, 12, '2019-06-20 19:03:03'),
-(20, 6, 13, 5, 13, '2019-06-20 19:04:28');
+(20, 12, 13, 7, 14, '2019-07-12 14:58:13');
 
 -- --------------------------------------------------------
 
@@ -537,7 +545,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `email`, `password`, `creado`, `ultimo_ingreso`) VALUES
-(1, 'Miguel Rangel', 'mikeven@gmail.com', '121212', '2019-06-05', '2019-07-01 17:33:42');
+(1, 'Miguel Rangel', 'mikeven@gmail.com', '121212', '2019-06-05', '2019-07-12 09:04:02');
 
 --
 -- Índices para tablas volcadas
@@ -609,7 +617,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `actividad`
 --
 ALTER TABLE `actividad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `area`
 --
@@ -624,17 +632,17 @@ ALTER TABLE `objeto`
 -- AUTO_INCREMENT de la tabla `proposito`
 --
 ALTER TABLE `proposito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `sesion`
 --
 ALTER TABLE `sesion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT de la tabla `sujeto`
 --
 ALTER TABLE `sujeto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `sujeto_objeto`
 --
