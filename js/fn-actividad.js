@@ -102,6 +102,29 @@
         }
     });
     /* --------------------------------------------------------- */
+    $("#frm_editresult").validate({
+        highlight: function( label ) {
+            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function( label ) {
+            $(label).closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+        onkeyup: false,
+        errorPlacement: function( error, element ) {
+            var placement = element.closest('.input-group');
+            if (!placement.get(0)) {
+                placement = element;
+            }
+            if (error.text() !== '') {
+                placement.after(error);
+            }
+        },
+        submitHandler: function(form) {
+            editarResultadoActividad();
+        }
+    });
+    /* --------------------------------------------------------- */
     $("#frm_finalizaract").validate({
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -180,6 +203,12 @@
         $( ".campos_edit_act :text" ).val("");
         var ida = $(this).attr("data-ida");
         mostrarActividad( ida, "edit" );
+    });
+    /* --------------------------------------------------------- */
+    $("#lnk_editr, #canc_edit_r").on( "click", function(){
+        // Mostrar bloque edición de resultado de actividad
+        $("#resultado_actual").slideToggle();
+        $("#edicion_resultado").slideToggle();
     });
     /* --------------------------------------------------------- */
     $(".info_hist").on( "click", function(){
@@ -365,9 +394,10 @@ function mostrarDatosVentanaCalendario( actividad ){
 function mostrarDatosVentanaHistorial( actividad ){
     // Muestra los datos de una actividad en la ventana emergente de historial
     mostrarDatosPanelActividad( actividad );
+    $("#id_act").val( actividad.id );
     $("#tx_sujeto_act").html( actividad.nsujeto );
     $("#tx_objeto_act").html( actividad.nobjeto );
-    $("#tx_resultado_act").html( actividad.resultado );
+    $(".tx_resultado_act").html( actividad.resultado );
 }
 /* --------------------------------------------------------- */
 function iniciarBotonBorrarActividad( param ){
@@ -583,6 +613,31 @@ function finalizarActividad(){
             }
 
             $("#cl_data_desag_act").click();
+        }
+    });
+}
+/* --------------------------------------------------------- */
+function editarResultadoActividad(){
+    //Invoca al servidor para finalizar (migrar a historial) una actividad del calendario
+    var frm_rslt = $("#frm_editresult").serialize();
+
+    $.ajax({
+        type:"POST",
+        url:"database/data-actividad.php",
+        data:{ edit_rslt: frm_rslt },
+        success: function( response ){
+            
+            res = jQuery.parseJSON(response);
+            if( res.exito == 1 ){ 
+                notificar( "Historial", res.mje, "success" );
+                $(".tx_resultado_act").html( $("#tx_nvoresult").val() );
+                //setTimeout( function() { location.reload( true ); }, 3000 );
+            }
+            else{
+                notificar( "Historial", res.mje, "error" );
+            }
+
+            //$("#cl_data_hist_act").click();
         }
     });
 }

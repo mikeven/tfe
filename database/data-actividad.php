@@ -131,6 +131,14 @@
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
+	function actualizarResultadoActividad( $dbh, $actividad ){
+		// Edita el resultado de una actividad
+		$q = "update actividad set resultado = '$actividad[resultado]' 
+		where id = $actividad[id_actfin]";
+		//echo $q;
+		return mysqli_query( $dbh, $q );
+	}
+	/* --------------------------------------------------------- */
 	function actualizarFechaActividad( $dbh, $ida, $fecha ){
 		// Edita un registro de actividad para actualizar fecha de calendario
 		$q = "update actividad set fecha_agenda = NOW(), fecha_calendario = '$fecha' 
@@ -404,7 +412,9 @@
 		include( "bd.php" );
 
 		parse_str( $_POST["finalizar_act"], $actividad );
+		$actividad = escaparCampos( $dbh, $actividad );
 		$actividad["estado"] = "finalizada";
+
 		$rsp = finalizarActividad( $dbh, $actividad );
 		if( $rsp == 1 ){
 			$res["exito"] = 1;
@@ -412,6 +422,26 @@
 		}else{
 			$res["exito"] = -1;
 			$res["mje"] = "Error al migrar actividad";
+		}
+		
+		echo json_encode( $res );
+	}
+	/* --------------------------------------------------------- */
+	// Actualiza el resultado de una actividad
+	if( isset( $_POST["edit_rslt"] ) ){
+		// Invocación desde: js/fn-actividad.js
+		include( "bd.php" );
+
+		parse_str( $_POST["edit_rslt"], $actividad );
+		$actividad = escaparCampos( $dbh, $actividad );
+		
+		$rsp = actualizarResultadoActividad( $dbh, $actividad );
+		if( $rsp == 1 ){
+			$res["exito"] = 1;
+			$res["mje"] = "La actividad fue actualizada con éxito";
+		}else{
+			$res["exito"] = -1;
+			$res["mje"] = "Error al actualizar actividad";
 		}
 		
 		echo json_encode( $res );

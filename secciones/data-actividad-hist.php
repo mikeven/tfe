@@ -53,8 +53,32 @@
 							</div>
 						</div>
 						<hr>
-						<div class="resultado">
-							<b>Resultado: </b> <span id="tx_resultado_act"></span>
+						<div id="resultado_actual">
+							<div class="resultado">
+								<b>Resultado: </b> <span class="tx_resultado_act"></span>
+							</div>
+							<div>
+								<a id="lnk_editr" href="#!">
+								<i class="fa fa-edit"></i> Editar resultado</a>
+							</div>
+						</div>
+						<div id="edicion_resultado">
+							<form id="frm_editresult">
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="textareaDefault">Resultado</label>
+									<div class="col-md-9">
+										<textarea name="resultado" class="form-control tx_resultado_act" rows="3" 
+										id="tx_nvoresult" required></textarea>
+									</div>
+									<input id="id_act" type="hidden" name="id_actfin">
+								</div>
+								<div >
+									<div class="col-sm-9 col-sm-offset-3">
+										<button id="canc_edit_r" type="button" class="btn btn-default">Cancelar</button>
+										<button type="submit" class="btn btn-primary">Guardar</button>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -63,7 +87,7 @@
 		<footer class="panel-footer">
 			<div class="row">
 				<div class="col-md-12 text-right">
-					<button id="cl_data_desag_act" class="btn btn-default modal-dismiss">Cerrar</button>
+					<button id="cl_data_hist_act" class="btn btn-default modal-dismiss">Cerrar</button>
 				</div>
 			</div>
 		</footer>

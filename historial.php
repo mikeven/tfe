@@ -52,6 +52,7 @@
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 		<style>
 			#icono_actividad{ color: #FFF; }
+			#edicion_resultado{ display: none; }
 		</style>
 	</head>
 	
@@ -152,7 +153,6 @@
 		<script src="js/validate-extend.js"></script>
 		<script type="text/javascript">
 			var table = $('#datatable-historial').DataTable();
-		    
 		</script>
 		
 	</body>
