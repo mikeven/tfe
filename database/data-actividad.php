@@ -420,7 +420,8 @@
 		include( "bd.php" );
 
 		$ida = $_POST["desagendar"];
-		$actividad = obtenerDataAgenda( $ida, "", "desagendar" );
+		$actividad = array();
+		$actividad = obtenerDataAgenda( $ida, $actividad, "desagendar" );
 		$actividad["id_actividad"] = $ida;
 
 		$rsp = agendarPrioridad( $dbh, $actividad );
