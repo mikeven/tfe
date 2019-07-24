@@ -240,8 +240,16 @@
 	/* --------------------------------------------------------- */
 	function titActividad( $actividad ){
       // Devuelve el texto descriptivo de una actividad para mostrar en calendario
+      $titulo = "";
+      if( $actividad["tipo"] == "g" )
+      	$titulo = $actividad["lugar"]."/".$actividad["direccion"];
+      if( $actividad["tipo"] == "e" )
+      	$titulo = $actividad["nsujeto"]."/".$actividad["tarea"];
+      if( $actividad["tipo"] == "l" )
+      	$titulo = $actividad["contacto"]."/".$actividad["motivo"];
       
-      return $actividad["nsujeto"]."/".$actividad["nobjeto"];
+      return $titulo;
+
     }
 	/* --------------------------------------------------------- */
     function colorActividad( $actividad ){
