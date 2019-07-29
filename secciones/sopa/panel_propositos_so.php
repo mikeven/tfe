@@ -22,7 +22,9 @@
 								<div class="toggle-content accord_act_cont">
 									<h2 class="title">Actividades</h2>
 									<?php 
-									foreach ( $actividades as $a ) { ?>
+										foreach ( $actividades as $a ) {
+											if( $a["estado"] != "finalizada" ){ 
+									?>
 									<div>
 										<?php echo iconoActividad( $a["tipo"] )?>
 										<a class="sel_actprop" href="#!" 
@@ -31,7 +33,7 @@
 											<?php echo " ".descActividad( $a ) ?>
 										</a>
 									</div>	
-									<?php } ?>
+									<?php } } ?>
 								</div>
 							</section>
 							<?php

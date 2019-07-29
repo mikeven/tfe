@@ -52,15 +52,17 @@
 											<a href="#frm-edit-actividad" class="modal-sizes modal-with-zoom-anim i_edit_act" 
 											data-ida="<?php echo $a['id'] ?>">
 											<i class="fa fa-edit" aria-hidden="true"></i>
-											</a> | 
-											<a href="#confirmar-accion" 
-											class="modal-sizes modal-with-zoom-anim elim_actividad" data-ida="<?php echo $a["id"] ?>"
-											data-desc="<?php echo "(".strtoupper( $a["tipo"] ).") ". descActividad( $a )?>">
-											<i class="fa fa-times" aria-hidden="true"></i>
-											</a>
+											</a>  
+											<?php if( $a["estado"] == 'creada' ) { ?>
+											   |<a href="#confirmar-accion" 
+												class="modal-sizes modal-with-zoom-anim elim_actividad" 
+												data-ida="<?php echo $a["id"] ?>"
+												data-desc="<?php echo "(".strtoupper( $a["tipo"] ).") ". descActividad( $a )?>">
+												<i class="fa fa-times" aria-hidden="true"></i>
+												</a>
+											<?php } ?>
 										</div>
 									</div>
-									
 								</li>
 							<?php } ?>
 							<li class="dd-item" data-id="nueva_actividad">
