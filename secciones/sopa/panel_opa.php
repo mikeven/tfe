@@ -66,7 +66,7 @@
 								</li>
 							<?php } ?>
 							<li class="dd-item" data-id="nueva_actividad">
-								<div class="dd-handle nopa">
+								<div class="a-dd-handle nopa">
 									<a href="#frm-actividad" class="modal-sizes modal-with-zoom-anim btn_nactiv" 
 									data-idp="<?php echo $p["id"]?>" 
 									data-np="<?php echo $p['descripcion']?>" 
@@ -84,7 +84,7 @@
 				<?php } ?>
 				
 				<li class="dd-item" data-id="nuevo_proposito">
-					<div class="dd-handle nopa">
+					<div class="p-dd-handle nopa">
 					<a href="#frm-proposito" class="modal-sizes modal-with-zoom-anim btn_nprop" 
 						data-iso="<?php echo $so["id_so"]?>" 
 						data-n-so="<?php echo $so['nsujeto'].' :: '.$o['nombre']?>"

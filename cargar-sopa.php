@@ -57,13 +57,14 @@
 			#agg_objeto, #agg-s-o, .campos_act{ display: none; }
 			.icon_obj{ font-family: Arial; color: #fff; font-size: 14px; margin-left: 10px; }
 			.nopa{ background-color: transparent; }
-			.item_obj{ background-color: #388de0 }
+			.item_obj{ background-color: #509E2D }
 			.item_pro{ background-color: #2762B7 }
-			.item_act{ background-color: #1F4A89 }
+			.item_act{ background-color: #e25522 }
 			.dd-handle{ color: #fff; }
 			.editableicon{ float: right; } 
 			.i_edit_act, .i_edit_prop{ color: #FFF; }
-			.elim_actividad, .elim_prop{ color: #d2322d; }
+			.elim_actividad, .elim_prop{ color: #fff; }
+			.elim_prop:hover{ text-decoration: none; }
 		</style>
 	</head>
 	

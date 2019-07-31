@@ -324,14 +324,14 @@ body .btn-pro[disabled] {
 body .btn-act {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	background-color: #1F4A89;
-	border-color: #1F4A89;
+	background-color: #e25522;
+	border-color: #e25522;
 }
 
 body .btn-act:hover {
 	color: #ffffff;
-	border-color: #3e72be !important;
-	background-color: #3e72be;
+	border-color: #fa6029 !important;
+	background-color: #fa6029;
 }
 
 body .btn-act:active,
