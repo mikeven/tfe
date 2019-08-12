@@ -41,7 +41,9 @@
 							</div>
 						</div>
 						<ol class="dd-list">
-							<?php foreach ( $actividades as $a ) { ?>
+							<?php foreach ( $actividades as $a ) {
+									if( $a["estado"] != "finalizada" ) {
+							?>
 								<li class="dd-item" data-id="<?php echo $a['id']?>">
 									<div class="dd-handle item_act">
 										<span class="icon_obj">
@@ -64,7 +66,7 @@
 										</div>
 									</div>
 								</li>
-							<?php } ?>
+							<?php 	} } ?>
 							<li class="dd-item" data-id="nueva_actividad">
 								<div class="a-dd-handle nopa">
 									<a href="#frm-actividad" class="modal-sizes modal-with-zoom-anim btn_nactiv" 
