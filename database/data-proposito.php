@@ -80,6 +80,16 @@
 		return mysqli_query( $dbh, $q );
 	}
 	/* --------------------------------------------------------- */
+	function actividadesSinFinalizar( $dbh, $actividades ){
+		// Devuelve verdadero si tiene hay actividades pendientes por finalizar en el arreglo dado
+		$finalizadas = false;
+		foreach ( $actividades as $a ) {
+			if( $a["estado"] != "finalizada" ) $finalizadas = true;
+		}
+
+		return $finalizadas;
+	}
+	/* --------------------------------------------------------- */
 	if( isset( $_POST["nproposito"] ) ){ 
 		// Registrar nuevo propósito - Invocación desde: js/fn-proposito.js
 		include( "bd.php" );

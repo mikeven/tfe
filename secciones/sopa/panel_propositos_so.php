@@ -15,27 +15,26 @@
 							<?php 
 								foreach ( $propositos as $p ) { 
 									$actividades = obtenerListaActividades( $dbh, $p["id"] );
-									if( count( $actividades ) > 0 ){
+									$pendientes = actividadesSinFinalizar( $dbh, $actividades );
+									if( $pendientes ){
 							?>
-							<section class="toggle">
-								<label><?php echo $p["descripcion"] ?></label>
-								<div class="toggle-content accord_act_cont">
-									<h2 class="title">Actividades</h2>
-									<?php 
-										foreach ( $actividades as $a ) {
-											if( $a["estado"] != "finalizada" ){ 
-									?>
-									<div>
-										<?php echo iconoActividad( $a["tipo"] )?>
-										<a class="sel_actprop" href="#!" 
-										data-ida="<?php echo $a['id'] ?>" 
-										data-prop="<?php echo $p['descripcion'] ?>">
-											<?php echo " ".descActividad( $a ) ?>
-										</a>
-									</div>	
-									<?php } } ?>
-								</div>
-							</section>
+									<section class="toggle">
+										<label><?php echo $p["descripcion"] ?></label>
+										<div class="toggle-content accord_act_cont">
+											<h2 class="title">Actividades</h2>
+											<?php 
+											foreach ( $actividades as $a ) { ?>
+											<div>
+												<?php echo iconoActividad( $a["tipo"] )?>
+												<a class="sel_actprop" href="#!" 
+												data-ida="<?php echo $a['id'] ?>" 
+												data-prop="<?php echo $p['descripcion'] ?>">
+													<?php echo " ".descActividad( $a ) ?>
+												</a>
+											</div>	
+											<?php } ?>
+										</div>
+									</section>
 							<?php
 								 	} 
 								} 
