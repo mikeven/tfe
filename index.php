@@ -64,7 +64,7 @@
 						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Ingresar</h2>
 					</div>
 					<div class="panel-body">
-						<form id="loginform">
+						<form id="loginform" >
 							<div class="form-group mb-lg">
 								<label>Correo electrónico</label>
 								<div class="input-group input-group-icon">

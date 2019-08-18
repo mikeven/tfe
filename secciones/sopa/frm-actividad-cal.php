@@ -1,6 +1,6 @@
 <div id="frm-actividad-cal" class="modal-block modal-block-primary mfp-hide">
 	<section class="panel">
-		<form id="frm-nagenda" class="form-horizontal mb-lg">
+		<form id="frm-nagenda" class="form-horizontal mb-lg" autocomplete="off">
 			<header class="panel-heading">
 				<h2 class="panel-title">
 					Agendar actividad
